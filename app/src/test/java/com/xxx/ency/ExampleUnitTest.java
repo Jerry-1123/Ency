@@ -1,4 +1,4 @@
-package com.xxx.encytool;
+package com.xxx.ency;
 
 import org.junit.Test;
 

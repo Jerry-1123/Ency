@@ -1,4 +1,4 @@
-package com.xxx.encytool;
+package com.xxx.ency;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.xxx.encytool", appContext.getPackageName());
+        assertEquals("com.xxx.ency", appContext.getPackageName());
     }
 }
