@@ -1,15 +1,16 @@
 package com.xxx.ency;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.xxx.ency.base.SimpleActivity;
 
-import com.xxx.ency.config.EnycApplication;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SimpleActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void init() {
+
     }
 }
