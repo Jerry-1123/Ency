@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ency.iml" filepath="$PROJECT_DIR$/Ency.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EncyTool.iml" filepath="$PROJECT_DIR$/EncyTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
