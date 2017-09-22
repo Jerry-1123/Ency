@@ -4,19 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+import com.xxx.ency.config.EnycApplication;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
+ * Fragment基类
  * Created by xiarh on 2017/9/21.
  */
 
-public abstract class SimpleFragment extends Fragment{
+public abstract class BaseFragment extends SupportFragment{
 
     protected View mView;
 
@@ -28,7 +32,7 @@ public abstract class SimpleFragment extends Fragment{
 
     protected abstract int getLayoutId();
 
-    protected abstract void init();
+    protected abstract void initialize();
 
     @Override
     public void onAttach(Context context) {
@@ -49,12 +53,20 @@ public abstract class SimpleFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnBinder = ButterKnife.bind(this, view);
-        init();
+        initialize();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnBinder.unbind();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // leakcanary
+        RefWatcher refWatcher = EnycApplication.getRefWatcher(mActivity);
+        refWatcher.watch(this);
     }
 }

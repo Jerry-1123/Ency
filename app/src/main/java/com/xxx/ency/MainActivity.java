@@ -1,8 +1,9 @@
 package com.xxx.ency;
 
-import com.xxx.ency.base.SimpleActivity;
+import com.r0adkll.slidr.Slidr;
+import com.xxx.ency.base.BaseActivity;
 
-public class MainActivity extends SimpleActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayout() {
@@ -10,7 +11,9 @@ public class MainActivity extends SimpleActivity {
     }
 
     @Override
-    protected void init() {
-
+    protected void initialize() {
+        int primary = getResources().getColor(R.color.colorPrimary);
+        int secondary = getResources().getColor(R.color.colorPrimaryDark);
+        Slidr.attach(this, primary, secondary);
     }
 }

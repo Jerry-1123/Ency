@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 
 /**
+ * SharePreferences管理类
  * Created by xiarh on 2017/9/21.
  */
 

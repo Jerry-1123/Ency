@@ -8,7 +8,6 @@ import com.xxx.ency.di.module.HttpModule;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by xiarh on 2017/9/21.

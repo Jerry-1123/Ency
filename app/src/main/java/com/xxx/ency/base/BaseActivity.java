@@ -4,37 +4,35 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.xxx.ency.util.AppActivityTaskManager;
 
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
+ * Activity基类
  * Created by xiarh on 2017/9/21.
  */
 
-public abstract class SimpleActivity extends AppCompatActivity {
+public abstract class BaseActivity extends SupportActivity {
 
     protected Activity mContext;
 
-    private Unbinder mUnBinder;
-
     protected abstract int getLayout();
 
-    protected abstract void init();
+    protected abstract void initialize();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         mContext = this;
-        mUnBinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         AppActivityTaskManager.getInstance().addActivity(this);
-        init();
+        initialize();
     }
 
     /**
@@ -52,7 +50,6 @@ public abstract class SimpleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnBinder.unbind();
         AppActivityTaskManager.getInstance().removeActivity(this);
     }
 
