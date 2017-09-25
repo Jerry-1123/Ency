@@ -32,13 +32,13 @@ public class HttpModule {
 
     private Context context;
 
-    public HttpModule(Context context){
+    public HttpModule(Context context) {
         this.context = context;
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(){
+    OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         File cacheFile = new File(Constants.PATH_CACHE);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
@@ -83,12 +83,12 @@ public class HttpModule {
         return builder.build();
     }
 
-    public Retrofit createRetrofit(String url, OkHttpClient client) {
+    @Provides
+    @Singleton
+    public Retrofit.Builder provideRetrofitBuilder(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(url)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     }
 }

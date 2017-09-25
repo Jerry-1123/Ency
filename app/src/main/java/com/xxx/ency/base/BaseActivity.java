@@ -32,6 +32,7 @@ public abstract class BaseActivity extends SupportActivity {
         mContext = this;
         ButterKnife.bind(this);
         AppActivityTaskManager.getInstance().addActivity(this);
+        setTitle("");
         initialize();
     }
 

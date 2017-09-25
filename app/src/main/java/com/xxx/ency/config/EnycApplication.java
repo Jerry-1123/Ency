@@ -13,6 +13,7 @@ import com.xxx.ency.di.module.HttpModule;
 import com.xxx.ency.util.AppApplicationUtil;
 
 import me.yokeyword.fragmentation.Fragmentation;
+import me.yokeyword.fragmentation.helper.ExceptionHandler;
 
 /**
  * Created by xiarh on 2017/9/20.
@@ -62,8 +63,11 @@ public class EnycApplication extends Application {
                 // 实际场景建议.debug(BuildConfig.DEBUG)
                 // 生产环境时，捕获上述异常（避免crash），会捕获
                 // 建议在回调处上传下面异常到崩溃监控服务器
-                .handleException(e -> {
-                    CrashReport.postCatchedException(e);  // bugly会将这个Exception上报
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
+                        CrashReport.postCatchedException(e);  // bugly会将这个Exception上报
+                    }
                 })
                 .install();
 
