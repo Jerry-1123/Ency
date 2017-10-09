@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface WeatherApi {
 
-    String Host = "https://api.heweather.com/v5/now";
+    String HOST = "https://api.heweather.com/v5/now";
 
     /**
      * 天气预报

@@ -3,6 +3,8 @@ package com.xxx.ency.di.module;
 import android.content.Context;
 
 import com.xxx.ency.config.Constants;
+import com.xxx.ency.di.qualifier.WeatherURL;
+import com.xxx.ency.model.http.api.WeatherApi;
 import com.xxx.ency.util.AppNetWorkUtil;
 
 import java.io.File;
@@ -30,16 +32,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class HttpModule {
 
-    private Context context;
-
-    public HttpModule(Context context) {
-        this.context = context;
+    @Provides
+    @Singleton
+    Retrofit.Builder provideRetrofitBuilder() {
+        return new Retrofit.Builder();
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+    OkHttpClient.Builder provideOkHttpBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder, final Context context) {
         File cacheFile = new File(Constants.PATH_CACHE);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = new Interceptor() {
@@ -83,12 +90,25 @@ public class HttpModule {
         return builder.build();
     }
 
+    @WeatherURL
     @Provides
     @Singleton
-    public Retrofit.Builder provideRetrofitBuilder(OkHttpClient client) {
-        return new Retrofit.Builder()
+    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return createRetrofit(builder, client, WeatherApi.HOST);
+    }
+
+    @Provides
+    @Singleton
+    WeatherApi provideWeatherApi(@WeatherURL Retrofit retrofit) {
+        return retrofit.create(WeatherApi.class);
+    }
+
+    private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {
+        return builder
+                .baseUrl(url)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
 }

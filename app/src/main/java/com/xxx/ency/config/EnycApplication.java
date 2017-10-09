@@ -45,7 +45,7 @@ public class EnycApplication extends Application {
         appComponent = DaggerAppComponent
                 .builder()
                 .applicationModule(new ApplicationModule(this))
-                .httpModule(new HttpModule(this))
+                .httpModule(new HttpModule())
                 .build();
 
         // 初始化Bugly

@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
+import com.xxx.ency.model.http.api.WeatherApi;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -28,6 +31,9 @@ public class MainActivity extends BaseActivity {
     NavigationView mNavView;
     @BindView(R.id.drawerlayout)
     DrawerLayout mDrawerLayout;
+
+    @Inject
+    WeatherApi weatherApi;
 
     @Override
     protected int getLayout() {

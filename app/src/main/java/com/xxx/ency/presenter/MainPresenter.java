@@ -14,7 +14,6 @@ import io.reactivex.disposables.Disposable;
 
 public class MainPresenter extends RxPresenter<MainContract.View> implements MainContract.Presenter {
 
-
     @Override
     public void checkUpdate() {
 
