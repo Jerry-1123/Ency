@@ -12,6 +12,8 @@ public class Constants {
     // bugly APP ID
     public static final String BUGLY_APP_ID = "e0359610ba";
 
+    public static final String WEATHER_KEY = "33ebf4d7998a4548942adcad5582e503";
+
     public static final String PATH_DATA = EnycApplication.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
 
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";

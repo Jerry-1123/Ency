@@ -9,17 +9,18 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.xxx.ency.R;
-import com.xxx.ency.base.BaseActivity;
-import com.xxx.ency.model.http.api.WeatherApi;
-
-import javax.inject.Inject;
+import com.xxx.ency.base.BaseMVPActivity;
+import com.xxx.ency.config.EnycApplication;
+import com.xxx.ency.di.component.DaggerActivityComponent;
+import com.xxx.ency.di.module.MainActivityModule;
+import com.xxx.ency.presenter.MainPresenter;
 
 import butterknife.BindView;
 
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMVPActivity<MainPresenter> {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -32,12 +33,19 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.drawerlayout)
     DrawerLayout mDrawerLayout;
 
-    @Inject
-    WeatherApi weatherApi;
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initInject() {
+        DaggerActivityComponent
+                .builder()
+                .appComponent(EnycApplication.getAppComponent())
+                .mainActivityModule(new MainActivityModule())
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -50,5 +58,6 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
             }
         });
+        mPresenter.getWeather();
     }
 }

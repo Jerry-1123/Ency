@@ -31,6 +31,7 @@ public abstract class BaseActivity extends SupportActivity {
         setContentView(getLayout());
         mContext = this;
         ButterKnife.bind(this);
+        onViewCreated();
         AppActivityTaskManager.getInstance().addActivity(this);
         setTitle("");
         initialize();
@@ -46,6 +47,10 @@ public abstract class BaseActivity extends SupportActivity {
             // 透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+    }
+
+    protected void onViewCreated() {
+
     }
 
     @Override

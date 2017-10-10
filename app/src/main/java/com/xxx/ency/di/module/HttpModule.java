@@ -2,6 +2,7 @@ package com.xxx.ency.di.module;
 
 import android.content.Context;
 
+import com.xxx.ency.BuildConfig;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.di.qualifier.WeatherURL;
 import com.xxx.ency.model.http.api.WeatherApi;
@@ -21,6 +22,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -47,6 +49,11 @@ public class HttpModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder, final Context context) {
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            builder.addInterceptor(loggingInterceptor);
+        }
         File cacheFile = new File(Constants.PATH_CACHE);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = new Interceptor() {
@@ -88,27 +95,5 @@ public class HttpModule {
         //错误重连
         builder.retryOnConnectionFailure(true);
         return builder.build();
-    }
-
-    @WeatherURL
-    @Provides
-    @Singleton
-    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client) {
-        return createRetrofit(builder, client, WeatherApi.HOST);
-    }
-
-    @Provides
-    @Singleton
-    WeatherApi provideWeatherApi(@WeatherURL Retrofit retrofit) {
-        return retrofit.create(WeatherApi.class);
-    }
-
-    private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {
-        return builder
-                .baseUrl(url)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
     }
 }

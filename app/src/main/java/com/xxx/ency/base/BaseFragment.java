@@ -45,7 +45,6 @@ public abstract class BaseFragment extends SupportFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(getLayoutId(), null);
-        ButterKnife.bind(this, mView);
         return mView;
     }
 
@@ -53,6 +52,11 @@ public abstract class BaseFragment extends SupportFragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnBinder = ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         initialize();
     }
 

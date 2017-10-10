@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface WeatherApi {
 
-    String HOST = "https://api.heweather.com/v5/now";
+    String HOST = "https://free-api.heweather.com/";
 
     /**
      * 天气预报
@@ -20,6 +20,6 @@ public interface WeatherApi {
      * @param city
      * @return
      */
-    @GET()
+    @GET("v5/now")  //没有数据就填 . 或者 /
     Observable<WeatherBean> getWeather(@Query("city") String city, @Query("key") String key);
 }

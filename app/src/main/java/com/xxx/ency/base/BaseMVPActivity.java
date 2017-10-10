@@ -1,7 +1,6 @@
 package com.xxx.ency.base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import javax.inject.Inject;
 
 /**
  * 带MVP和Dagger2的Activity基类
@@ -10,11 +9,15 @@ import android.support.annotation.Nullable;
 
 public abstract class BaseMVPActivity<T extends BasePresenter> extends BaseActivity implements BaseView {
 
+    @Inject
     protected T mPresenter;
 
+    protected abstract void initInject();
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onViewCreated() {
+        super.onViewCreated();
+        initInject();
         if (mPresenter != null)
             mPresenter.attachView(this);
     }
@@ -24,5 +27,30 @@ public abstract class BaseMVPActivity<T extends BasePresenter> extends BaseActiv
         if (mPresenter != null)
             mPresenter.detachView();
         super.onDestroy();
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void startLoading() {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
     }
 }
