@@ -2,6 +2,7 @@ package com.xxx.ency.model.http.api;
 
 import com.xxx.ency.model.bean.WeatherBean;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -21,5 +22,5 @@ public interface WeatherApi {
      * @return
      */
     @GET("v5/now")  //没有数据就填 . 或者 /
-    Observable<WeatherBean> getWeather(@Query("city") String city, @Query("key") String key);
+    Flowable<WeatherBean> getWeather(@Query("city") String city, @Query("key") String key);
 }

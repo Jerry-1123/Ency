@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Ency</string>
+    <string name="permission_application">权限申请</string>
+    <string name="permission_application_content">在设置-应用-XXX中开启权限，以正常使用XXX</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
+    <string name="setting">设置</string>
+    <string name="app_exit">应用退出</string>
+    <string name="app_exit_confirm">是否确认退出应用？</string>
 </resources>

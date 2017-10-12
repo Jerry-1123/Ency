@@ -1,5 +1,8 @@
 package com.xxx.ency.di.module;
 
+import android.app.Activity;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xxx.ency.di.qualifier.WeatherURL;
 import com.xxx.ency.di.scope.ActivityScope;
 import com.xxx.ency.model.http.api.WeatherApi;
@@ -17,6 +20,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class MainActivityModule {
+
+    private Activity activity;
+
+    public MainActivityModule(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Provides
+    @ActivityScope
+    Activity provideActivity() {
+        return activity;
+    }
+
+    @Provides
+    @ActivityScope
+    RxPermissions provideRxPermissions(Activity activity) {
+        return new RxPermissions(activity);
+    }
 
     @WeatherURL
     @Provides
