@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable;
 public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
 
     protected T mView;
+
     protected CompositeDisposable mCompositeDisposable;
 
     /**

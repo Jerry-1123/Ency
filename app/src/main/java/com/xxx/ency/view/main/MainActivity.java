@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.xxx.ency.config.EnycApplication;
 import com.xxx.ency.di.component.DaggerActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
 import com.xxx.ency.presenter.MainPresenter;
+import com.xxx.ency.util.AppExitUtil;
 
 import butterknife.BindView;
 
@@ -59,5 +61,13 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> {
             }
         });
         mPresenter.getWeather();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return AppExitUtil.exitApp(this);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

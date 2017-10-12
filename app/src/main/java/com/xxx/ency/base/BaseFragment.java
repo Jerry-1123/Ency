@@ -20,7 +20,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by xiarh on 2017/9/21.
  */
 
-public abstract class BaseFragment extends SupportFragment{
+public abstract class BaseFragment extends SupportFragment implements BaseView{
 
     protected View mView;
 
@@ -45,13 +45,8 @@ public abstract class BaseFragment extends SupportFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(getLayoutId(), null);
+        mUnBinder = ButterKnife.bind(this, mView);
         return mView;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mUnBinder = ButterKnife.bind(this, view);
     }
 
     @Override
@@ -72,5 +67,30 @@ public abstract class BaseFragment extends SupportFragment{
         // leakcanary
         RefWatcher refWatcher = EnycApplication.getRefWatcher(mActivity);
         refWatcher.watch(this);
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void startLoading() {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
     }
 }
