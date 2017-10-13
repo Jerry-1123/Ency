@@ -2,6 +2,7 @@ package com.xxx.ency.contract;
 
 import com.xxx.ency.base.BasePresenter;
 import com.xxx.ency.base.BaseView;
+import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
 
 /**
@@ -15,7 +16,7 @@ public interface MainContract {
         /**
          * 更新提示框
          */
-        void showUpdateDialog();
+        void showUpdateDialog(UpdateBean updateBean);
 
         /**
          * 天气数据
@@ -30,11 +31,6 @@ public interface MainContract {
         void showPermissionDialog();
 
         /**
-         * 未获取权限，直接exit
-         */
-        void exit();
-
-        /**
          * 获取权限成功
          */
         void getPermissionSuccess();
@@ -42,10 +38,19 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter<View> {
 
+        /**
+         * 检查更新
+         */
         void checkUpdate();
 
+        /**
+         * 检查权限
+         */
         void checkPermissions();
 
+        /**
+         * 拉取天气权限
+         */
         void getWeather();
     }
 }

@@ -7,9 +7,9 @@ package com.xxx.ency.base;
 
 public interface BaseView {
 
-    void showMsg(String msg);
+    void showMsg(CharSequence msg);
 
-    void showError(String error);
+    void showError(CharSequence error);
 
     void showEmptyView();
 

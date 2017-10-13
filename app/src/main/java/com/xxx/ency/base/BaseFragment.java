@@ -20,7 +20,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by xiarh on 2017/9/21.
  */
 
-public abstract class BaseFragment extends SupportFragment implements BaseView{
+public abstract class BaseFragment extends SupportFragment{
 
     protected View mView;
 
@@ -67,30 +67,5 @@ public abstract class BaseFragment extends SupportFragment implements BaseView{
         // leakcanary
         RefWatcher refWatcher = EnycApplication.getRefWatcher(mActivity);
         refWatcher.watch(this);
-    }
-
-    @Override
-    public void showMsg(String msg) {
-
-    }
-
-    @Override
-    public void showError(String error) {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void startLoading() {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
     }
 }

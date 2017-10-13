@@ -1,21 +1,18 @@
 package com.xxx.ency.presenter;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
+import android.content.Context;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xxx.ency.R;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.MainContract;
+import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
-import com.xxx.ency.model.http.api.WeatherApi;
+import com.xxx.ency.model.http.UpdateApi;
+import com.xxx.ency.model.http.WeatherApi;
+import com.xxx.ency.util.AppApplicationUtil;
 
 import javax.inject.Inject;
 
@@ -30,43 +27,47 @@ import io.reactivex.subscribers.ResourceSubscriber;
 
 public class MainPresenter extends RxPresenter<MainContract.View> implements MainContract.Presenter {
 
-    private WeatherApi api;
+    private WeatherApi weatherApi;
+
+    private UpdateApi updateApi;
 
     private RxPermissions rxPermissions;
 
-    private MaterialDialog dialog;
+    private Context context;
 
     @Inject
-    public MainPresenter(WeatherApi api, RxPermissions rxPermissions, final Activity activity) {
-        this.api = api;
+    public MainPresenter(WeatherApi weatherApi, UpdateApi updateApi, RxPermissions rxPermissions, Context context) {
+        this.weatherApi = weatherApi;
+        this.updateApi = updateApi;
         this.rxPermissions = rxPermissions;
-        dialog = new MaterialDialog.Builder(activity)
-                .title(R.string.permission_application)
-                .content(R.string.permission_application_content)
-                .cancelable(false)
-                .positiveText(R.string.setting)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
-                        activity.startActivity(intent);
-                    }
-                })
-                .negativeText(R.string.no)
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mView.exit();
-                    }
-                })
-                .build();
+        this.context = context;
     }
 
     @Override
     public void checkUpdate() {
+        addSubscribe(updateApi.getVersionInfo(Constants.FIR_IM_API_TOKEN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new ResourceSubscriber<UpdateBean>() {
+                    @Override
+                    public void onNext(UpdateBean updateBean) {
+//                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
+                            mView.showUpdateDialog(updateBean);
+//                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
+//                            mView.showMsg(context.getResources().getString(R.string.update_msg));
+//                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable t) {
+                        mView.showError(t.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
     }
 
     @Override
@@ -85,9 +86,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                         // 只要有一个权限禁止，返回false，
                         // 下一次申请只申请没通过申请的权限
                         else {
-                            if (!dialog.isShowing()) {
-                                dialog.show();
-                            }
+                            mView.showPermissionDialog();
                         }
                     }
                 }));
@@ -95,7 +94,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
 
     @Override
     public void getWeather() {
-        addSubscribe(api.getWeather("苏州", Constants.WEATHER_KEY)
+        addSubscribe(weatherApi.getWeather("苏州", Constants.WEATHER_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new ResourceSubscriber<WeatherBean>() {

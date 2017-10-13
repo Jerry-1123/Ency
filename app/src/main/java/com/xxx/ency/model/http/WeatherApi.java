@@ -1,4 +1,4 @@
-package com.xxx.ency.model.http.api;
+package com.xxx.ency.model.http;
 
 import com.xxx.ency.model.bean.WeatherBean;
 

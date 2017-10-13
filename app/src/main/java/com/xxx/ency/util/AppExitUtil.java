@@ -53,4 +53,20 @@ public class AppExitUtil {
         LogUtil.i("AppExitUtil-->>exitApp：", "空闲内存：" + Runtime.getRuntime().freeMemory());
         return isExit;
     }
+
+    /**
+     * 直接退出
+     *
+     * @param context
+     */
+    public static void exitAPP(Context context) {
+        AppActivityTaskManager.getInstance().removeAllActivity();
+        //创建ACTION_MAIN
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //启动ACTION_MAIN，直接回到桌面
+        context.startActivity(intent);
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
 }

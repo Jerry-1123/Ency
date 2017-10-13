@@ -3,9 +3,11 @@ package com.xxx.ency.di.module;
 import android.app.Activity;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xxx.ency.di.qualifier.UpdateURL;
 import com.xxx.ency.di.qualifier.WeatherURL;
 import com.xxx.ency.di.scope.ActivityScope;
-import com.xxx.ency.model.http.api.WeatherApi;
+import com.xxx.ency.model.http.UpdateApi;
+import com.xxx.ency.model.http.WeatherApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -42,7 +44,7 @@ public class MainActivityModule {
     @WeatherURL
     @Provides
     @ActivityScope
-    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+    Retrofit provideWeatherRetrofit(Retrofit.Builder builder, OkHttpClient client) {
         return builder
                 .baseUrl(WeatherApi.HOST)
                 .client(client)
@@ -55,5 +57,23 @@ public class MainActivityModule {
     @ActivityScope
     WeatherApi provideWeatherApi(@WeatherURL Retrofit retrofit) {
         return retrofit.create(WeatherApi.class);
+    }
+
+    @UpdateURL
+    @Provides
+    @ActivityScope
+    Retrofit provideUpdateRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return builder
+                .baseUrl(UpdateApi.HOST)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @ActivityScope
+    UpdateApi provideUpdateApi(@UpdateURL Retrofit retrofit) {
+        return retrofit.create(UpdateApi.class);
     }
 }

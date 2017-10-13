@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.xxx.ency.BuildConfig;
 import com.xxx.ency.config.Constants;
-import com.xxx.ency.di.qualifier.WeatherURL;
-import com.xxx.ency.model.http.api.WeatherApi;
 import com.xxx.ency.util.AppNetWorkUtil;
 
 import java.io.File;
@@ -24,8 +22,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by xiarh on 2017/9/21.

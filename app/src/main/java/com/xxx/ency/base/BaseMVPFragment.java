@@ -34,12 +34,12 @@ public abstract class BaseMVPFragment<T extends BasePresenter> extends BaseFragm
     }
 
     @Override
-    public void showMsg(String msg) {
+    public void showMsg(CharSequence msg) {
 
     }
 
     @Override
-    public void showError(String error) {
+    public void showError(CharSequence error) {
 
     }
 
