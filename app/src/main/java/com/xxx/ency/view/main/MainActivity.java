@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -35,10 +36,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.tv_title)
-    TextView mTxtTitle;
-    @BindView(R.id.menu_slide)
-    FrameLayout mSlide;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
     @BindView(R.id.drawerlayout)
@@ -66,14 +63,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @Override
     protected void initialize() {
+        mToolbar.setNavigationIcon(R.drawable.ic_slide);
         setSupportActionBar(mToolbar);
-        mTxtTitle.setText("主页");
-        mSlide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("主页");
         dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.permission_application)
                 .content(R.string.permission_application_content)
@@ -165,5 +158,15 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         if (requestCode == PERMISSION_CODE) {
             mPresenter.checkPermissions();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

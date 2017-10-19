@@ -52,7 +52,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                     @Override
                     public void onNext(UpdateBean updateBean) {
 //                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
-                            mView.showUpdateDialog(updateBean);
+                        mView.showUpdateDialog(updateBean);
 //                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
 //                            mView.showMsg(context.getResources().getString(R.string.update_msg));
 //                        }
@@ -72,10 +72,9 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
 
     @Override
     public void checkPermissions() {
-        addSubscribe(rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.ACCESS_FINE_LOCATION
-                , Manifest.permission.ACCESS_COARSE_LOCATION)
+        addSubscribe(rxPermissions.request(Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {

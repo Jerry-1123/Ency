@@ -15,44 +15,11 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary">
-
-                <FrameLayout
-                    android:id="@+id/menu_slide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true">
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_slide" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:paddingLeft="15dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-            </android.support.v7.widget.Toolbar>
-        </FrameLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"/>
 
         <FrameLayout
             android:id="@+id/main_content"
