@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -41,6 +42,14 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @BindView(R.id.drawerlayout)
     DrawerLayout mDrawerLayout;
 
+    private View mHeaderView;
+
+    private ImageView mImgWeather;
+
+    private TextView mTxtWeather;
+
+    private TextView mTextTemperature;
+
     private static final int PERMISSION_CODE = 1000;
 
     // 权限获取提示框
@@ -67,6 +76,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("主页");
+        mHeaderView = mNavView.getHeaderView(0);
+        mImgWeather = mHeaderView.findViewById(R.id.img_weather);
+        mTxtWeather = mHeaderView.findViewById(R.id.txt_weather);
+        mTextTemperature = mHeaderView.findViewById(R.id.txt_temperature);
         dialog = new MaterialDialog.Builder(mContext)
                 .title(R.string.permission_application)
                 .content(R.string.permission_application_content)
@@ -106,21 +119,23 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
      */
     @Override
     public void showUpdateDialog(UpdateBean updateBean) {
-        new MaterialDialog.Builder(mContext)
-                .title(R.string.app_update)
-                .content(updateBean.getChangelog())
-                .positiveText(R.string.update)
-                .positiveColorRes(R.color.black)
-                .negativeText(R.string.no)
-                .negativeColorRes(R.color.black)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        showMsg("开始更新啦~");
-                        startService(new Intent(mContext, UpdateService.class));
-                    }
-                })
-                .show();
+        if (null != updateBean) {
+            new MaterialDialog.Builder(mContext)
+                    .title(R.string.app_update)
+                    .content(updateBean.getChangelog())
+                    .positiveText(R.string.update)
+                    .positiveColorRes(R.color.black)
+                    .negativeText(R.string.no)
+                    .negativeColorRes(R.color.black)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            showMsg("开始更新啦~");
+                            startService(new Intent(mContext, UpdateService.class));
+                        }
+                    })
+                    .show();
+        }
     }
 
     /**
@@ -130,7 +145,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
      */
     @Override
     public void showWeather(WeatherBean weatherBean) {
-        showMsg("获取天气信息成功");
+        mImgWeather.setBackgroundResource(switchWeather(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt()));
+        mTxtWeather.setText(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt());
+        mTextTemperature.setText(weatherBean.getHeWeather5().get(0).getNow().getTmp() + "°C");
     }
 
     /**
@@ -168,5 +185,30 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 获取天气图标
+     *
+     * @return
+     */
+    private int switchWeather(String txt) {
+        if (txt.contains("晴")) {
+            return R.drawable.ic_sunny;
+        } else if (txt.contains("云")) {
+            return R.drawable.ic_cloudy;
+        } else if (txt.contains("风")) {
+            return R.drawable.ic_wind;
+        } else if (txt.contains("雨")) {
+            return R.drawable.ic_rainy;
+        } else if (txt.contains("雪")) {
+            return R.drawable.ic_snowy;
+        } else if (txt.contains("阴")) {
+            return R.drawable.ic_overcast;
+        } else if (txt.contains("霾")) {
+            return R.drawable.ic_haze;
+        } else {
+            return R.drawable.ic_unknown;
+        }
     }
 }

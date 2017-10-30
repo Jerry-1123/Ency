@@ -51,11 +51,11 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                 .subscribeWith(new ResourceSubscriber<UpdateBean>() {
                     @Override
                     public void onNext(UpdateBean updateBean) {
-//                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
-                        mView.showUpdateDialog(updateBean);
-//                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
-//                            mView.showMsg(context.getResources().getString(R.string.update_msg));
-//                        }
+                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
+                            mView.showUpdateDialog(updateBean);
+                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
+                            mView.showUpdateDialog(null);
+                        }
                     }
 
                     @Override
