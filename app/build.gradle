@@ -85,6 +85,8 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    // 道德地图定位
+    compile 'com.amap.api:location:3.6.1'
     // other
     compile('com.afollestad.material-dialogs:core:0.9.4.5') {
         exclude group: 'com.android.support'

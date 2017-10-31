@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:gravity="center"
     android:orientation="horizontal">
 
+    <TextView
+        android:id="@+id/txt_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        tools:text="城市" />
+
     <ImageView
         android:id="@+id/img_weather"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/ic_cloudy" />
+        android:layout_margin="5dp"
+        tools:background="@drawable/ic_sunny" />
 
     <TextView
         android:id="@+id/txt_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="天气"
-        android:textSize="18sp" />
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        tools:text="天气" />
 
     <TextView
         android:id="@+id/txt_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="温度"
-        android:textSize="18sp" />
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        tools:text="温度" />
 
 </LinearLayout>

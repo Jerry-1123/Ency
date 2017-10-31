@@ -74,7 +74,9 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
     public void checkPermissions() {
         addSubscribe(rxPermissions.request(Manifest.permission.READ_PHONE_STATE
                 , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.READ_EXTERNAL_STORAGE)
+                , Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.ACCESS_COARSE_LOCATION
+                , Manifest.permission.ACCESS_FINE_LOCATION)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
@@ -92,8 +94,8 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
     }
 
     @Override
-    public void getWeather() {
-        addSubscribe(weatherApi.getWeather("苏州", Constants.WEATHER_KEY)
+    public void getWeather(String city) {
+        addSubscribe(weatherApi.getWeather(city, Constants.WEATHER_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new ResourceSubscriber<WeatherBean>() {
