@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.leakcanary.RefWatcher;
-import com.xxx.ency.config.EnycApplication;
+import com.xxx.ency.config.EncyApplication;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -65,7 +65,7 @@ public abstract class BaseFragment extends SupportFragment{
     public void onDestroy() {
         super.onDestroy();
         // leakcanary
-        RefWatcher refWatcher = EnycApplication.getRefWatcher(mActivity);
+        RefWatcher refWatcher = EncyApplication.getRefWatcher(mActivity);
         refWatcher.watch(this);
     }
 }

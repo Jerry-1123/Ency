@@ -19,18 +19,18 @@ import me.yokeyword.fragmentation.helper.ExceptionHandler;
  * Created by xiarh on 2017/9/20.
  */
 
-public class EnycApplication extends Application {
+public class EncyApplication extends Application {
 
-    private static EnycApplication instance;
+    private static EncyApplication instance;
 
     public static AppComponent appComponent;
 
-    public static synchronized EnycApplication getInstance() {
+    public static synchronized EncyApplication getInstance() {
         return instance;
     }
 
     public static RefWatcher getRefWatcher(Context context) {
-        EnycApplication application = (EnycApplication) context.getApplicationContext();
+        EncyApplication application = (EncyApplication) context.getApplicationContext();
         return application.refWatcher;
     }
 

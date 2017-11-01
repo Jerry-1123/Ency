@@ -15,23 +15,22 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"/>
+        <include layout="@layout/toolbar_layout" />
 
         <FrameLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-re
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header" />
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/nav_menu_icon_color"
+        app:itemTextColor="@color/nav_menu_text_color"
+        app:menu="@menu/main" />
 
 </android.support.v4.widget.DrawerLayout>

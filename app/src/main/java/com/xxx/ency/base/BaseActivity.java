@@ -21,14 +21,14 @@ public abstract class BaseActivity extends SupportActivity {
 
     protected Activity mContext;
 
-    protected abstract int getLayout();
+    protected abstract int getLayoutId();
 
     protected abstract void initialize();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayout());
+        setContentView(getLayoutId());
         mContext = this;
         ButterKnife.bind(this);
         onViewCreated();

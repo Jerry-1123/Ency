@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
+ * 版本更新
  * Created by xiarh on 2017/10/13.
  */
 

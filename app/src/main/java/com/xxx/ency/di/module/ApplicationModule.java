@@ -2,7 +2,7 @@ package com.xxx.ency.di.module;
 
 import android.content.Context;
 
-import com.xxx.ency.config.EnycApplication;
+import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.model.prefs.SharePrefManager;
 
 import javax.inject.Singleton;
@@ -17,9 +17,9 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    private final EnycApplication application;
+    private final EncyApplication application;
 
-    public ApplicationModule(EnycApplication application) {
+    public ApplicationModule(EncyApplication application) {
         this.application = application;
     }
 

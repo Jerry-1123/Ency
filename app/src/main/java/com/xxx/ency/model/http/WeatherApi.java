@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
+ * 天气预报
  * Created by xiarh on 2017/9/25.
  */
 

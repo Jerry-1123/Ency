@@ -6,13 +6,13 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,9 +22,13 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
-import com.xxx.ency.config.EnycApplication;
+import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.contract.MainContract;
 import com.xxx.ency.di.component.DaggerActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
@@ -32,13 +36,15 @@ import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
+import com.xxx.ency.util.WeatherUtil;
+import com.xxx.ency.view.one.OneFragment;
 
 import butterknife.BindView;
 
 /**
  * 主页
  */
-public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainContract.View, AMapLocationListener {
+public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainContract.View, AMapLocationListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -51,9 +57,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     private TextView mTxtCity;
 
-    private ImageView mImgWeather;
-
     private TextView mTxtWeather;
+
+    private ImageView mImgWeather;
 
     private TextView mTextTemperature;
 
@@ -68,8 +74,15 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     // 权限获取提示框
     private MaterialDialog dialog;
 
+    private RequestOptions options = new RequestOptions()
+            .centerCrop()
+            .priority(Priority.HIGH)
+            .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+    private OneFragment oneFragment;
+
     @Override
-    protected int getLayout() {
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
@@ -77,7 +90,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     protected void initInject() {
         DaggerActivityComponent
                 .builder()
-                .appComponent(EnycApplication.getAppComponent())
+                .appComponent(EncyApplication.getAppComponent())
                 .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
@@ -85,39 +98,23 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @Override
     protected void initialize() {
-        mToolbar.setNavigationIcon(R.drawable.ic_slide);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("主页");
+        setTitle("头条");
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        WeatherUtil.init(mContext);
         mHeaderView = mNavView.getHeaderView(0);
         mTxtCity = mHeaderView.findViewById(R.id.txt_city);
-        mImgWeather = mHeaderView.findViewById(R.id.img_weather);
         mTxtWeather = mHeaderView.findViewById(R.id.txt_weather);
+        mImgWeather = mHeaderView.findViewById(R.id.img_weather);
         mTextTemperature = mHeaderView.findViewById(R.id.txt_temperature);
-        dialog = new MaterialDialog.Builder(mContext)
-                .title(R.string.permission_application)
-                .content(R.string.permission_application_content)
-                .cancelable(false)
-                .positiveText(R.string.setting)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.fromParts("package", getPackageName(), null));
-                        startActivityForResult(intent, PERMISSION_CODE);
-                    }
-                })
-                .negativeText(R.string.no)
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // 不给权限就直接退出，不多BB
-                        AppExitUtil.exitAPP(mContext);
-                    }
-                })
-                .build();
         mPresenter.checkPermissions();
+        initDialog();
+        initFragment();
+        //设置选中
+        mNavView.getMenu().getItem(0).setChecked(true);
+        mNavView.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -147,6 +144,37 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mLocationOption.setLocationCacheEnable(false);
         //启动定位
         mLocationClient.startLocation();
+    }
+
+    private void initDialog() {
+        dialog = new MaterialDialog.Builder(mContext)
+                .title(R.string.permission_application)
+                .content(R.string.permission_application_content)
+                .cancelable(false)
+                .positiveText(R.string.setting)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.fromParts("package", getPackageName(), null));
+                        startActivityForResult(intent, PERMISSION_CODE);
+                    }
+                })
+                .negativeText(R.string.no)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        // 不给权限就直接退出，不多BB
+                        AppExitUtil.exitAPP(mContext);
+                    }
+                })
+                .build();
+    }
+
+    private void initFragment() {
+        oneFragment = new OneFragment();
+        loadMultipleRootFragment(R.id.main_content, 0, oneFragment);
     }
 
     @Override
@@ -189,9 +217,12 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @Override
     public void showWeather(WeatherBean weatherBean) {
         mTxtCity.setText(weatherBean.getHeWeather5().get(0).getBasic().getCity());
-        mImgWeather.setBackgroundResource(switchWeather(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt()));
-        mTxtWeather.setText(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt());
-        mTextTemperature.setText(weatherBean.getHeWeather5().get(0).getNow().getTmp() + "°C");
+        mTxtWeather.setText(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt() + " " + weatherBean.getHeWeather5().get(0).getNow().getWind().getSc());
+        mTextTemperature.setText(weatherBean.getHeWeather5().get(0).getNow().getTmp() + "°");
+        Glide.with(mContext)
+                .applyDefaultRequestOptions(options)
+                .load(WeatherUtil.getImageUrl(weatherBean.getHeWeather5().get(0).getNow().getCond().getCode()))
+                .into(mImgWeather);
     }
 
     /**
@@ -232,41 +263,33 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     }
 
     @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_toutiao:
+                setTitle("头条");
+                break;
+            case R.id.item_one:
+                setTitle("2017/11/01");
+                break;
+            case R.id.item_setting:
+                break;
+            case R.id.item_about:
+                break;
+        }
+        mDrawerLayout.closeDrawers();
+        return true;
+    }
+
+    @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
-                Log.e("xrh", aMapLocation.getCity());
                 mPresenter.getWeather(aMapLocation.getCity());
             }
             //定位失败，通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息
             else {
                 Log.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
             }
-        }
-    }
-
-    /**
-     * 获取天气图标
-     *
-     * @return
-     */
-    private int switchWeather(String txt) {
-        if (txt.contains("晴")) {
-            return R.drawable.ic_sunny;
-        } else if (txt.contains("云")) {
-            return R.drawable.ic_cloudy;
-        } else if (txt.contains("风")) {
-            return R.drawable.ic_wind;
-        } else if (txt.contains("雨")) {
-            return R.drawable.ic_rainy;
-        } else if (txt.contains("雪")) {
-            return R.drawable.ic_snowy;
-        } else if (txt.contains("阴")) {
-            return R.drawable.ic_overcast;
-        } else if (txt.contains("霾")) {
-            return R.drawable.ic_haze;
-        } else {
-            return R.drawable.ic_unknown;
         }
     }
 

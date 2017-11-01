@@ -10,4 +10,9 @@
     <string name="app_update">新版本</string>
     <string name="update">更新</string>
     <string name="update_msg">已经是最新版本~</string>
+    // drawer
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+    <string name="about">关于</string>
+    <string name="one">每日一文</string>
 </resources>

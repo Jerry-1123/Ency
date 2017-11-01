@@ -23,7 +23,7 @@ public class Constants {
     // fir.im ID
     public static final String FIR_IM_ID = "59e01d00959d691da60001b0";
 
-    public static final String PATH_DATA = EnycApplication.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
+    public static final String PATH_DATA = EncyApplication.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
 
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";
 }

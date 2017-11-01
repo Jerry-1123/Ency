@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="all">
+        <item
+            android:id="@+id/item_toutiao"
+            android:icon="@drawable/ic_tip"
+            android:title="头条" />
+        <item
+            android:id="@+id/item_one"
+            android:icon="@drawable/ic_tip"
+            android:title="@string/one" />
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/item_setting"
+            android:title="设置" />
+        <item
+            android:id="@+id/item_about"
+            android:title="关于" />
+    </group>
+</menu>
