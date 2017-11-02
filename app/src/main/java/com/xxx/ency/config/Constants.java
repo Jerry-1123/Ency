@@ -9,7 +9,7 @@ import java.io.File;
 
 public class Constants {
 
-    public static final String TEST_URL = "http://gdown.baidu.com/data/wisegame/405c40b335033fe1/shoujitaobao_166.apk";
+    public static final String ONE_URL = "https://meiriyiwen.com/";
 
     // bugly APP ID
     public static final String BUGLY_APP_ID = "e0359610ba";

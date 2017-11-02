@@ -25,6 +25,6 @@ public interface OneContract {
         /**
          * 获取One数据
          */
-        void getData();
+        void getData(String url);
     }
 }
