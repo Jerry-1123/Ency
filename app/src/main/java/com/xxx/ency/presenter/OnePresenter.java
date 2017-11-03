@@ -31,7 +31,7 @@ public class OnePresenter extends RxPresenter<OneContract.View> implements OneCo
     @Override
     public void getData(String url) {
         addSubscribe(Flowable.just(url)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .map(new Function<String, OneBean>() {
                     @Override
@@ -50,7 +50,9 @@ public class OnePresenter extends RxPresenter<OneContract.View> implements OneCo
                             }
                             // 解析内容
                             else {
+                                buffer.append("\u3000\u3000");
                                 buffer.append(elements.get(i).text() + "\n");
+                                buffer.append("\n");
                             }
                         }
                         oneBean.setContent(buffer.toString());
@@ -65,7 +67,7 @@ public class OnePresenter extends RxPresenter<OneContract.View> implements OneCo
 
                     @Override
                     public void onError(Throwable t) {
-
+                        mView.showError(t.getMessage());
                     }
 
                     @Override

@@ -30,13 +30,14 @@ import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.contract.MainContract;
-import com.xxx.ency.di.component.DaggerActivityComponent;
+import com.xxx.ency.di.component.DaggerMainActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
 import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
 import com.xxx.ency.util.WeatherUtil;
+import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.one.OneFragment;
 
 import butterknife.BindView;
@@ -88,7 +89,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @Override
     protected void initInject() {
-        DaggerActivityComponent
+        DaggerMainActivityComponent
                 .builder()
                 .appComponent(EncyApplication.getAppComponent())
                 .mainActivityModule(new MainActivityModule(this))
@@ -216,12 +217,12 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
      */
     @Override
     public void showWeather(WeatherBean weatherBean) {
-        mTxtCity.setText(weatherBean.getHeWeather5().get(0).getBasic().getCity());
-        mTxtWeather.setText(weatherBean.getHeWeather5().get(0).getNow().getCond().getTxt() + " " + weatherBean.getHeWeather5().get(0).getNow().getWind().getSc());
-        mTextTemperature.setText(weatherBean.getHeWeather5().get(0).getNow().getTmp() + "°");
+        mTxtCity.setText(weatherBean.getHeWeather6().get(0).getBasic().getLocation());
+        mTxtWeather.setText(weatherBean.getHeWeather6().get(0).getNow().getCond_txt() + " " + weatherBean.getHeWeather6().get(0).getNow().getWind_dir());
+        mTextTemperature.setText(weatherBean.getHeWeather6().get(0).getNow().getTmp() + "°");
         Glide.with(mContext)
                 .applyDefaultRequestOptions(options)
-                .load(WeatherUtil.getImageUrl(weatherBean.getHeWeather5().get(0).getNow().getCond().getCode()))
+                .load(WeatherUtil.getImageUrl(weatherBean.getHeWeather6().get(0).getNow().getCond_code()))
                 .into(mImgWeather);
     }
 
@@ -274,6 +275,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
             case R.id.item_setting:
                 break;
             case R.id.item_about:
+                startActivity(new Intent(mContext, AboutActivity.class));
                 break;
         }
         mDrawerLayout.closeDrawers();

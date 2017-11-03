@@ -19,9 +19,11 @@ public interface WeatherApi {
     /**
      * 天气预报
      *
-     * @param city
+     * @param location
+     * @param key
      * @return
      */
-    @GET("v5/now")  //没有数据就填 . 或者 /
-    Flowable<WeatherBean> getWeather(@Query("city") String city, @Query("key") String key);
+    @GET("s6/weather/now")
+    //没有数据就填 . 或者 /
+    Flowable<WeatherBean> getWeather(@Query("location") String location, @Query("key") String key);
 }

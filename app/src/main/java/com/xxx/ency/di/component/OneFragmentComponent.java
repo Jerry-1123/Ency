@@ -12,8 +12,8 @@ import dagger.Component;
 
 @FragmentScope
 @Component(dependencies = AppComponent.class,
-        modules = {OneFragmentModule.class})
-public interface FragmentComponent {
+        modules = OneFragmentModule.class)
+public interface OneFragmentComponent {
 
     void inject(OneFragment oneFragment);
 

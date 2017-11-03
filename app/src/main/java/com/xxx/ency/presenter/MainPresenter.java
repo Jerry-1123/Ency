@@ -94,8 +94,8 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
     }
 
     @Override
-    public void getWeather(String city) {
-        addSubscribe(weatherApi.getWeather(city, Constants.WEATHER_KEY)
+    public void getWeather(String location) {
+        addSubscribe(weatherApi.getWeather(location, Constants.WEATHER_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new ResourceSubscriber<WeatherBean>() {

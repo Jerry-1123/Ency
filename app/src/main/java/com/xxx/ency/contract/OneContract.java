@@ -18,6 +18,7 @@ public interface OneContract {
          * @param oneBean
          */
         void showOneBean(OneBean oneBean);
+
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -2,6 +2,7 @@ package com.xxx.ency.di.component;
 
 import com.xxx.ency.di.module.MainActivityModule;
 import com.xxx.ency.di.scope.ActivityScope;
+import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.main.MainActivity;
 
 import dagger.Component;
@@ -12,8 +13,8 @@ import dagger.Component;
 
 @ActivityScope
 @Component(dependencies = AppComponent.class,
-        modules = {MainActivityModule.class})
-public interface ActivityComponent {
+        modules = MainActivityModule.class )
+public interface MainActivityComponent {
 
     void inject(MainActivity mainActivity);
 

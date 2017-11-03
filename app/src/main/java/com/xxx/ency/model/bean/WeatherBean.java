@@ -8,26 +8,29 @@ import java.util.List;
 
 public class WeatherBean {
 
-    private List<HeWeather5Bean> HeWeather5;
 
-    public List<HeWeather5Bean> getHeWeather5() {
-        return HeWeather5;
+    private List<HeWeather6Bean> HeWeather6;
+
+    public List<HeWeather6Bean> getHeWeather6() {
+        return HeWeather6;
     }
 
-    public void setHeWeather5(List<HeWeather5Bean> HeWeather5) {
-        this.HeWeather5 = HeWeather5;
+    public void setHeWeather6(List<HeWeather6Bean> HeWeather6) {
+        this.HeWeather6 = HeWeather6;
     }
 
-    public static class HeWeather5Bean {
+    public static class HeWeather6Bean {
         /**
-         * basic : {"city":"苏州","cnty":"中国","id":"CN101190401","lat":"31.29937935","lon":"120.61958313","update":{"loc":"2017-09-25 16:46","utc":"2017-09-25 08:46"}}
-         * now : {"cond":{"code":"300","txt":"阵雨"},"fl":"31","hum":"98","pcpn":"4.7","pres":"1008","tmp":"24","vis":"5","wind":{"deg":"141","dir":"东南风","sc":"微风","spd":"10"}}
+         * basic : {"cid":"CN101190401","location":"苏州","parent_city":"苏州","admin_area":"江苏","cnty":"中国","lat":"31.29937935","lon":"120.61958313","tz":"+8.0"}
+         * now : {"cloud":"0","cond_code":"101","cond_txt":"多云","fl":"23","hum":"61","pcpn":"0","pres":"1022","tmp":"21","vis":"10","wind_deg":"357","wind_dir":"北风","wind_sc":"3-4","wind_spd":"11"}
          * status : ok
+         * update : {"loc":"2017-11-03 13:51","utc":"2017-11-03 05:51"}
          */
 
         private BasicBean basic;
         private NowBean now;
         private String status;
+        private UpdateBean update;
 
         public BasicBean getBasic() {
             return basic;
@@ -53,29 +56,65 @@ public class WeatherBean {
             this.status = status;
         }
 
+        public UpdateBean getUpdate() {
+            return update;
+        }
+
+        public void setUpdate(UpdateBean update) {
+            this.update = update;
+        }
+
         public static class BasicBean {
             /**
-             * city : 苏州
+             * cid : CN101190401
+             * location : 苏州
+             * parent_city : 苏州
+             * admin_area : 江苏
              * cnty : 中国
-             * id : CN101190401
              * lat : 31.29937935
              * lon : 120.61958313
-             * update : {"loc":"2017-09-25 16:46","utc":"2017-09-25 08:46"}
+             * tz : +8.0
              */
 
-            private String city;
+            private String cid;
+            private String location;
+            private String parent_city;
+            private String admin_area;
             private String cnty;
-            private String id;
             private String lat;
             private String lon;
-            private UpdateBean update;
+            private String tz;
 
-            public String getCity() {
-                return city;
+            public String getCid() {
+                return cid;
             }
 
-            public void setCity(String city) {
-                this.city = city;
+            public void setCid(String cid) {
+                this.cid = cid;
+            }
+
+            public String getLocation() {
+                return location;
+            }
+
+            public void setLocation(String location) {
+                this.location = location;
+            }
+
+            public String getParent_city() {
+                return parent_city;
+            }
+
+            public void setParent_city(String parent_city) {
+                this.parent_city = parent_city;
+            }
+
+            public String getAdmin_area() {
+                return admin_area;
+            }
+
+            public void setAdmin_area(String admin_area) {
+                this.admin_area = admin_area;
             }
 
             public String getCnty() {
@@ -84,14 +123,6 @@ public class WeatherBean {
 
             public void setCnty(String cnty) {
                 this.cnty = cnty;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
             }
 
             public String getLat() {
@@ -110,68 +141,68 @@ public class WeatherBean {
                 this.lon = lon;
             }
 
-            public UpdateBean getUpdate() {
-                return update;
+            public String getTz() {
+                return tz;
             }
 
-            public void setUpdate(UpdateBean update) {
-                this.update = update;
-            }
-
-            public static class UpdateBean {
-                /**
-                 * loc : 2017-09-25 16:46
-                 * utc : 2017-09-25 08:46
-                 */
-
-                private String loc;
-                private String utc;
-
-                public String getLoc() {
-                    return loc;
-                }
-
-                public void setLoc(String loc) {
-                    this.loc = loc;
-                }
-
-                public String getUtc() {
-                    return utc;
-                }
-
-                public void setUtc(String utc) {
-                    this.utc = utc;
-                }
+            public void setTz(String tz) {
+                this.tz = tz;
             }
         }
 
         public static class NowBean {
             /**
-             * cond : {"code":"300","txt":"阵雨"}
-             * fl : 31
-             * hum : 98
-             * pcpn : 4.7
-             * pres : 1008
-             * tmp : 24
-             * vis : 5
-             * wind : {"deg":"141","dir":"东南风","sc":"微风","spd":"10"}
+             * cloud : 0
+             * cond_code : 101
+             * cond_txt : 多云
+             * fl : 23
+             * hum : 61
+             * pcpn : 0
+             * pres : 1022
+             * tmp : 21
+             * vis : 10
+             * wind_deg : 357
+             * wind_dir : 北风
+             * wind_sc : 3-4
+             * wind_spd : 11
              */
 
-            private CondBean cond;
+            private String cloud;
+            private String cond_code;
+            private String cond_txt;
             private String fl;
             private String hum;
             private String pcpn;
             private String pres;
             private String tmp;
             private String vis;
-            private WindBean wind;
+            private String wind_deg;
+            private String wind_dir;
+            private String wind_sc;
+            private String wind_spd;
 
-            public CondBean getCond() {
-                return cond;
+            public String getCloud() {
+                return cloud;
             }
 
-            public void setCond(CondBean cond) {
-                this.cond = cond;
+            public void setCloud(String cloud) {
+                this.cloud = cloud;
+            }
+
+            public String getCond_code() {
+                return cond_code;
+            }
+
+            public void setCond_code(String cond_code) {
+                this.cond_code = cond_code;
+            }
+
+            public String getCond_txt() {
+                return cond_txt;
+            }
+
+            public void setCond_txt(String cond_txt) {
+                this.cond_txt = cond_txt;
             }
 
             public String getFl() {
@@ -222,84 +253,62 @@ public class WeatherBean {
                 this.vis = vis;
             }
 
-            public WindBean getWind() {
-                return wind;
+            public String getWind_deg() {
+                return wind_deg;
             }
 
-            public void setWind(WindBean wind) {
-                this.wind = wind;
+            public void setWind_deg(String wind_deg) {
+                this.wind_deg = wind_deg;
             }
 
-            public static class CondBean {
-                /**
-                 * code : 300
-                 * txt : 阵雨
-                 */
-
-                private String code;
-                private String txt;
-
-                public String getCode() {
-                    return code;
-                }
-
-                public void setCode(String code) {
-                    this.code = code;
-                }
-
-                public String getTxt() {
-                    return txt;
-                }
-
-                public void setTxt(String txt) {
-                    this.txt = txt;
-                }
+            public String getWind_dir() {
+                return wind_dir;
             }
 
-            public static class WindBean {
-                /**
-                 * deg : 141
-                 * dir : 东南风
-                 * sc : 微风
-                 * spd : 10
-                 */
+            public void setWind_dir(String wind_dir) {
+                this.wind_dir = wind_dir;
+            }
 
-                private String deg;
-                private String dir;
-                private String sc;
-                private String spd;
+            public String getWind_sc() {
+                return wind_sc;
+            }
 
-                public String getDeg() {
-                    return deg;
-                }
+            public void setWind_sc(String wind_sc) {
+                this.wind_sc = wind_sc;
+            }
 
-                public void setDeg(String deg) {
-                    this.deg = deg;
-                }
+            public String getWind_spd() {
+                return wind_spd;
+            }
 
-                public String getDir() {
-                    return dir;
-                }
+            public void setWind_spd(String wind_spd) {
+                this.wind_spd = wind_spd;
+            }
+        }
 
-                public void setDir(String dir) {
-                    this.dir = dir;
-                }
+        public static class UpdateBean {
+            /**
+             * loc : 2017-11-03 13:51
+             * utc : 2017-11-03 05:51
+             */
 
-                public String getSc() {
-                    return sc;
-                }
+            private String loc;
+            private String utc;
 
-                public void setSc(String sc) {
-                    this.sc = sc;
-                }
+            public String getLoc() {
+                return loc;
+            }
 
-                public String getSpd() {
-                    return spd;
-                }
+            public void setLoc(String loc) {
+                this.loc = loc;
+            }
 
-                public void setSpd(String spd) {
-                    this.spd = spd;
-                }
+            public String getUtc() {
+                return utc;
+            }
+
+            public void setUtc(String utc) {
+                this.utc = utc;
             }
         }
     }

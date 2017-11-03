@@ -51,6 +51,6 @@ public interface MainContract {
         /**
          * 拉取天气权限
          */
-        void getWeather(String city);
+        void getWeather(String location);
     }
 }
