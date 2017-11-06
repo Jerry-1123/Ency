@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -8,12 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/txtcolor</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <!--设置切换动画-->
         <item name="android:windowAnimationStyle">@style/WindowAnimTheme</item>
         <!--ActionBarDrawerToggle设置颜色-->
         <item name="colorControlNormal">@color/white</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <!--Activity切换动画-->
@@ -22,6 +22,11 @@
         <item name="android:activityOpenExitAnimation">@anim/open_exit</item>
         <item name="android:activityCloseEnterAnimation">@anim/pop_enter</item>
         <item name="android:activityCloseExitAnimation">@anim/pop_exit</item>
+    </style>
+
+    <style name="TextToolbarTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#00000000</item>
     </style>
 
 </resources>
