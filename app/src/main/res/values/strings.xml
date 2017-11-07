@@ -8,11 +8,31 @@
     <string name="app_exit">应用退出</string>
     <string name="app_exit_confirm">是否确认退出应用？</string>
     <string name="app_update">新版本</string>
+    <string name="start_update">开始更新啦~</string>
     <string name="update">更新</string>
     <string name="update_msg">已经是最新版本~</string>
-    // drawer
+    <string name="copy">复制链接</string>
+    <string name="copy_msg">已经复制链接地址到剪切板！</string>
+    <string name="browser">浏览器中打开</string>
+    <!--drawer-->
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
     <string name="about">关于</string>
     <string name="one">每日一文</string>
+    <!--about-->
+    <string name="summary">概述</string>
+    <string name="thanks">感谢</string>
+    <string name="version">当前版本：</string>
+    <string name="github">项目主页</string>
+    <string name="advise">意见反馈</string>
+    <string name="check_update">检查更新</string>
+    <string name="share_app">应用分享</string>
+    <string name="about1">• RxJava - github.com/ReactiveX/RxJava</string>
+    <string name="about2">• Retrofit - github.com/square/retrofit</string>
+    <string name="about3">• Dagger2 - github.com/google/dagger</string>
+    <string name="about4">• Glide - github.com/bumptech/glide</string>
+    <string name="about5">• LeakCanary - github.com/square/leakcanary</string>
+    <string name="about6">• ButterKnife - github.com/JakeWharton/butterknife</string>
+    <string name="about7">• 和风天气提供天气数据</string>
+    <string name="about8">• 高德定位提供定位服务</string>
 </resources>

@@ -202,7 +202,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            showMsg("开始更新啦~");
+                            showMsg(getResources().getString(R.string.start_update));
                             startService(new Intent(mContext, UpdateService.class));
                         }
                     })

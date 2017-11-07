@@ -1,8 +1,10 @@
 package com.xxx.ency.di.module;
 
 import com.xxx.ency.di.qualifier.BingURL;
+import com.xxx.ency.di.qualifier.UpdateURL;
 import com.xxx.ency.di.scope.ActivityScope;
 import com.xxx.ency.model.http.BingApi;
+import com.xxx.ency.model.http.UpdateApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -34,5 +36,23 @@ public class AboutActivityModule {
     @ActivityScope
     BingApi provideBingApi(@BingURL Retrofit retrofit) {
         return retrofit.create(BingApi.class);
+    }
+
+    @UpdateURL
+    @Provides
+    @ActivityScope
+    Retrofit provideUpdateRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return builder
+                .baseUrl(UpdateApi.HOST)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @ActivityScope
+    UpdateApi provideUpdateApi(@UpdateURL Retrofit retrofit) {
+        return retrofit.create(UpdateApi.class);
     }
 }

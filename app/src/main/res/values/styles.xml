@@ -7,13 +7,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/txtcolor</item>
-        <item name="android:typeface">monospace</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <!--设置切换动画-->
         <item name="android:windowAnimationStyle">@style/WindowAnimTheme</item>
         <!--ActionBarDrawerToggle设置颜色-->
         <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Main">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <!--Activity切换动画-->

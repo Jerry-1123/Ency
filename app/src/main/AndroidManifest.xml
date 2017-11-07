@@ -25,9 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--主页-->
         <activity
             android:name="com.xxx.ency.view.main.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +37,15 @@
             </intent-filter>
         </activity>
 
+        <!--关于-->
         <activity
             android:name=".view.about.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main" />
+
+        <!--Web页-->
+        <activity
+            android:name=".view.web.WebActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".view.main.UpdateService" />

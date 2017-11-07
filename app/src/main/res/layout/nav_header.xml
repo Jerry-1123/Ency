@@ -22,6 +22,7 @@
             android:layout_marginLeft="20dp"
             android:textColor="@color/white"
             android:textSize="45sp"
+            android:typeface="monospace"
             tools:text="18°" />
 
         <LinearLayout
@@ -52,7 +53,6 @@
             android:id="@+id/img_weather"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
-            tools:background="@drawable/ic_sunny" />
+            android:layout_marginLeft="20dp" />
     </LinearLayout>
 </RelativeLayout>
