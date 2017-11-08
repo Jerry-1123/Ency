@@ -101,16 +101,15 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
             // 上拉加载后可以下拉刷新
             swipeRefreshLayout.setEnabled(true);
         }
-        if (weiXinBean.getNewslist().size() == PAGE_SIZE) {
-            weiXinAdapter.loadMoreComplete();
-        } else if (weiXinBean.getNewslist().size() < PAGE_SIZE) {
-            weiXinAdapter.loadMoreEnd();
-            return;
-        }
         if (page == 1) {
             weiXinAdapter.setNewData(weiXinBean.getNewslist());
         } else {
             weiXinAdapter.addData(weiXinBean.getNewslist());
+        }
+        if (weiXinBean.getNewslist().size() == PAGE_SIZE) {
+            weiXinAdapter.loadMoreComplete();
+        } else if (weiXinBean.getNewslist().size() < PAGE_SIZE) {
+            weiXinAdapter.loadMoreEnd();
         }
     }
 
