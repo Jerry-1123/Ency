@@ -4,9 +4,9 @@
         android:id="@+id/group1"
         android:checkableBehavior="all">
         <item
-            android:id="@+id/item_toutiao"
+            android:id="@+id/item_weixin"
             android:icon="@drawable/ic_tip"
-            android:title="头条" />
+            android:title="@string/weixin" />
         <item
             android:id="@+id/item_one"
             android:icon="@drawable/ic_tip"

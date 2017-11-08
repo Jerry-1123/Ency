@@ -20,6 +20,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 
 /**
+ * 每日一文
  * Created by xiarh on 2017/11/1.
  */
 

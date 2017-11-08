@@ -19,6 +19,7 @@
     <string name="drawer_close">关闭</string>
     <string name="about">关于</string>
     <string name="one">每日一文</string>
+    <string name="weixin">微信精选</string>
     <!--about-->
     <string name="summary">概述</string>
     <string name="thanks">感谢</string>

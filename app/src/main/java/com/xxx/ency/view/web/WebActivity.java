@@ -56,7 +56,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     protected void initialize() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.black));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(this);
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {

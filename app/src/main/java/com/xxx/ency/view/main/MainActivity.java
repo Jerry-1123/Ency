@@ -39,6 +39,10 @@ import com.xxx.ency.util.AppExitUtil;
 import com.xxx.ency.util.WeatherUtil;
 import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.one.OneFragment;
+import com.xxx.ency.view.weixin.WeiXinFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -80,6 +84,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
             .priority(Priority.HIGH)
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
+    private WeiXinFragment weiXinFragment;
     private OneFragment oneFragment;
 
     @Override
@@ -174,14 +179,15 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     }
 
     private void initFragment() {
+        weiXinFragment = new WeiXinFragment();
         oneFragment = new OneFragment();
-        loadMultipleRootFragment(R.id.main_content, 0, oneFragment);
+        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return AppExitUtil.exitApp(this);
+            return AppExitUtil.exitApp(this, mToolbar);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -266,11 +272,14 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_toutiao:
-                setTitle("头条");
+            case R.id.item_weixin:
+                setTitle("微信精选");
+                showHideFragment(weiXinFragment);
                 break;
             case R.id.item_one:
-                setTitle("2017/11/01");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                setTitle(formatter.format(new Date()));
+                showHideFragment(oneFragment);
                 break;
             case R.id.item_setting:
                 break;
