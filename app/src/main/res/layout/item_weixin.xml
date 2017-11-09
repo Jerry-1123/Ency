@@ -12,7 +12,7 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/weixin_image">
+        android:layout_toLeftOf="@+id/img_weixin">
 
         <TextView
             android:id="@+id/txt_weixin_title"
