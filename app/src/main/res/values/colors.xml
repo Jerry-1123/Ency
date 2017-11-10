@@ -8,4 +8,5 @@
     <color name="gray">#9b9b9b</color>
     <color name="txtcolor">#2c2c2c</color>
     <color name="linecolor">#f1f1f1</color>
+    <color name="txtcolor_gray">#7E7E7E</color>
 </resources>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +25,9 @@ import android.webkit.WebViewClient;
 
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
+import com.xxx.ency.config.EncyApplication;
+import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.util.SnackBarUtil;
-
-import java.lang.reflect.Method;
 
 import butterknife.BindView;
 
@@ -43,9 +44,21 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     @BindView(R.id.swipelayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    private String guid;
+
+    private String imageUrl;
+
+    private int type;
+
     private String url;
 
     private String title;
+
+    private boolean isShowLikeIcon;
+
+    private MenuItem menuItem;
+
+    private GreenDaoManager daoManager;
 
     @Override
     protected int getLayoutId() {
@@ -54,22 +67,28 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initialize() {
+        daoManager = EncyApplication.getAppComponent().getGreenDaoManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(this);
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
+            guid = bundle.getString("guid");
+            imageUrl = bundle.getString("imageUrl");
+            type = bundle.getInt("type");
             url = bundle.getString("url");
             title = bundle.getString("title");
+            isShowLikeIcon = bundle.getBoolean("isshow");
         }
         setTitle(title);
         initWebView();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         WebSettings settings = webView.getSettings();
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -79,7 +98,6 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         webView.getSettings().setGeolocationEnabled(true);
         webView.getSettings().setGeolocationDatabasePath(dir);
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return super.shouldOverrideUrlLoading(view, request);
@@ -103,7 +121,6 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {
-
             @Override
             public void onGeolocationPermissionsHidePrompt() {
                 super.onGeolocationPermissionsHidePrompt();
@@ -136,43 +153,20 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_web, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-        setIconEnable(menu, true);//让在overflow中的menuitem的icon显示
-        return super.onPrepareOptionsPanel(view, menu);
-    }
-
-    /**
-     * 利用反射机制调用MenuBuilder中的setOptionIconsVisable（），
-     * 如果是集成自AppCompatActivity则不行,需要在onPreareOptionPanel（）中调用该方法
-     *
-     * @param menu   该menu实质为MenuBuilder，该类实现了Menu接口
-     * @param enable enable为true时，菜单添加图标有效，enable为false时无效。因为4.0系统之后默认无效
-     */
-    private void setIconEnable(Menu menu, boolean enable) {
-        if (menu != null) {
-            try {
-                Class clazz = menu.getClass();
-                if (clazz.getSimpleName().equals("MenuBuilder")) {
-                    Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    //MenuBuilder实现Menu接口，创建菜单时，传进来的menu其实就是MenuBuilder对象(java的多态特征)
-                    m.invoke(menu, enable);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (isShowLikeIcon) {
+            getMenuInflater().inflate(R.menu.menu_web1, menu);
+            menuItem = menu.findItem(R.id.item_like);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_web2, menu);
         }
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.item_like:
+                break;
             case R.id.item_copy:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(url);

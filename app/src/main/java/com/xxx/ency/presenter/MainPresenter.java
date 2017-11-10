@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.xxx.ency.R;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.MainContract;

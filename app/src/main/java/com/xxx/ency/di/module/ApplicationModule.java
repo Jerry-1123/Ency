@@ -3,6 +3,7 @@ package com.xxx.ency.di.module;
 import android.content.Context;
 
 import com.xxx.ency.config.EncyApplication;
+import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.model.prefs.SharePrefManager;
 
 import javax.inject.Singleton;
@@ -33,5 +34,11 @@ public class ApplicationModule {
     @Singleton
     SharePrefManager provideSharePrefManager(Context context) {
         return new SharePrefManager(context);
+    }
+
+    @Provides
+    @Singleton
+    GreenDaoManager provideGreenDaoManager(Context context){
+        return new GreenDaoManager(context);
     }
 }

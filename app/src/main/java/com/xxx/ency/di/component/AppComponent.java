@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xxx.ency.di.module.ApplicationModule;
 import com.xxx.ency.di.module.HttpModule;
+import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.model.prefs.SharePrefManager;
 
 import javax.inject.Singleton;
@@ -27,5 +28,7 @@ public interface AppComponent {
     Retrofit.Builder getRetrofitBuilder();
 
     OkHttpClient getOkHttpClient();
+
+    GreenDaoManager getGreenDaoManager();
 
 }

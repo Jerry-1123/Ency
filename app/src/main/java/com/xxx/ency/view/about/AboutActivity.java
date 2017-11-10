@@ -6,19 +6,20 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
+import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.EncyApplication;
+import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.contract.AboutContract;
 import com.xxx.ency.di.component.DaggerAboutActivityComponent;
 import com.xxx.ency.di.module.AboutActivityModule;
 import com.xxx.ency.model.bean.BingBean;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
+import com.xxx.ency.util.WebUtil;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;
 
@@ -38,12 +39,6 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
     ImageView mImgAbout;
     @BindView(R.id.txt_version)
     TextView txtVersion;
-
-    private RequestOptions options = new RequestOptions()
-            .centerCrop()
-            .error(R.drawable.bg_about)
-            .priority(Priority.LOW)
-            .diskCacheStrategy(DiskCacheStrategy.NONE);
 
     @Override
     protected int getLayoutId() {
@@ -71,9 +66,12 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
 
     @Override
     public void showBingBean(BingBean bingBean) {
-        Glide.with(mContext)
-                .applyDefaultRequestOptions(options)
+        GlideApp.with(mContext)
                 .load(bingBean.getData().getOriginal_pic())
+                .centerCrop()
+                .error(R.drawable.bg_about)
+                .priority(Priority.LOW)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(mImgAbout);
     }
 
@@ -84,10 +82,8 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
 
     @OnClick(R.id.txt_github)
     public void onTxtGithubClicked() {
-        Intent intent = new Intent(mContext, WebActivity.class);
-        intent.putExtra("url","https://github.com/xiarunhao123/Ency");
-        intent.putExtra("title","项目主页");
-        startActivity(intent);
+        WebUtil.openUrl(mContext, "", "", Constants.TYPE_DEFAULT
+                , "https://github.com/xiarunhao123/Ency", "项目主页", false);
     }
 
     @OnClick(R.id.txt_email)

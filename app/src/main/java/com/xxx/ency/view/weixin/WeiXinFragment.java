@@ -1,18 +1,22 @@
 package com.xxx.ency.view.weixin;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPFragment;
+import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.contract.WeiXinContract;
 import com.xxx.ency.di.component.DaggerWeiXinFragmentComponent;
 import com.xxx.ency.di.module.WeiXinFragmentModule;
 import com.xxx.ency.model.bean.WeiXinBean;
 import com.xxx.ency.presenter.WeiXinPresenter;
+import com.xxx.ency.util.WebUtil;
 import com.xxx.ency.view.weixin.adapter.WeiXinAdapter;
 
 import butterknife.BindView;
@@ -59,8 +63,17 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         mPresenter.getWeiXinData(PAGE_SIZE, page);
         weiXinAdapter = new WeiXinAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(weiXinAdapter);
         weiXinAdapter.setOnLoadMoreListener(this, recyclerView);
+        weiXinAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WeiXinBean.NewslistBean bean = (WeiXinBean.NewslistBean) adapter.getData().get(position);
+                WebUtil.openUrl(mContext, bean.getUrl(), bean.getPicUrl(), Constants.TYPE_WECHAT
+                        , bean.getUrl(), bean.getTitle(), true);//微信Item没有id，使用url作为guid
+            }
+        });
     }
 
     /**

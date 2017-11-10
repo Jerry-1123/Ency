@@ -22,13 +22,12 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.EncyApplication;
+import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.contract.MainContract;
 import com.xxx.ency.di.component.DaggerMainActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
@@ -79,11 +78,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     // 权限获取提示框
     private MaterialDialog dialog;
 
-    private RequestOptions options = new RequestOptions()
-            .centerCrop()
-            .priority(Priority.HIGH)
-            .diskCacheStrategy(DiskCacheStrategy.ALL);
-
     private WeiXinFragment weiXinFragment;
     private OneFragment oneFragment;
 
@@ -105,7 +99,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @Override
     protected void initialize() {
         setSupportActionBar(mToolbar);
-        setTitle("头条");
+        setTitle("微信精选");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -226,9 +220,11 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mTxtCity.setText(weatherBean.getHeWeather6().get(0).getBasic().getLocation());
         mTxtWeather.setText(weatherBean.getHeWeather6().get(0).getNow().getCond_txt() + " " + weatherBean.getHeWeather6().get(0).getNow().getWind_dir());
         mTextTemperature.setText(weatherBean.getHeWeather6().get(0).getNow().getTmp() + "°");
-        Glide.with(mContext)
-                .applyDefaultRequestOptions(options)
+        GlideApp.with(mContext)
                 .load(WeatherUtil.getImageUrl(weatherBean.getHeWeather6().get(0).getNow().getCond_code()))
+                .centerCrop()
+                .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mImgWeather);
     }
 
