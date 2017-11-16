@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.MainContract;
@@ -18,7 +19,6 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * Created by xiarh on 2017/9/25.
@@ -47,7 +47,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(updateApi.getVersionInfo(Constants.FIR_IM_API_TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ResourceSubscriber<UpdateBean>() {
+                .subscribeWith(new BaseSubscriber<UpdateBean>(context,mView) {
                     @Override
                     public void onNext(UpdateBean updateBean) {
                         if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
@@ -55,16 +55,6 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                         } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
                             mView.showUpdateDialog(null);
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 }));
     }
@@ -97,20 +87,10 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(weatherApi.getWeather(location, Constants.WEATHER_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ResourceSubscriber<WeatherBean>() {
+                .subscribeWith(new BaseSubscriber<WeatherBean>(context,mView) {
                     @Override
                     public void onNext(WeatherBean weatherBean) {
                         mView.showWeather(weatherBean);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 }));
     }

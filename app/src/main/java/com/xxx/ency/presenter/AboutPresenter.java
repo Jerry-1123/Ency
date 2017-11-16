@@ -3,6 +3,7 @@ package com.xxx.ency.presenter;
 import android.content.Context;
 
 import com.xxx.ency.R;
+import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.AboutContract;
@@ -16,7 +17,6 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * Created by xiarh on 2017/11/3.
@@ -42,20 +42,10 @@ public class AboutPresenter extends RxPresenter<AboutContract.View> implements A
         addSubscribe(bingApi.getBingBean("800", "600", "json")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ResourceSubscriber<BingBean>() {
+                .subscribeWith(new BaseSubscriber<BingBean>(context, mView) {
                     @Override
                     public void onNext(BingBean bingBean) {
                         mView.showBingBean(bingBean);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 }));
     }
@@ -65,7 +55,7 @@ public class AboutPresenter extends RxPresenter<AboutContract.View> implements A
         addSubscribe(updateApi.getVersionInfo(Constants.FIR_IM_API_TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ResourceSubscriber<UpdateBean>() {
+                .subscribeWith(new BaseSubscriber<UpdateBean>(context,mView) {
                     @Override
                     public void onNext(UpdateBean updateBean) {
                         if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
@@ -74,16 +64,6 @@ public class AboutPresenter extends RxPresenter<AboutContract.View> implements A
                         } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
                             mView.showMsg(context.getResources().getString(R.string.update_msg));
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 }));
     }

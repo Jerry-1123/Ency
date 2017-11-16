@@ -1,5 +1,8 @@
 package com.xxx.ency.presenter;
 
+import android.content.Context;
+
+import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.WeiXinContract;
@@ -10,7 +13,6 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * Created by xiarh on 2017/11/8.
@@ -20,9 +22,12 @@ public class WeiXinPresenter extends RxPresenter<WeiXinContract.View> implements
 
     private WeiXinApi weiXinApi;
 
+    private Context context;
+
     @Inject
-    public WeiXinPresenter(WeiXinApi weiXinApi) {
+    public WeiXinPresenter(WeiXinApi weiXinApi,Context context) {
         this.weiXinApi = weiXinApi;
+        this.context = context;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class WeiXinPresenter extends RxPresenter<WeiXinContract.View> implements
         addSubscribe(weiXinApi.getWeiXin(Constants.WECHAT_KEY, pagesize, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ResourceSubscriber<WeiXinBean>() {
+                .subscribeWith(new BaseSubscriber<WeiXinBean>(context, mView) {
                     @Override
                     public void onNext(WeiXinBean weiXinBean) {
                         mView.showWeiXinData(weiXinBean);
@@ -38,12 +43,8 @@ public class WeiXinPresenter extends RxPresenter<WeiXinContract.View> implements
 
                     @Override
                     public void onError(Throwable t) {
+                        super.onError(t);
                         mView.failGetData();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 }));
     }

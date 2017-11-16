@@ -14,6 +14,7 @@
     <string name="copy">复制链接</string>
     <string name="copy_msg">已经复制链接地址到剪切板！</string>
     <string name="browser">浏览器中打开</string>
+    <string name="no_network">当前网络不可用，请检查网络情况</string>
     <!--drawer-->
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>

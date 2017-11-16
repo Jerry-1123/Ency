@@ -111,10 +111,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mTextTemperature = mHeaderView.findViewById(R.id.txt_temperature);
         mPresenter.checkPermissions();
         initDialog();
-        initFragment();
-        //设置选中
-        mNavView.getMenu().getItem(0).setChecked(true);
-        mNavView.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -243,6 +239,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
      */
     @Override
     public void getPermissionSuccess() {
+        initFragment();
+        //设置选中
+        mNavView.getMenu().getItem(0).setChecked(true);
+        mNavView.setNavigationItemSelectedListener(this);
         mPresenter.checkUpdate();
         initLocation();
     }

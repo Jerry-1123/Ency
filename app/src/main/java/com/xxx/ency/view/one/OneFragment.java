@@ -1,7 +1,5 @@
 package com.xxx.ency.view.one;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.TextView;
 
@@ -14,8 +12,6 @@ import com.xxx.ency.di.component.DaggerOneFragmentComponent;
 import com.xxx.ency.di.module.OneFragmentModule;
 import com.xxx.ency.model.bean.OneBean;
 import com.xxx.ency.presenter.OnePresenter;
-
-import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -34,8 +30,6 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
     TextView oneAuthor;
     @BindView(R.id.one_content)
     TextView oneContent;
-
-    private MyHandler mHandler;
 
     @Override
     protected void initInject() {
@@ -56,21 +50,15 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
-        mHandler = new MyHandler(this);
         mPresenter.getData(Constants.ONE_URL);
     }
 
     @Override
-    public void showOneBean(OneBean oneBean) {
-        Message msg = mHandler.obtainMessage();
-        msg.obj = oneBean;
-        mHandler.sendMessage(msg);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
+    public void showOneBean(OneBean bean) {
+        oneTitle.setText(bean.getTitle());
+        oneAuthor.setText(bean.getAuthor());
+        oneContent.setText(bean.getContent());
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -78,24 +66,31 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
         mPresenter.getData(Constants.ONE_URL);
     }
 
-    static class MyHandler extends Handler {
+//    private MyHandler mHandler;
 
-        private WeakReference<OneFragment> mOuter;
+//    Message msg = mHandler.obtainMessage();
+//    msg.obj =oneBean;
+//    mHandler.sendMessage(msg);
 
-        public MyHandler(OneFragment fragment) {
-            mOuter = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            OneFragment oneFragment = mOuter.get();
-            if (oneFragment != null) {
-                OneBean bean = (OneBean) msg.obj;
-                oneFragment.oneTitle.setText(bean.getTitle());
-                oneFragment.oneAuthor.setText(bean.getAuthor());
-                oneFragment.oneContent.setText(bean.getContent());
-                oneFragment.swipeRefreshLayout.setRefreshing(false);
-            }
-        }
-    }
+//    static class MyHandler extends Handler {
+//
+//        private WeakReference<OneFragment> mOuter;
+//
+//        public MyHandler(OneFragment fragment) {
+//            mOuter = new WeakReference<>(fragment);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            OneFragment oneFragment = mOuter.get();
+//            if (oneFragment != null) {
+//                OneBean bean = (OneBean) msg.obj;
+//                oneFragment.oneTitle.setText(bean.getTitle());
+//                oneFragment.oneAuthor.setText(bean.getAuthor());
+//                oneFragment.oneContent.setText(bean.getContent());
+//                oneFragment.swipeRefreshLayout.setRefreshing(false);
+//            }
+//        }
+//    }
+//    mHandler.removeCallbacksAndMessages(null);
 }
