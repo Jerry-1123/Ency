@@ -13,6 +13,8 @@ public interface BaseView {
 
     void showEmptyView();
 
+    void showErrorView();
+
     void startLoading();
 
     void stopLoading();

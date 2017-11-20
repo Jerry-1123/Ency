@@ -62,6 +62,11 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
     }
 
     @Override
+    public void failGetData() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.getData(Constants.ONE_URL);
     }

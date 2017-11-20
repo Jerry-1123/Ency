@@ -34,12 +34,12 @@ public abstract class BaseSubscriber<T> extends ResourceSubscriber<T> {
     }
 
     @Override
-    public void onComplete() {
-
+    public void onError(Throwable t) {
+        view.showError(t.getMessage());
     }
 
     @Override
-    public void onError(Throwable t) {
-        view.showError(t.getMessage());
+    public void onComplete() {
+
     }
 }

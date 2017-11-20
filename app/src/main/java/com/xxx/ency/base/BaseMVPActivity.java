@@ -49,6 +49,11 @@ public abstract class BaseMVPActivity<T extends BasePresenter> extends BaseActiv
     }
 
     @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
     public void startLoading() {
 
     }

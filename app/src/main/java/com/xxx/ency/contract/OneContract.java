@@ -19,6 +19,11 @@ public interface OneContract {
          */
         void showOneBean(OneBean oneBean);
 
+        /**
+         * 获取数据失败
+         */
+        void failGetData();
+
     }
 
     interface Presenter extends BasePresenter<View> {

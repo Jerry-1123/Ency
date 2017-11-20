@@ -49,6 +49,11 @@ public abstract class BaseMVPFragment<T extends BasePresenter> extends BaseFragm
     }
 
     @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
     public void startLoading() {
 
     }
