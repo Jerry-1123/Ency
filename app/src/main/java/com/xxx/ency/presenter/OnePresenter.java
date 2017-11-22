@@ -2,6 +2,7 @@ package com.xxx.ency.presenter;
 
 import android.content.Context;
 
+import com.xxx.ency.R;
 import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.contract.OneContract;

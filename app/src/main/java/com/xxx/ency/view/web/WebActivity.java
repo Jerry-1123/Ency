@@ -25,6 +25,7 @@ import android.webkit.WebViewClient;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
 import com.xxx.ency.config.EncyApplication;
+import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.util.SnackBarUtil;
 
@@ -58,6 +59,8 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     private MenuItem menuItem;
 
     private GreenDaoManager daoManager;
+
+    private boolean isLiked;
 
     @Override
     protected int getLayoutId() {
@@ -155,6 +158,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         if (isShowLikeIcon) {
             getMenuInflater().inflate(R.menu.menu_web1, menu);
             menuItem = menu.findItem(R.id.item_like);
+            setLikeState(daoManager.queryByGuid(guid));
         } else {
             getMenuInflater().inflate(R.menu.menu_web2, menu);
         }
@@ -165,6 +169,23 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_like:
+                if (isLiked) {
+                    item.setIcon(R.drawable.ic_notlike);
+                    daoManager.deleteByGuid(guid);
+                    isLiked = false;
+                } else {
+                    item.setIcon(R.drawable.ic_like);
+                    LikeBean bean = new LikeBean();
+                    bean.setId(null);
+                    bean.setGuid(guid);
+                    bean.setImageUrl(imageUrl);
+                    bean.setTitle(title);
+                    bean.setUrl(url);
+                    bean.setType(type);
+                    bean.setTime(System.currentTimeMillis());
+                    daoManager.insert(bean);
+                    isLiked = true;
+                }
                 break;
             case R.id.item_copy:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -178,5 +199,15 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setLikeState(boolean state) {
+        if (state) {
+            menuItem.setIcon(R.drawable.ic_like);
+            isLiked = true;
+        } else {
+            menuItem.setIcon(R.drawable.ic_notlike);
+            isLiked = false;
+        }
     }
 }

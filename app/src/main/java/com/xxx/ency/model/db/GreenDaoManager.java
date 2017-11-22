@@ -66,12 +66,17 @@ public class GreenDaoManager {
      * @param guid
      * @return
      */
-    public LikeBean queryByGuid(String guid) {
-        return getLikeBeanDao()
+    public boolean queryByGuid(String guid) {
+        LikeBean bean = getLikeBeanDao()
                 .queryBuilder()
                 .where(LikeBeanDao.Properties.Guid.eq(guid))
                 .build()
                 .unique();
+        if (null == bean) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

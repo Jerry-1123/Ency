@@ -277,6 +277,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 setTitle(formatter.format(new Date()));
                 showHideFragment(oneFragment);
                 break;
+            case R.id.item_my_collection:
+                break;
             case R.id.item_setting:
                 break;
             case R.id.item_about:

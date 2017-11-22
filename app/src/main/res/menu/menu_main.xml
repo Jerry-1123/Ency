@@ -11,6 +11,10 @@
             android:id="@+id/item_one"
             android:icon="@drawable/ic_tip"
             android:title="@string/one" />
+        <item
+            android:id="@+id/item_my_collection"
+            android:icon="@drawable/ic_tip"
+            android:title="@string/mycollection"/>
     </group>
     <group
         android:id="@+id/group2"

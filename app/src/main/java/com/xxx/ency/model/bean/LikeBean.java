@@ -13,9 +13,8 @@ import org.greenrobot.greendao.annotation.Generated;
 public class LikeBean {
 
     @Id
-    private String id;
+    private Long id;
 
-    @Unique
     private String guid;
 
     private String imageUrl;
@@ -28,9 +27,9 @@ public class LikeBean {
 
     private long time;
 
-    @Generated(hash = 1132733219)
-    public LikeBean(String id, String guid, String imageUrl, String title,
-            String url, int type, long time) {
+    @Generated(hash = 693919166)
+    public LikeBean(Long id, String guid, String imageUrl, String title, String url,
+            int type, long time) {
         this.id = id;
         this.guid = guid;
         this.imageUrl = imageUrl;
@@ -44,11 +43,11 @@ public class LikeBean {
     public LikeBean() {
     }
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,6 +98,5 @@ public class LikeBean {
     public void setTime(long time) {
         this.time = time;
     }
-
 
 }

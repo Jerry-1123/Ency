@@ -15,7 +15,7 @@ import com.xxx.ency.model.bean.LikeBean;
 /** 
  * DAO for table "LIKE_BEAN".
 */
-public class LikeBeanDao extends AbstractDao<LikeBean, String> {
+public class LikeBeanDao extends AbstractDao<LikeBean, Long> {
 
     public static final String TABLENAME = "LIKE_BEAN";
 
@@ -24,7 +24,7 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, String.class, "id", true, "ID");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Guid = new Property(1, String.class, "guid", false, "GUID");
         public final static Property ImageUrl = new Property(2, String.class, "imageUrl", false, "IMAGE_URL");
         public final static Property Title = new Property(3, String.class, "title", false, "TITLE");
@@ -46,8 +46,8 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"LIKE_BEAN\" (" + //
-                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
-                "\"GUID\" TEXT UNIQUE ," + // 1: guid
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"GUID\" TEXT," + // 1: guid
                 "\"IMAGE_URL\" TEXT," + // 2: imageUrl
                 "\"TITLE\" TEXT," + // 3: title
                 "\"URL\" TEXT," + // 4: url
@@ -65,9 +65,9 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
     protected final void bindValues(DatabaseStatement stmt, LikeBean entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
+        Long id = entity.getId();
         if (id != null) {
-            stmt.bindString(1, id);
+            stmt.bindLong(1, id);
         }
  
         String guid = entity.getGuid();
@@ -97,9 +97,9 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
     protected final void bindValues(SQLiteStatement stmt, LikeBean entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
+        Long id = entity.getId();
         if (id != null) {
-            stmt.bindString(1, id);
+            stmt.bindLong(1, id);
         }
  
         String guid = entity.getGuid();
@@ -126,14 +126,14 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
     }
 
     @Override
-    public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public LikeBean readEntity(Cursor cursor, int offset) {
         LikeBean entity = new LikeBean( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // guid
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // imageUrl
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // title
@@ -146,7 +146,7 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
      
     @Override
     public void readEntity(Cursor cursor, LikeBean entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setGuid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setImageUrl(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setTitle(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -156,12 +156,13 @@ public class LikeBeanDao extends AbstractDao<LikeBean, String> {
      }
     
     @Override
-    protected final String updateKeyAfterInsert(LikeBean entity, long rowId) {
-        return entity.getId();
+    protected final Long updateKeyAfterInsert(LikeBean entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public String getKey(LikeBean entity) {
+    public Long getKey(LikeBean entity) {
         if(entity != null) {
             return entity.getId();
         } else {
