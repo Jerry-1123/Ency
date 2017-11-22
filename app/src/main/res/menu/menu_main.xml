@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_tip"
             android:title="@string/one" />
         <item
-            android:id="@+id/item_my_collection"
+            android:id="@+id/item_like"
             android:icon="@drawable/ic_tip"
             android:title="@string/mycollection"/>
     </group>
