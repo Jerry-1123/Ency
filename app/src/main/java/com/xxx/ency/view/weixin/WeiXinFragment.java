@@ -16,7 +16,7 @@ import com.xxx.ency.di.component.DaggerWeiXinFragmentComponent;
 import com.xxx.ency.di.module.WeiXinFragmentModule;
 import com.xxx.ency.model.bean.WeiXinBean;
 import com.xxx.ency.presenter.WeiXinPresenter;
-import com.xxx.ency.util.WebUtil;
+import com.xxx.ency.view.web.WebActivity;
 import com.xxx.ency.view.weixin.adapter.WeiXinAdapter;
 
 import butterknife.BindView;
@@ -70,8 +70,15 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 WeiXinBean.NewslistBean bean = (WeiXinBean.NewslistBean) adapter.getData().get(position);
-                WebUtil.openUrl(mContext, bean.getUrl(), bean.getPicUrl(), Constants.TYPE_WECHAT
-                        , bean.getUrl(), bean.getTitle(), true);//微信Item没有id，使用url作为guid
+                WebActivity.open(new WebActivity.Builder()
+                        .setGuid(bean.getUrl())//微信Item没有id，使用url作为guid
+                        .setImgUrl(bean.getPicUrl())
+                        .setType(Constants.TYPE_WEIXIN)
+                        .setUrl(bean.getUrl())
+                        .setTitle(bean.getTitle())
+                        .setShowLikeIcon(true)
+                        .setContext(mContext)
+                );
             }
         });
     }

@@ -32,7 +32,7 @@ public class WeiXinPresenter extends RxPresenter<WeiXinContract.View> implements
 
     @Override
     public void getWeiXinData(int pagesize,int page) {
-        addSubscribe(weiXinApi.getWeiXin(Constants.WECHAT_KEY, pagesize, page)
+        addSubscribe(weiXinApi.getWeiXin(Constants.WEIXIN_KEY, pagesize, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<WeiXinBean>(context, mView) {

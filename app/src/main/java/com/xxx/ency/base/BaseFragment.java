@@ -34,6 +34,8 @@ public abstract class BaseFragment extends SupportFragment{
 
     protected abstract void initialize();
 
+    protected boolean isInited = false;
+
     @Override
     public void onAttach(Context context) {
         mActivity = (Activity) context;
@@ -52,6 +54,7 @@ public abstract class BaseFragment extends SupportFragment{
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+        isInited = true;
         initialize();
     }
 

@@ -2,7 +2,6 @@ package com.xxx.ency.di.component;
 
 import com.xxx.ency.di.module.MainActivityModule;
 import com.xxx.ency.di.scope.ActivityScope;
-import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.main.MainActivity;
 
 import dagger.Component;

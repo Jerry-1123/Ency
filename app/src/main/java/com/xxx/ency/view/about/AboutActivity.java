@@ -19,7 +19,6 @@ import com.xxx.ency.di.module.AboutActivityModule;
 import com.xxx.ency.model.bean.BingBean;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
-import com.xxx.ency.util.WebUtil;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;
 
@@ -82,8 +81,15 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
 
     @OnClick(R.id.txt_github)
     public void onTxtGithubClicked() {
-        WebUtil.openUrl(mContext, "", "", Constants.TYPE_DEFAULT
-                , "https://github.com/xiarunhao123/Ency", "项目主页", false);
+        WebActivity.open(new WebActivity.Builder()
+                .setGuid("")
+                .setImgUrl("")
+                .setType(Constants.TYPE_DEFAULT)
+                .setUrl("https://github.com/xiarunhao123/Ency")
+                .setTitle("项目主页")
+                .setShowLikeIcon(false)
+                .setContext(mContext)
+        );
     }
 
     @OnClick(R.id.txt_email)

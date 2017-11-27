@@ -8,7 +8,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -35,8 +34,11 @@ import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
+import com.xxx.ency.util.LogUtil;
 import com.xxx.ency.util.WeatherUtil;
 import com.xxx.ency.view.about.AboutActivity;
+import com.xxx.ency.view.gank.GankMainFragment;
+import com.xxx.ency.view.like.LikeFragment;
 import com.xxx.ency.view.one.OneFragment;
 import com.xxx.ency.view.weixin.WeiXinFragment;
 
@@ -80,6 +82,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     private WeiXinFragment weiXinFragment;
     private OneFragment oneFragment;
+    private LikeFragment likeFragment;
+    private GankMainFragment gankFragment;
 
     @Override
     protected int getLayoutId() {
@@ -171,7 +175,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     private void initFragment() {
         weiXinFragment = new WeiXinFragment();
         oneFragment = new OneFragment();
-        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment);
+        likeFragment = new LikeFragment();
+        gankFragment = new GankMainFragment();
+        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, likeFragment, gankFragment);
     }
 
     @Override
@@ -277,7 +283,13 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 setTitle(formatter.format(new Date()));
                 showHideFragment(oneFragment);
                 break;
+            case R.id.item_gank:
+                setTitle("干货热门");
+                showHideFragment(gankFragment);
+                break;
             case R.id.item_like:
+                setTitle("我的收藏");
+                showHideFragment(likeFragment);
                 break;
             case R.id.item_setting:
                 break;
@@ -297,7 +309,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
             }
             //定位失败，通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息
             else {
-                Log.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
+                LogUtil.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
             }
         }
     }

@@ -48,7 +48,11 @@ public class GreenDaoManager {
      * @return
      */
     public List<LikeBean> queryAll() {
-        return getLikeBeanDao().loadAll();
+        return getLikeBeanDao()
+                .queryBuilder()
+                .orderDesc(LikeBeanDao.Properties.Time)
+                .build()
+                .list();
     }
 
     /**
@@ -91,5 +95,14 @@ public class GreenDaoManager {
         if (null != bean) {
             getLikeBeanDao().delete(bean);
         }
+    }
+
+    /**
+     * 删除
+     *
+     * @param likeBean
+     */
+    public void delete(LikeBean likeBean) {
+        getLikeBeanDao().delete(likeBean);
     }
 }

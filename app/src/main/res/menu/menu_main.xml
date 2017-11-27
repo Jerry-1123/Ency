@@ -12,9 +12,13 @@
             android:icon="@drawable/ic_tip"
             android:title="@string/one" />
         <item
+            android:id="@+id/item_gank"
+            android:icon="@drawable/ic_tip"
+            android:title="@string/gank" />
+        <item
             android:id="@+id/item_like"
             android:icon="@drawable/ic_tip"
-            android:title="@string/mycollection"/>
+            android:title="@string/mylike" />
     </group>
     <group
         android:id="@+id/group2"

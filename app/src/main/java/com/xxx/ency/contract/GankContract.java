@@ -2,22 +2,22 @@ package com.xxx.ency.contract;
 
 import com.xxx.ency.base.BasePresenter;
 import com.xxx.ency.base.BaseView;
-import com.xxx.ency.model.bean.WeiXinBean;
+import com.xxx.ency.model.bean.GankBean;
 
 /**
- * Created by xiarh on 2017/11/8.
+ * Created by xiarh on 2017/11/27.
  */
 
-public interface WeiXinContract {
+public interface GankContract {
 
     interface View extends BaseView {
 
         /**
          * 成功获取数据
          *
-         * @param weiXinBean
+         * @param gankBean
          */
-        void showWeiXinData(WeiXinBean weiXinBean);
+        void showGankData(GankBean gankBean);
 
         /**
          * 获取数据失败
@@ -28,11 +28,12 @@ public interface WeiXinContract {
     interface Presenter extends BasePresenter<View> {
 
         /**
-         * 获取微信数据
+         * 获取干活数据
          *
-         * @param pagesize
+         * @param type
+         * @param size
          * @param page
          */
-        void getWeiXinData(int pagesize, int page);
+        void getGankData(String type, int size, int page);
     }
 }

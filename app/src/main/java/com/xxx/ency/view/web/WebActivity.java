@@ -1,12 +1,15 @@
 package com.xxx.ency.view.web;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
@@ -209,5 +212,66 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
             menuItem.setIcon(R.drawable.ic_notlike);
             isLiked = false;
         }
+    }
+
+    public static class Builder {
+
+        private String guid;
+        private String imageUrl;
+        private int type;
+        private String url;
+        private String title;
+        private boolean isShowLikeIcon;
+        private Context context;
+
+        public Builder() {
+
+        }
+
+        public Builder setGuid(String guid) {
+            this.guid = guid;
+            return this;
+        }
+
+        public Builder setImgUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Builder setType(int type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setShowLikeIcon(boolean isShowLikeIcon) {
+            this.isShowLikeIcon = isShowLikeIcon;
+            return this;
+        }
+
+        public Builder setContext(Context context) {
+            this.context = context;
+            return this;
+        }
+    }
+
+    public static void open(Builder builder) {
+            Intent intent = new Intent(builder.context, WebActivity.class);
+            intent.putExtra("guid", builder.guid);
+            intent.putExtra("imageUrl", builder.imageUrl);
+            intent.putExtra("type", builder.type);
+            intent.putExtra("url", builder.url);
+            intent.putExtra("title", builder.title);
+            intent.putExtra("isshow", builder.isShowLikeIcon);
+            builder.context.startActivity(intent);
     }
 }
