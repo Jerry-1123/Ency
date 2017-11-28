@@ -177,7 +177,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         oneFragment = new OneFragment();
         likeFragment = new LikeFragment();
         gankFragment = new GankMainFragment();
-        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, likeFragment, gankFragment);
+        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, gankFragment, likeFragment);
     }
 
     @Override

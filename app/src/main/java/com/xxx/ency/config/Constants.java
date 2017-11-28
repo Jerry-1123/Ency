@@ -33,4 +33,6 @@ public class Constants {
     public static final int TYPE_DEFAULT = 0;
 
     public static final int TYPE_WEIXIN = 1;
+
+    public static final int TYPE_GANK = 2;
 }

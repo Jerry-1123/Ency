@@ -28,13 +28,16 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
         if (item.getType() == Constants.TYPE_WEIXIN) {
             helper.setText(R.id.txt_like_type, R.string.weixin);
         }
+        else if(item.getType() == Constants.TYPE_GANK){
+            helper.setText(R.id.txt_like_type, R.string.gank);
+        }
         helper.setText(R.id.txt_like_date, DateUtil.LongToString(item.getTime()));
         GlideApp.with(mContext)
                 .load(item.getImageUrl())
                 .centerCrop()
-                .placeholder(R.drawable.icon_default)
+                .placeholder(R.drawable.ic_ali)
                 .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into((ImageView) helper.getView(R.id.img_like));
     }
 }

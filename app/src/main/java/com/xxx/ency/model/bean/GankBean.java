@@ -1,5 +1,7 @@
 package com.xxx.ency.model.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 
 /**
@@ -25,6 +27,13 @@ public class GankBean {
     }
 
     public List<ResultsBean> getResults() {
+        for (ResultsBean bean : results) {
+            if (bean.getImages() == null) {
+                bean.setItemType(ResultsBean.TEXT);
+            } else {
+                bean.setItemType(ResultsBean.IMG);
+            }
+        }
         return results;
     }
 
@@ -32,7 +41,7 @@ public class GankBean {
         this.results = results;
     }
 
-    public static class ResultsBean {
+    public static class ResultsBean implements MultiItemEntity {
         /**
          * _id : 599a482a421aa901c85e5fa1
          * createdAt : 2017-08-21T10:40:42.831Z
@@ -46,6 +55,9 @@ public class GankBean {
          * who : S
          */
 
+        public static final int TEXT = 1;
+        public static final int IMG = 2;
+
         private String _id;
         private String createdAt;
         private String desc;
@@ -56,6 +68,7 @@ public class GankBean {
         private boolean used;
         private String who;
         private List<String> images;
+        private int itemType;
 
         public String get_id() {
             return _id;
@@ -135,6 +148,15 @@ public class GankBean {
 
         public void setImages(List<String> images) {
             this.images = images;
+        }
+
+        public void setItemType(int itemType) {
+            this.itemType = itemType;
+        }
+
+        @Override
+        public int getItemType() {
+            return itemType;
         }
     }
 }

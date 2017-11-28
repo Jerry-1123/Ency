@@ -1,15 +1,12 @@
 package com.xxx.ency.view.web;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
@@ -212,6 +209,17 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
             menuItem.setIcon(R.drawable.ic_notlike);
             isLiked = false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.setWebChromeClient(null);
+        webView.setWebViewClient(null);
+        webView.getSettings().setJavaScriptEnabled(false);
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.removeAllViews();
     }
 
     public static class Builder {

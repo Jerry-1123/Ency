@@ -38,18 +38,18 @@ public class GankMainFragment extends BaseFragment {
     @Override
     protected void initialize() {
         types.add("Android");
-//        types.add("IOS");
-//        types.add("前端");
-//        types.add("拓展资源");
-//        types.add("瞎推荐");
+        types.add("IOS");
+        types.add("前端");
+        types.add("拓展资源");
+        types.add("瞎推荐");
 //        types.add("福利");
         fragments.add(GankFragment.newInstance("Android"));
-//        fragments.add(GankFragment.newInstance("iOS"));
-//        fragments.add(GankFragment.newInstance("前端"));
-//        fragments.add(GankFragment.newInstance("拓展资源"));
-//        fragments.add(GankFragment.newInstance("瞎推荐"));
+        fragments.add(GankFragment.newInstance("iOS"));
+        fragments.add(GankFragment.newInstance("前端"));
+        fragments.add(GankFragment.newInstance("拓展资源"));
+        fragments.add(GankFragment.newInstance("瞎推荐"));
 //        fragments.add(GankFragment.newInstance("福利"));
-        titleAdapter = new TitleAdapter(getFragmentManager(), fragments, types);
+        titleAdapter = new TitleAdapter(getChildFragmentManager(), fragments, types);
         viewPager.setAdapter(titleAdapter);
         tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tablayout.setupWithViewPager(viewPager);

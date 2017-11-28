@@ -48,6 +48,11 @@
             android:name=".view.web.WebActivity"
             android:screenOrientation="portrait" />
 
+        <!--图片详情-->
+        <activity
+            android:name=".view.gank.ImageActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".view.main.UpdateService" />
 
         <provider

@@ -28,9 +28,9 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
         GlideApp.with(mContext)
                 .load(item.getPicUrl())
                 .centerCrop()
-                .placeholder(R.drawable.icon_default)
+                .placeholder(R.drawable.ic_ali)
                 .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into((ImageView) helper.getView(R.id.img_weixin));
     }
 }
