@@ -51,7 +51,8 @@
         <!--图片详情-->
         <activity
             android:name=".view.gank.ImageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageTheme" />
 
         <service android:name=".view.main.UpdateService" />
 

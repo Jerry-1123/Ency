@@ -108,6 +108,6 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.9.4.5') {
         exclude group: 'com.android.support'
     }
-    compile 'com.stone.vega.library:VegaLayoutManager:1.0.2'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    compile 'com.github.chrisbanes:PhotoView:2.1.3'
 }

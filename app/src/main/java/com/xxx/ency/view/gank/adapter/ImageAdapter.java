@@ -11,6 +11,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
 import com.xxx.ency.config.GlideApp;
+import com.xxx.ency.view.gank.ImageActivity;
 
 import java.util.List;
 
@@ -45,12 +46,12 @@ public class ImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         final ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         GlideApp.with(context)
-                .asDrawable()
+                .asBitmap()
                 .load(imgs.get(position))
                 .fitCenter()
                 .placeholder(R.drawable.ic_ali)
@@ -60,7 +61,8 @@ public class ImageAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ImageAdapter.class);
+                Intent intent = new Intent(context, ImageActivity.class);
+                intent.putExtra("imgurl", imgs.get(position));
                 context.startActivity(intent);
             }
         });

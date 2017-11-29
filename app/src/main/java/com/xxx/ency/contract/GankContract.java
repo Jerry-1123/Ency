@@ -28,7 +28,7 @@ public interface GankContract {
     interface Presenter extends BasePresenter<View> {
 
         /**
-         * 获取干活数据
+         * 获取干货数据
          *
          * @param type
          * @param size
