@@ -141,14 +141,12 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
             swipeRefreshLayout.setEnabled(true);
         }
         if (page == 1) {
-//            resultsBeans.clear();
-//            resultsBeans.addAll(gankBean.getResults());
-            gankAdapter.setNewData(gankBean.getResults());
+            resultsBeans.clear();
+            resultsBeans.addAll(gankBean.getResults());
         } else {
-//            resultsBeans.addAll(gankBean.getResults());
-            gankAdapter.addData(gankBean.getResults());
+            resultsBeans.addAll(gankBean.getResults());
         }
-//        gankAdapter.notifyDataSetChanged();
+        gankAdapter.notifyDataSetChanged();
         if (gankBean.getResults().size() == PAGE_SIZE) {
             gankAdapter.loadMoreComplete();
         } else if (gankBean.getResults().size() < PAGE_SIZE) {
@@ -163,5 +161,6 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
     public void failGetData() {
         gankAdapter.loadMoreFail();
         swipeRefreshLayout.setEnabled(true);
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

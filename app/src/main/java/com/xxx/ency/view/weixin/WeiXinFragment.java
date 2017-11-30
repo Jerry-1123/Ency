@@ -140,5 +140,6 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
     public void failGetData() {
         weiXinAdapter.loadMoreFail();
         swipeRefreshLayout.setEnabled(true);
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.chrisbanes.photoview.PhotoView
+    <ImageView
         android:id="@+id/img_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/img_download"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:fitsSystemWindows="true"
+        android:transitionName="transition_img" />
 
     <ImageView
         android:id="@+id/img_download"

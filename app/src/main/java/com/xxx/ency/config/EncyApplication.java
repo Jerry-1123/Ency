@@ -21,6 +21,10 @@ import me.yokeyword.fragmentation.helper.ExceptionHandler;
 
 public class EncyApplication extends Application {
 
+    public static int SCREEN_WIDTH = -1;
+
+    public static int SCREEN_HEIGHT = -1;
+
     private static EncyApplication instance;
 
     public static AppComponent appComponent;

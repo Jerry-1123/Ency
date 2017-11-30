@@ -29,7 +29,11 @@ public class GankBean {
     public List<ResultsBean> getResults() {
         for (ResultsBean bean : results) {
             if (bean.getImages() == null) {
-                bean.setItemType(ResultsBean.TEXT);
+                if (bean.getType().equals("福利")) {
+                    bean.setItemType(ResultsBean.MEIZI);
+                } else {
+                    bean.setItemType(ResultsBean.TEXT);
+                }
             } else {
                 bean.setItemType(ResultsBean.IMG);
             }
@@ -57,6 +61,7 @@ public class GankBean {
 
         public static final int TEXT = 1;
         public static final int IMG = 2;
+        public static final int MEIZI = 3;
 
         private String _id;
         private String createdAt;

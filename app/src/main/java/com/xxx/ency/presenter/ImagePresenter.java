@@ -74,7 +74,7 @@ public class ImagePresenter extends RxPresenter<ImageContract.View> implements I
             fos.close();
             bis.close();
             is.close();
-            mView.showMsg("成功保存在" + imageFile.getAbsolutePath());
+            mView.showMsg("成功保存" + imageFile.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
             mView.showMsg("保存图片失败~");

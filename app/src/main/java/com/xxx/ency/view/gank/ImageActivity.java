@@ -1,10 +1,10 @@
 package com.xxx.ency.view.gank;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.github.chrisbanes.photoview.PhotoView;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.EncyApplication;
@@ -13,7 +13,6 @@ import com.xxx.ency.contract.ImageContract;
 import com.xxx.ency.di.component.DaggerImageActivityComponent;
 import com.xxx.ency.di.module.ImageActivityModule;
 import com.xxx.ency.presenter.ImagePresenter;
-import com.xxx.ency.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +25,7 @@ import butterknife.OnClick;
 public class ImageActivity extends BaseMVPActivity<ImagePresenter> implements ImageContract.View {
 
     @BindView(R.id.img_preview)
-    PhotoView photoView;
+    ImageView photoView;
 
     private String imgUrl;
 
@@ -51,10 +50,8 @@ public class ImageActivity extends BaseMVPActivity<ImagePresenter> implements Im
         imgUrl = bundle.getString("imgurl");
         GlideApp.with(mContext)
                 .load(imgUrl)
-                .fitCenter()
-                .placeholder(R.drawable.ic_ali)
                 .priority(Priority.NORMAL)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(photoView);
     }
 

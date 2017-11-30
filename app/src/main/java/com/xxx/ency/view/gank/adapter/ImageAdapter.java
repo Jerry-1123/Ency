@@ -1,7 +1,10 @@
 package com.xxx.ency.view.gank.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,14 +59,15 @@ public class ImageAdapter extends PagerAdapter {
                 .fitCenter()
                 .placeholder(R.drawable.ic_ali)
                 .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ImageActivity.class);
                 intent.putExtra("imgurl", imgs.get(position));
-                context.startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, imageView, context.getString(R.string.transition_img));
+                ActivityCompat.startActivity(context, intent, options.toBundle());
             }
         });
         container.addView(imageView);
