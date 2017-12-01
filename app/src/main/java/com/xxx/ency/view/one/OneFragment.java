@@ -14,6 +14,7 @@ import com.xxx.ency.model.bean.OneBean;
 import com.xxx.ency.presenter.OnePresenter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 每日一文
