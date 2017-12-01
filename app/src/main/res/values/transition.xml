@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="transition_img">transition_img</string>
+    <string name="transition_content">transition_content</string>
 </resources>

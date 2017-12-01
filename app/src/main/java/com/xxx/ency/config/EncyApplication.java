@@ -1,10 +1,8 @@
 package com.xxx.ency.config;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.xxx.ency.di.component.AppComponent;
 import com.xxx.ency.di.component.DaggerAppComponent;
@@ -21,10 +19,6 @@ import me.yokeyword.fragmentation.helper.ExceptionHandler;
 
 public class EncyApplication extends Application {
 
-    public static int SCREEN_WIDTH = -1;
-
-    public static int SCREEN_HEIGHT = -1;
-
     private static EncyApplication instance;
 
     public static AppComponent appComponent;
@@ -32,13 +26,6 @@ public class EncyApplication extends Application {
     public static synchronized EncyApplication getInstance() {
         return instance;
     }
-
-    public static RefWatcher getRefWatcher(Context context) {
-        EncyApplication application = (EncyApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
-    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -79,7 +66,7 @@ public class EncyApplication extends Application {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        refWatcher = LeakCanary.install(this);
+        LeakCanary.install(this);
     }
 
     public static AppComponent getAppComponent() {

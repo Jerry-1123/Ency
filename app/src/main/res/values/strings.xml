@@ -15,6 +15,9 @@
     <string name="copy_msg">已经复制链接地址到剪切板！</string>
     <string name="browser">浏览器中打开</string>
     <string name="no_network">当前网络不可用，请检查网络情况</string>
+    <string name="share">分享</string>
+    <string name="save">保存</string>
+    <string name="setwallpaper">设为壁纸</string>
     <!--drawer-->
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>

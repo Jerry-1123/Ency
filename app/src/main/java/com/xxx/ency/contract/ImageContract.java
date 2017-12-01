@@ -11,7 +11,6 @@ public interface ImageContract {
 
     interface View extends BaseView {
 
-
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -22,5 +21,12 @@ public interface ImageContract {
          * @param url
          */
         void download(String url);
+
+        /**
+         * 设置壁纸
+         *
+         * @param url
+         */
+        void setWallpaper(String url);
     }
 }

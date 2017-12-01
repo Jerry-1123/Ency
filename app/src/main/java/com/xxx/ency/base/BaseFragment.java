@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.leakcanary.RefWatcher;
-import com.xxx.ency.config.EncyApplication;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -62,13 +59,5 @@ public abstract class BaseFragment extends SupportFragment{
     public void onDestroyView() {
         super.onDestroyView();
         mUnBinder.unbind();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // leakcanary
-        RefWatcher refWatcher = EncyApplication.getRefWatcher(mActivity);
-        refWatcher.watch(this);
     }
 }
