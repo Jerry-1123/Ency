@@ -1,6 +1,9 @@
 package com.xxx.ency.view.one;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.xxx.ency.R;
@@ -31,6 +34,10 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
     TextView oneAuthor;
     @BindView(R.id.one_content)
     TextView oneContent;
+    @BindView(R.id.fab_top)
+    FloatingActionButton fabTop;
+    @BindView(R.id.scrollView_one)
+    ScrollView scrollView;
 
     @Override
     protected void initInject() {
@@ -51,11 +58,13 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
+        fabTop.setVisibility(View.GONE);
         mPresenter.getData(Constants.ONE_URL);
     }
 
     @Override
     public void showOneBean(OneBean bean) {
+        fabTop.setVisibility(View.VISIBLE);
         oneTitle.setText(bean.getTitle());
         oneAuthor.setText(bean.getAuthor());
         oneContent.setText(bean.getContent());
@@ -64,12 +73,19 @@ public class OneFragment extends BaseMVPFragment<OnePresenter> implements OneCon
 
     @Override
     public void failGetData() {
+        fabTop.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
+        fabTop.setVisibility(View.GONE);
         mPresenter.getData(Constants.ONE_URL);
+    }
+
+    @OnClick(R.id.fab_top)
+    public void toTop() {
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
 //    private MyHandler mHandler;
