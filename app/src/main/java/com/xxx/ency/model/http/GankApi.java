@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
+ * 干货热门
  * Created by xiarh on 2017/11/27.
  */
 

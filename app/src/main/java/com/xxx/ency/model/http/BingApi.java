@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
+ * Bing壁纸
  * Created by xiarh on 2017/11/3.
  */
 

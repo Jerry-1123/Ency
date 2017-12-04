@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -176,6 +177,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
                     item.setIcon(R.drawable.ic_notlike);
                     daoManager.deleteByGuid(guid);
                     isLiked = false;
+                    SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功从收藏中移除");
                 } else {
                     item.setIcon(R.drawable.ic_like);
                     LikeBean bean = new LikeBean();
@@ -188,6 +190,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
                     bean.setTime(System.currentTimeMillis());
                     daoManager.insert(bean);
                     isLiked = true;
+                    SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功添加到收藏");
                 }
                 break;
             case R.id.item_copy:
