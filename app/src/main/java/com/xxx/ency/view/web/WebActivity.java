@@ -237,8 +237,6 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         private String title;
         private boolean isShowLikeIcon;
         private Context context;
-        private Activity activity;
-        private View shareView;
 
         public Builder() {
 
@@ -278,39 +276,16 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
             this.context = context;
             return this;
         }
-
-        public Builder setActivity(Activity activity) {
-            this.activity = activity;
-            return this;
-        }
-
-        public Builder setShareView(View shareView) {
-            this.shareView = shareView;
-            return this;
-        }
     }
 
     public static void open(Builder builder) {
-        if (builder.shareView == null) {
-            Intent intent = new Intent(builder.context, WebActivity.class);
-            intent.putExtra("guid", builder.guid);
-            intent.putExtra("imageUrl", builder.imageUrl);
-            intent.putExtra("type", builder.type);
-            intent.putExtra("url", builder.url);
-            intent.putExtra("title", builder.title);
-            intent.putExtra("isshow", builder.isShowLikeIcon);
-            builder.context.startActivity(intent);
-        } else {
-            Intent intent = new Intent(builder.context, WebActivity.class);
-            intent.putExtra("guid", builder.guid);
-            intent.putExtra("imageUrl", builder.imageUrl);
-            intent.putExtra("type", builder.type);
-            intent.putExtra("url", builder.url);
-            intent.putExtra("title", builder.title);
-            intent.putExtra("isshow", builder.isShowLikeIcon);
-            ActivityOptionsCompat options = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(builder.activity, builder.shareView, builder.context.getString(R.string.transition_content));
-            ActivityCompat.startActivity(builder.context, intent, options.toBundle());
-        }
+        Intent intent = new Intent(builder.context, WebActivity.class);
+        intent.putExtra("guid", builder.guid);
+        intent.putExtra("imageUrl", builder.imageUrl);
+        intent.putExtra("type", builder.type);
+        intent.putExtra("url", builder.url);
+        intent.putExtra("title", builder.title);
+        intent.putExtra("isshow", builder.isShowLikeIcon);
+        builder.context.startActivity(intent);
     }
 }
