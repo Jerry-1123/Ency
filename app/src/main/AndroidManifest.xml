@@ -62,6 +62,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/ImageTheme" />
 
+        <!--设置-->
+        <activity
+            android:name=".view.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".view.main.UpdateService" />
 
         <provider

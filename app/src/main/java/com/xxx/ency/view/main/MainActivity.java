@@ -40,6 +40,7 @@ import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.gank.GankMainFragment;
 import com.xxx.ency.view.like.LikeFragment;
 import com.xxx.ency.view.one.OneFragment;
+import com.xxx.ency.view.setting.SettingActivity;
 import com.xxx.ency.view.weixin.WeiXinFragment;
 
 import java.text.SimpleDateFormat;
@@ -292,6 +293,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 showHideFragment(likeFragment);
                 break;
             case R.id.item_setting:
+                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
             case R.id.item_about:
                 startActivity(new Intent(mContext, AboutActivity.class));
