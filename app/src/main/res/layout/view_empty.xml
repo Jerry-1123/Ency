@@ -6,15 +6,15 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="220dp"
-        android:background="@drawable/bg_empty" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_empty"/>
 
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="噫，什么都没找到(๑¯ω¯๑)"
-        android:textColor="@color/txtcolor_gray" />
+        android:text="暂无相关数据"
+        android:textSize="15sp" />
 
 </LinearLayout>

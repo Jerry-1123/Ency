@@ -2,24 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="基本设置">
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="key1"
-            android:summary="仅在Wi-Fi环境下才自动加载图片"
-            android:title="省流量模式" />
-        <Preference
-            android:key="key2"
-            android:summary="删除已缓存的文章内容及图片"
-            android:title="清空缓存" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="key3"
-            android:summary="无图模式"
-            android:title="显示图片" />
-        <EditTextPreference
-            android:key="key4"
-            android:summary="请输入联系方式"
-            android:title="手机号、邮箱等" />
+            android:summary="仅在Wi-Fi环境下才会自动加载图片"
+            android:title="省流量模式" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:title="夜间模式" />
+        <Preference
+            android:summary="包括图片、视频缓存(共XXXM)"
+            android:title="清除缓存" />
     </PreferenceCategory>
 
 </PreferenceScreen>
