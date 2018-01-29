@@ -18,6 +18,12 @@ import com.xxx.ency.util.DateUtil;
 
 public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
 
+    private boolean isPTP = false;
+
+    public void setPTP(boolean ptp) {
+        this.isPTP = ptp;
+    }
+
     public LikeAdapter() {
         super(R.layout.item_like);
     }
@@ -27,17 +33,23 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
         helper.setText(R.id.txt_like_title, item.getTitle());
         if (item.getType() == Constants.TYPE_WEIXIN) {
             helper.setText(R.id.txt_like_type, R.string.weixin);
-        }
-        else if(item.getType() == Constants.TYPE_GANK){
+        } else if (item.getType() == Constants.TYPE_GANK) {
             helper.setText(R.id.txt_like_type, R.string.gank);
         }
         helper.setText(R.id.txt_like_date, DateUtil.LongToString(item.getTime()));
-        GlideApp.with(mContext)
-                .load(item.getImageUrl())
-                .centerCrop()
-                .placeholder(R.drawable.ic_ali)
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into((ImageView) helper.getView(R.id.img_like));
+        if (isPTP) {
+            GlideApp.with(mContext)
+                    .load(R.drawable.ic_ali)
+                    .fitCenter()
+                    .priority(Priority.LOW)
+                    .into((ImageView) helper.getView(R.id.img_like));
+        } else {
+            GlideApp.with(mContext)
+                    .load(item.getImageUrl())
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_ali)
+                    .priority(Priority.LOW)
+                    .into((ImageView) helper.getView(R.id.img_like));
+        }
     }
 }

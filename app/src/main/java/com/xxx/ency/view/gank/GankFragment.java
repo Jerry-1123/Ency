@@ -16,12 +16,15 @@ import com.xxx.ency.contract.GankContract;
 import com.xxx.ency.di.component.DaggerGankFragmentComponent;
 import com.xxx.ency.di.module.GankFragmentModule;
 import com.xxx.ency.model.bean.GankBean;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.GankPresenter;
 import com.xxx.ency.view.gank.adapter.GankAdapter;
 import com.xxx.ency.view.web.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -37,6 +40,9 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
+    @Inject
+    SharePrefManager sharePrefManager;
+
     private GankAdapter gankAdapter;
 
     private List<GankBean.ResultsBean> resultsBeans = new ArrayList<>();
@@ -50,6 +56,15 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_refresh;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null != sharePrefManager && null != gankAdapter) {
+            gankAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
+            gankAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -84,6 +99,7 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(gankAdapter);
+        gankAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
         gankAdapter.setOnLoadMoreListener(this, recyclerView);
         gankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

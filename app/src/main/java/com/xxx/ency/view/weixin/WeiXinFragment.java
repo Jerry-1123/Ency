@@ -15,9 +15,12 @@ import com.xxx.ency.contract.WeiXinContract;
 import com.xxx.ency.di.component.DaggerWeiXinFragmentComponent;
 import com.xxx.ency.di.module.WeiXinFragmentModule;
 import com.xxx.ency.model.bean.WeiXinBean;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.WeiXinPresenter;
 import com.xxx.ency.view.web.WebActivity;
 import com.xxx.ency.view.weixin.adapter.WeiXinAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -34,6 +37,9 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
+    @Inject
+    SharePrefManager sharePrefManager;
+
     private WeiXinAdapter weiXinAdapter;
 
     private int page = 1;
@@ -43,6 +49,15 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_refresh;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null != sharePrefManager && null != weiXinAdapter) {
+            weiXinAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
+            weiXinAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -65,6 +80,7 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(weiXinAdapter);
+        weiXinAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
         weiXinAdapter.setOnLoadMoreListener(this, recyclerView);
         weiXinAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

@@ -44,4 +44,10 @@
     <string name="about7">• greenDAO - github.com/greenrobot/greenDAO</string>
     <string name="about8">• 和风天气提供天气数据</string>
     <string name="about9">• 高德定位提供定位服务</string>
+    <!--setting preferences-->
+    <string name="key_provincial_traffic_patterns">省流量模式</string>
+    <string name="key_night_mode">夜间模式</string>
+    <string name="key_clear_cache">清除缓存</string>
+    <string name="key_version">当前版本</string>
+    <string name="key_homepage">个人主页</string>
 </resources>

@@ -20,6 +20,12 @@ import java.util.List;
 
 public class GankAdapter extends BaseMultiItemQuickAdapter<GankBean.ResultsBean, BaseViewHolder> {
 
+    private boolean isPTP = false;
+
+    public void setPTP(boolean ptp) {
+        this.isPTP = ptp;
+    }
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -46,7 +52,7 @@ public class GankAdapter extends BaseMultiItemQuickAdapter<GankBean.ResultsBean,
                 helper.setText(R.id.txt_gank_author, item.getSource());
                 helper.setText(R.id.txt_gank_time, item.getPublishedAt().substring(0, 10));
                 ViewPager viewPager = helper.getView(R.id.viewpager_gank_img);
-                ImageAdapter adapter = new ImageAdapter(mContext, item.getImages());
+                ImageAdapter adapter = new ImageAdapter(mContext, item.getImages(),isPTP);
                 viewPager.setAdapter(adapter);
                 break;
             case GankBean.ResultsBean.MEIZI:

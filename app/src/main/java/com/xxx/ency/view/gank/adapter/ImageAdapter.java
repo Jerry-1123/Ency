@@ -28,9 +28,12 @@ public class ImageAdapter extends PagerAdapter {
 
     private Context context;
 
-    public ImageAdapter(Context context, List<String> imgs) {
+    private boolean isPTP;
+
+    public ImageAdapter(Context context, List<String> imgs,boolean isPTP) {
         this.imgs = imgs;
         this.context = context;
+        this.isPTP = isPTP;
     }
 
     @Override
@@ -53,14 +56,22 @@ public class ImageAdapter extends PagerAdapter {
         final ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        GlideApp.with(context)
-                .asBitmap()
-                .load(imgs.get(position))
-                .fitCenter()
-                .placeholder(R.drawable.ic_ali)
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
+        if(isPTP){
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(R.drawable.ic_ali)
+                    .fitCenter()
+                    .priority(Priority.HIGH)
+                    .into(imageView);
+        }else {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(imgs.get(position))
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_ali)
+                    .priority(Priority.LOW)
+                    .into(imageView);
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

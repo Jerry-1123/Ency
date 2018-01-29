@@ -1,5 +1,6 @@
 package com.xxx.ency.model.prefs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -19,5 +20,29 @@ public class SharePrefManager {
     @Inject
     public SharePrefManager(Context context) {
         SPfres = context.getSharedPreferences(SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * 设置省流量模式
+     */
+    public void setProvincialTrafficPatterns(boolean event) {
+        SPfres.edit().putBoolean("provincial_traffic_patterns", event).commit();
+    }
+
+    public boolean getProvincialTrafficPattern() {
+        return SPfres.getBoolean("provincial_traffic_patterns", false);
+    }
+
+    /**
+     * 设置夜间模式
+     *
+     * @param event
+     */
+    public void setNightMode(boolean event) {
+        SPfres.edit().putBoolean("nightmode", event).commit();
+    }
+
+    public boolean getNightMode(){
+        return SPfres.getBoolean("nightmode",false);
     }
 }

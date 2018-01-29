@@ -15,8 +15,11 @@ import com.xxx.ency.base.BaseFragment;
 import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.db.GreenDaoManager;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.view.like.adapter.LikeAdapter;
 import com.xxx.ency.view.web.WebActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -29,6 +32,9 @@ public class LikeFragment extends BaseFragment {
 
     @BindView(R.id.recyclerview_like)
     RecyclerView recyclerView;
+
+    @Inject
+    SharePrefManager sharePrefManager;
 
     private LikeAdapter likeAdapter;
 
@@ -91,6 +97,10 @@ public class LikeFragment extends BaseFragment {
         super.onResume();
         if (isInited) {
             likeAdapter.setNewData(daoManager.queryAll());
+        }
+        if (null != sharePrefManager && null != likeAdapter) {
+            likeAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
+            likeAdapter.notifyDataSetChanged();
         }
     }
 }

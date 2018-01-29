@@ -16,6 +16,12 @@ import com.xxx.ency.model.bean.WeiXinBean;
 
 public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, BaseViewHolder> {
 
+    private boolean isPTP = false;
+
+    public void setPTP(boolean ptp) {
+        this.isPTP = ptp;
+    }
+
     public WeiXinAdapter() {
         super(R.layout.item_weixin);
     }
@@ -25,12 +31,19 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
         helper.setText(R.id.txt_weixin_title, item.getTitle());
         helper.setText(R.id.txt_weixin_author, item.getDescription());
         helper.setText(R.id.txt_weixin_date, item.getCtime());
-        GlideApp.with(mContext)
-                .load(item.getPicUrl())
-                .centerCrop()
-                .placeholder(R.drawable.ic_ali)
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into((ImageView) helper.getView(R.id.img_weixin));
+        if (isPTP) {
+            GlideApp.with(mContext)
+                    .load(R.drawable.ic_ali)
+                    .fitCenter()
+                    .priority(Priority.LOW)
+                    .into((ImageView) helper.getView(R.id.img_weixin));
+        } else {
+            GlideApp.with(mContext)
+                    .load(item.getPicUrl())
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_ali)
+                    .priority(Priority.LOW)
+                    .into((ImageView) helper.getView(R.id.img_weixin));
+        }
     }
 }

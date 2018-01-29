@@ -3,15 +3,29 @@
 
     <PreferenceCategory android:title="基本设置">
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
+            android:key="@string/key_provincial_traffic_patterns"
             android:summary="仅在Wi-Fi环境下才会自动加载图片"
             android:title="省流量模式" />
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
+            android:key="@string/key_night_mode"
             android:title="夜间模式" />
         <Preference
-            android:summary="包括图片、视频缓存(共XXXM)"
+            android:key="@string/key_clear_cache"
+            android:summary="缓存大小：1000.4M"
             android:title="清除缓存" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="其他说明">
+        <Preference
+            android:key="@string/key_version"
+            android:summary="V 1.0"
+            android:title="当前版本" />
+        <Preference
+            android:key="@string/key_homepage"
+            android:summary="https://github.com/xiarunhao123"
+            android:title="个人主页" />
     </PreferenceCategory>
 
 </PreferenceScreen>
