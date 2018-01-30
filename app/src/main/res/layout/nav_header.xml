@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
+            android:textColor="@color/toggleColor"
             android:textSize="45sp"
             android:typeface="monospace"
             tools:text="18°" />
@@ -35,7 +35,7 @@
                 android:id="@+id/txt_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/toggleColor"
                 android:textSize="17sp"
                 tools:text="苏州市" />
 
@@ -43,7 +43,7 @@
                 android:id="@+id/txt_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/toggleColor"
                 android:textSize="15sp"
                 tools:text="晴" />
 

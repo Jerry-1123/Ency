@@ -61,6 +61,9 @@ public class ImageAdapter extends PagerAdapter {
                     .asBitmap()
                     .load(R.drawable.ic_ali)
                     .fitCenter()
+                    .placeholder(R.drawable.ic_ali)
+                    .error(R.drawable.ic_ali)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH)
                     .into(imageView);
         }else {
@@ -69,6 +72,8 @@ public class ImageAdapter extends PagerAdapter {
                     .load(imgs.get(position))
                     .fitCenter()
                     .placeholder(R.drawable.ic_ali)
+                    .error(R.drawable.ic_ali)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into(imageView);
         }

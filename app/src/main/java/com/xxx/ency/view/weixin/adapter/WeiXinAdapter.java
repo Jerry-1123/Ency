@@ -35,6 +35,9 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
             GlideApp.with(mContext)
                     .load(R.drawable.ic_ali)
                     .fitCenter()
+                    .placeholder(R.drawable.ic_ali)
+                    .error(R.drawable.ic_ali)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_weixin));
         } else {
@@ -42,6 +45,8 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
                     .load(item.getPicUrl())
                     .fitCenter()
                     .placeholder(R.drawable.ic_ali)
+                    .error(R.drawable.ic_ali)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_weixin));
         }

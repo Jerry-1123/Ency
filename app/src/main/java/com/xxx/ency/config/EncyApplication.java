@@ -1,6 +1,7 @@
 package com.xxx.ency.config;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -30,6 +31,8 @@ public class EncyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         instance = this;
 
