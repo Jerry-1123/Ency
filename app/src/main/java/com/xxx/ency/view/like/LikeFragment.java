@@ -76,8 +76,9 @@ public class LikeFragment extends BaseFragment {
                 new MaterialDialog.Builder(mContext)
                         .content("确认要删除该收藏吗？")
                         .negativeText("取消")
-                        .negativeColor(R.color.black)
+                        .negativeColorRes(R.color.colorNegative)
                         .positiveText("确定")
+                        .positiveColorRes(R.color.colorPositive)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

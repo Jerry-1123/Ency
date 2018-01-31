@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0AACF4</color>
+    <color name="colorPrimaryDark">#0AACF4</color>
+    <color name="colorAccent">#0AACF4</color>
+    <color name="colorPositive">#0AACF4</color>
+    <color name="colorNegative">#000000</color>
+    <color name="colorTxt">#2c2c2c</color>
+    <color name="colorTxt2">#7E7E7E</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorItemSelected">#0AACF4</color>
+    <color name="colorItemUnselected">#9b9b9b</color>
+    <color name="colorLine">#f1f1f1</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+</resources>

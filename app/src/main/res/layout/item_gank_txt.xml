@@ -10,7 +10,7 @@
         android:id="@+id/txt_gank_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/colorTxt"
         android:textSize="14sp"
         tools:text="标题XXXXXX" />
 

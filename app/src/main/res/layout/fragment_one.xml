@@ -56,7 +56,7 @@
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
                 android:src="@drawable/ic_top"
-                app:backgroundTint="@color/toggleColor"
+                app:backgroundTint="@color/colorBackground"
                 app:fabSize="mini"
                 app:pressedTranslationZ="2dp" />
 

@@ -5,6 +5,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.xxx.ency.R;
 import com.xxx.ency.config.Constants;
@@ -60,6 +61,14 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
             sharePrefManager.setProvincialTrafficPatterns((Boolean) newValue);
         } else if (preference == nightModePreference) {
             sharePrefManager.setNightMode((Boolean) newValue);
+            if ((Boolean) newValue) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            if(getActivity() instanceof SettingActivity){
+                getActivity().recreate();
+            }
         }
         return true;
     }

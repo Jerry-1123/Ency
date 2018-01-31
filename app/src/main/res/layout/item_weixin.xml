@@ -23,7 +23,7 @@
             android:layout_margin="10dp"
             android:ellipsize="end"
             android:lines="2"
-            android:textColor="@color/black"
+            android:textColor="@color/colorTxt"
             android:textSize="14sp"
             tools:text="XXXXXXXXXXXXXXXXXX这是标题" />
 
@@ -34,7 +34,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/txtcolor_gray"
+            android:textColor="@color/colorTxt2"
             android:textSize="12sp"
             tools:text="这是作者" />
 
@@ -46,7 +46,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/txt_weixin_author"
-            android:textColor="@color/txtcolor_gray"
+            android:textColor="@color/colorTxt2"
             android:textSize="12sp"
             tools:text="这是时间" />
 

@@ -9,6 +9,7 @@ import com.xxx.ency.di.component.AppComponent;
 import com.xxx.ency.di.component.DaggerAppComponent;
 import com.xxx.ency.di.module.ApplicationModule;
 import com.xxx.ency.di.module.HttpModule;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.util.AppApplicationUtil;
 
 import me.yokeyword.fragmentation.Fragmentation;
@@ -24,6 +25,8 @@ public class EncyApplication extends Application {
 
     public static AppComponent appComponent;
 
+    private SharePrefManager sharePrefManager;
+
     public static synchronized EncyApplication getInstance() {
         return instance;
     }
@@ -32,8 +35,6 @@ public class EncyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         instance = this;
 
         appComponent = DaggerAppComponent
@@ -41,6 +42,14 @@ public class EncyApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .httpModule(new HttpModule())
                 .build();
+
+        sharePrefManager = appComponent.getSharePrefManager();
+
+        if (sharePrefManager.getNightMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         // 初始化Bugly
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());

@@ -68,7 +68,7 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
         GlideApp.with(mContext)
                 .load(bingBean.getData().getOriginal_pic())
                 .centerCrop()
-                .error(R.drawable.bg_about)
+                .error(R.drawable.bg_about_day)
                 .priority(Priority.LOW)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(mImgAbout);

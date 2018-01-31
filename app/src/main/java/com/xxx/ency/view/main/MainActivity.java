@@ -153,6 +153,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 .content(R.string.permission_application_content)
                 .cancelable(false)
                 .positiveText(R.string.setting)
+                .positiveColorRes(R.color.colorPositive)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -163,6 +164,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                     }
                 })
                 .negativeText(R.string.no)
+                .negativeColorRes(R.color.colorNegative)
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -198,10 +200,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
             new MaterialDialog.Builder(mContext)
                     .title(R.string.app_update)
                     .content(updateBean.getChangelog())
-                    .positiveText(R.string.update)
-                    .positiveColorRes(R.color.black)
                     .negativeText(R.string.no)
-                    .negativeColorRes(R.color.black)
+                    .negativeColorRes(R.color.colorNegative)
+                    .positiveText(R.string.update)
+                    .positiveColorRes(R.color.colorPositive)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

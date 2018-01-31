@@ -9,11 +9,11 @@
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme">
-        <item name="android:textColor">@color/txtcolor</item>
+        <item name="android:textColor">@color/colorTxt</item>
         <!--设置切换动画-->
         <item name="android:windowAnimationStyle">@style/WindowAnimTheme</item>
         <!--ActionBarDrawerToggle设置颜色-->
-        <item name="colorControlNormal">@color/toggleColor</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.Main">

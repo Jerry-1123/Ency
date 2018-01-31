@@ -25,9 +25,12 @@ public abstract class BaseActivity extends SupportActivity {
 
     protected abstract void initialize();
 
+//    protected abstract void initTheme();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        initTheme();
         setContentView(getLayoutId());
         mContext = this;
         ButterKnife.bind(this);

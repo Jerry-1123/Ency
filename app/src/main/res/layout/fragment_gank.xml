@@ -9,8 +9,8 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:tabIndicatorColor="@color/colorPrimaryDark"
-        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabIndicatorColor="@color/colorItemSelected"
+        app:tabSelectedTextColor="@color/colorItemSelected"
         app:tabTextColor="#9b9b9b" />
 
     <android.support.v4.view.ViewPager
