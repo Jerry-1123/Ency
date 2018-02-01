@@ -1,5 +1,6 @@
 package com.xxx.ency.view.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -61,14 +62,15 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
             sharePrefManager.setProvincialTrafficPatterns((Boolean) newValue);
         } else if (preference == nightModePreference) {
             sharePrefManager.setNightMode((Boolean) newValue);
-            if ((Boolean) newValue) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            if(getActivity() instanceof SettingActivity){
-                getActivity().recreate();
-            }
+            AppCompatDelegate.setDefaultNightMode((Boolean) newValue ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+            // recreate()会产生闪屏
+//            if (getActivity() instanceof SettingActivity) {
+//                getActivity().recreate();
+//            }
+            // 调用startActivity启动，并为其添加了一个透明渐变的启动动画，最后调用finish结束掉旧的页面。
+            getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+            getActivity().overridePendingTransition(R.anim.alpha_start, R.anim.alpha_out);
+            getActivity().finish();
         }
         return true;
     }

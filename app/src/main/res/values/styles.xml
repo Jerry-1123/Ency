@@ -48,4 +48,21 @@
         <item name="android:textColor">#00000000</item>
     </style>
 
+    <!-- App Widget -->
+
+    <style name="AppWidget" parent="Theme.AppCompat.Light" />
+
+    <!-- Deep Line -->
+
+    <style name="AppWidget.DeepLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="AppWidget.DeepLine.Vertical">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 </resources>

@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
@@ -16,19 +18,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
+import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
 import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.db.GreenDaoManager;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.util.SnackBarUtil;
+import com.xxx.ency.widget.X5WebView;
 
 import butterknife.BindView;
 
@@ -41,7 +49,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.webview)
-    WebView webView;
+    X5WebView webView;
     @BindView(R.id.swipelayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -61,6 +69,8 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     private GreenDaoManager daoManager;
 
+    private SharePrefManager sharePrefManager;
+
     private boolean isLiked;
 
     @Override
@@ -71,10 +81,19 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     @Override
     protected void initialize() {
         daoManager = EncyApplication.getAppComponent().getGreenDaoManager();
+        sharePrefManager = EncyApplication.getAppComponent().getSharePrefManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (child.getScrollY() > 0)
+                    return true;
+                return false;
+            }
+        });
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             guid = bundle.getString("guid");
@@ -98,12 +117,18 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         settings.setDatabaseEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setGeolocationDatabasePath(dir);
+        settings.setGeolocationEnabled(true);
+        settings.setGeolocationDatabasePath(dir);
+        if (sharePrefManager.getNightMode()) {
+            webView.setDayOrNight(false);
+        } else {
+            webView.setDayOrNight(true);
+        }
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return super.shouldOverrideUrlLoading(view, request);
+            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
+                return super.shouldOverrideUrlLoading(webView, s);
             }
 
             @Override
@@ -119,20 +144,73 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
             }
 
             @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed();
+            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, com.tencent.smtt.export.external.interfaces.SslError sslError) {
+                sslErrorHandler.proceed();
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {
+            //扩展支持alert事件
+            @Override
+            public boolean onJsAlert(WebView webView, String url, String message, final JsResult jsResult) {
+                new MaterialDialog.Builder(mContext)
+                        .title("提示")
+                        .content(message)
+                        .positiveText(R.string.yes)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                jsResult.confirm();
+                            }
+                        })
+                        .cancelable(false)
+                        .build()
+                        .show();
+                return true;
+            }
+
             @Override
             public void onGeolocationPermissionsHidePrompt() {
                 super.onGeolocationPermissionsHidePrompt();
             }
 
             @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-                super.onGeolocationPermissionsShowPrompt(origin, callback);
+            public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissionsCallback callback) {
+                final boolean remember = false;
+                new MaterialDialog.Builder(mContext)
+                        .title("地理位置授权")
+                        .content("允许" + origin + "获取您当前的地理位置信息吗")
+                        .positiveText("允许")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                callback.invoke(origin, true, remember);
+                            }
+                        })
+                        .negativeText("拒绝")
+                        .negativeColorRes(R.color.black)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                callback.invoke(origin, false, remember);
+                            }
+                        })
+                        .cancelable(false)
+                        .build()
+                        .show();
+            }
+        });
+        webView.setOnScrollListener(new X5WebView.IScrollListener() {
+            @Override
+            public void onScrollChanged(int scrollY) {
+                //swiperefreshLayout刷新
+                //webView在顶部
+                if (scrollY == 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                }
+                //webView不是顶部
+                else {
+                    swipeRefreshLayout.setEnabled(false);
+                }
             }
         });
         //点击返回

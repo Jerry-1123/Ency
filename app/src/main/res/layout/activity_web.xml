@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
 
-        <WebView
+        <com.xxx.ency.widget.X5WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

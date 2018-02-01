@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
 import com.xxx.ency.di.component.AppComponent;
 import com.xxx.ency.di.component.DaggerAppComponent;
 import com.xxx.ency.di.module.ApplicationModule;
 import com.xxx.ency.di.module.HttpModule;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.util.AppApplicationUtil;
+import com.xxx.ency.util.LogUtil;
 
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
@@ -45,11 +47,8 @@ public class EncyApplication extends Application {
 
         sharePrefManager = appComponent.getSharePrefManager();
 
-        if (sharePrefManager.getNightMode()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        boolean nightMode = sharePrefManager.getNightMode();
+        AppCompatDelegate.setDefaultNightMode(nightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
 
         // 初始化Bugly
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
@@ -73,6 +72,22 @@ public class EncyApplication extends Application {
                     }
                 })
                 .install();
+
+        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                LogUtil.d("app", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(getApplicationContext(), cb);
 
         // 初始化LeakCanary
         if (LeakCanary.isInAnalyzerProcess(this)) {
