@@ -23,7 +23,7 @@ public interface AboutContract {
         /**
          * 更新
          */
-        void startUpdate();
+        void showUpdateDialog(UpdateBean updateBean);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -17,6 +17,7 @@ import com.xxx.ency.contract.AboutContract;
 import com.xxx.ency.di.component.DaggerAboutActivityComponent;
 import com.xxx.ency.di.module.AboutActivityModule;
 import com.xxx.ency.model.bean.BingBean;
+import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
@@ -95,7 +96,7 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
     }
 
     @Override
-    public void startUpdate() {
+    public void showUpdateDialog(UpdateBean updateBean) {
         startService(new Intent(mContext, UpdateService.class));
     }
 

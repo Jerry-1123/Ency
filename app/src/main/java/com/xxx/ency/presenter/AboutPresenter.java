@@ -60,7 +60,7 @@ public class AboutPresenter extends RxPresenter<AboutContract.View> implements A
                     public void onNext(UpdateBean updateBean) {
                         if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
                             mView.showMsg(context.getResources().getString(R.string.start_update));
-                            mView.startUpdate();
+                            mView.showUpdateDialog(updateBean);
                         } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
                             mView.showMsg(context.getResources().getString(R.string.update_msg));
                         }

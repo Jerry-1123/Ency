@@ -53,7 +53,7 @@ public class EncyApplication extends Application {
         // 初始化Bugly
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
         strategy.setAppVersion(String.valueOf(AppApplicationUtil.getVersionCode(getApplicationContext())));
-        CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, true); // debug版本设置为true，正式发布设置为false
+        CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, false); // debug版本设置为true，正式发布设置为false
 
         // 初始化Fragmentation
         Fragmentation.builder()
