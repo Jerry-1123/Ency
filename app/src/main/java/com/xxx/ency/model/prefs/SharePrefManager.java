@@ -42,7 +42,15 @@ public class SharePrefManager {
         SPfres.edit().putBoolean("nightmode", event).commit();
     }
 
-    public boolean getNightMode(){
-        return SPfres.getBoolean("nightmode",false);
+    public boolean getNightMode() {
+        return SPfres.getBoolean("nightmode", false);
+    }
+
+    public void setLocalMode(int localMode){
+        SPfres.edit().putInt("localMode", localMode).commit();
+    }
+
+    public int getLocalMode(){
+        return SPfres.getInt("localMode", 0);
     }
 }

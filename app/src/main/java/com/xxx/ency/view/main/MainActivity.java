@@ -32,6 +32,7 @@ import com.xxx.ency.di.component.DaggerMainActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
 import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.bean.WeatherBean;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
 import com.xxx.ency.util.LogUtil;
@@ -46,7 +47,12 @@ import com.xxx.ency.view.weixin.WeiXinFragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * 主页
@@ -60,6 +66,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @BindView(R.id.drawerlayout)
     DrawerLayout mDrawerLayout;
 
+    @Inject
+    SharePrefManager sharePrefManager;
+
     private View mHeaderView;
 
     private TextView mTxtCity;
@@ -69,6 +78,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     private ImageView mImgWeather;
 
     private TextView mTextTemperature;
+
+    private ImageView mImgWeatherBg;
 
     private static final int PERMISSION_CODE = 1000;
 
@@ -114,7 +125,24 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mTxtWeather = mHeaderView.findViewById(R.id.txt_weather);
         mImgWeather = mHeaderView.findViewById(R.id.img_weather);
         mTextTemperature = mHeaderView.findViewById(R.id.txt_temperature);
+        mImgWeatherBg = mHeaderView.findViewById(R.id.img_weather_bg);
+        if (sharePrefManager.getNightMode()) {
+            GlideApp.with(mContext)
+                    .load(R.drawable.bg_weather_night)
+                    .centerCrop()
+                    .priority(Priority.LOW)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mImgWeatherBg);
+        } else {
+            GlideApp.with(mContext)
+                    .load(R.drawable.bg_weather_day)
+                    .centerCrop()
+                    .priority(Priority.LOW)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mImgWeatherBg);
+        }
         mPresenter.checkPermissions();
+        mPresenter.setDayOrNight();
         initDialog();
     }
 
@@ -254,6 +282,13 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mNavView.setNavigationItemSelectedListener(this);
         mPresenter.checkUpdate();
         initLocation();
+    }
+
+    @Override
+    public void changeDayOrNight(boolean changed) {
+        if (changed) {
+            finish();
+        }
     }
 
     @Override

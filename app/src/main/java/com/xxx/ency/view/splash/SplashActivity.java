@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
+import com.xxx.ency.R;
 import com.xxx.ency.view.main.MainActivity;
 
 import me.yokeyword.fragmentation.SupportActivity;

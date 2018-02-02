@@ -17,10 +17,14 @@ import com.xxx.ency.contract.AboutContract;
 import com.xxx.ency.di.component.DaggerAboutActivityComponent;
 import com.xxx.ency.di.module.AboutActivityModule;
 import com.xxx.ency.model.bean.BingBean;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
+import com.xxx.ency.util.ImageLoader;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +42,9 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
     ImageView mImgAbout;
     @BindView(R.id.txt_version)
     TextView txtVersion;
+
+    @Inject
+    SharePrefManager sharePrefManager;
 
     @Override
     protected int getLayoutId() {
@@ -65,13 +72,26 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
 
     @Override
     public void showBingBean(BingBean bingBean) {
-        GlideApp.with(mContext)
-                .load(bingBean.getData().getOriginal_pic())
-                .centerCrop()
-                .error(R.drawable.bg_about_day)
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(mImgAbout);
+        if (sharePrefManager.getNightMode()){
+            GlideApp.with(mContext)
+                    .load(bingBean.getData().getOriginal_pic())
+                    .centerCrop()
+                    .placeholder(R.drawable.bg_about_night)
+                    .error(R.drawable.bg_about_night)
+                    .priority(Priority.LOW)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(mImgAbout);
+        }
+        else {
+            GlideApp.with(mContext)
+                    .load(bingBean.getData().getOriginal_pic())
+                    .centerCrop()
+                    .placeholder(R.drawable.bg_about_day)
+                    .error(R.drawable.bg_about_day)
+                    .priority(Priority.LOW)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(mImgAbout);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xxx.ency.base.BaseSubscriber;
+import com.xxx.ency.base.RxBus;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.MainContract;
@@ -91,6 +92,21 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                     @Override
                     public void onNext(WeatherBean weatherBean) {
                         mView.showWeather(weatherBean);
+                    }
+                }));
+    }
+
+    @Override
+    public void setDayOrNight() {
+        addSubscribe(RxBus.getInstance().register(Integer.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<Integer>(context,null) {
+                    @Override
+                    public void onNext(Integer integer) {
+                        if(integer == 1000){
+                            mView.changeDayOrNight(true);
+                        }
                     }
                 }));
     }

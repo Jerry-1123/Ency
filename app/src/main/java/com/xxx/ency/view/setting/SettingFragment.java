@@ -1,6 +1,7 @@
 package com.xxx.ency.view.setting;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -62,7 +63,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
             sharePrefManager.setProvincialTrafficPatterns((Boolean) newValue);
         } else if (preference == nightModePreference) {
             sharePrefManager.setNightMode((Boolean) newValue);
-            AppCompatDelegate.setDefaultNightMode((Boolean) newValue ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+            int currentMode = (Boolean) newValue ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
+            AppCompatDelegate.setDefaultNightMode(currentMode);
             // recreate()会产生闪屏
 //            if (getActivity() instanceof SettingActivity) {
 //                getActivity().recreate();

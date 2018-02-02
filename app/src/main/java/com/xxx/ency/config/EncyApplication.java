@@ -27,8 +27,6 @@ public class EncyApplication extends Application {
 
     public static AppComponent appComponent;
 
-    private SharePrefManager sharePrefManager;
-
     public static synchronized EncyApplication getInstance() {
         return instance;
     }
@@ -45,10 +43,12 @@ public class EncyApplication extends Application {
                 .httpModule(new HttpModule())
                 .build();
 
-        sharePrefManager = appComponent.getSharePrefManager();
+        SharePrefManager sharePrefManager = appComponent.getSharePrefManager();
 
         boolean nightMode = sharePrefManager.getNightMode();
         AppCompatDelegate.setDefaultNightMode(nightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+
+        sharePrefManager.setLocalMode(AppCompatDelegate.getDefaultNightMode());
 
         // 初始化Bugly
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());

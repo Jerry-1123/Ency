@@ -34,6 +34,11 @@ public interface MainContract {
          * 获取权限成功
          */
         void getPermissionSuccess();
+
+        /**
+         * 是否改变
+         */
+        void changeDayOrNight(boolean changed);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -52,5 +57,10 @@ public interface MainContract {
          * 拉取天气权限
          */
         void getWeather(String location);
+
+        /**
+         * 设置白天/夜间模式
+         */
+        void setDayOrNight();
     }
 }
