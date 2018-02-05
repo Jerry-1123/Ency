@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.xxx.ency.BuildConfig;
 import com.xxx.ency.di.component.AppComponent;
 import com.xxx.ency.di.component.DaggerAppComponent;
 import com.xxx.ency.di.module.ApplicationModule;
@@ -94,6 +95,11 @@ public class EncyApplication extends Application {
             return;
         }
         LeakCanary.install(this);
+
+        // 异常处理类
+        if (!BuildConfig.DEBUG) {
+            EncyCrashHandler.getInstance().setCrashHanler(this);
+        }
     }
 
     public static AppComponent getAppComponent() {

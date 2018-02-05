@@ -18,8 +18,8 @@ public class ImageLoader {
         GlideApp.with(context)
                 .load(imgUrl)
                 .fitCenter()
-                .placeholder(R.drawable.ic_ali)
-                .error(R.drawable.ic_ali)
+                .placeholder(R.drawable.icon_default)
+                .error(R.drawable.icon_default)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into(imageView);
@@ -29,8 +29,8 @@ public class ImageLoader {
         GlideApp.with(context)
                 .load(imgRes)
                 .fitCenter()
-                .placeholder(R.drawable.ic_ali)
-                .error(R.drawable.ic_ali)
+                .placeholder(R.drawable.icon_default)
+                .error(R.drawable.icon_default)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into(imageView);
@@ -38,10 +38,10 @@ public class ImageLoader {
 
     public static void loadNone(Context context, String imgUrl, ImageView imageView) {
         GlideApp.with(context)
-                .load(R.drawable.ic_ali)
+                .load(R.drawable.icon_default)
                 .fitCenter()
-                .placeholder(R.drawable.ic_ali)
-                .error(R.drawable.ic_ali)
+                .placeholder(R.drawable.icon_default)
+                .error(R.drawable.icon_default)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .priority(Priority.LOW)
                 .into(imageView);
@@ -51,8 +51,8 @@ public class ImageLoader {
         GlideApp.with(context)
                 .load(imgRes)
                 .fitCenter()
-                .placeholder(R.drawable.ic_ali)
-                .error(R.drawable.ic_ali)
+                .placeholder(R.drawable.icon_default)
+                .error(R.drawable.icon_default)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .priority(Priority.LOW)
                 .into(imageView);

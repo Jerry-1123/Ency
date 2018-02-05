@@ -39,10 +39,10 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
         helper.setText(R.id.txt_like_date, DateUtil.Long2String(item.getTime()));
         if (isPTP) {
             GlideApp.with(mContext)
-                    .load(R.drawable.ic_ali)
+                    .load(R.drawable.icon_default)
                     .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_like));
@@ -50,8 +50,8 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
             GlideApp.with(mContext)
                     .load(item.getImageUrl())
                     .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_like));

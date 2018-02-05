@@ -5,10 +5,12 @@ import android.os.Environment;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by xiarh on 2017/9/14.
@@ -179,7 +181,7 @@ public class AppFileUtil {
      * @param content 保存的内容
      * @throws IOException
      */
-    public static void saveToFile(File file, String content) throws IOException {
+    public static void saveToFile(File file, String content)  {
         saveToFile(file, content, System.getProperty("file.encoding"));
     }
 
@@ -191,7 +193,7 @@ public class AppFileUtil {
      * @param encoding 写文件编码
      * @throws IOException
      */
-    public static void saveToFile(File file, String content, String encoding) throws IOException {
+    public static void saveToFile(File file, String content, String encoding)  {
         BufferedWriter writer = null;
         try {
             if (!file.getParentFile().exists()) {
@@ -199,9 +201,15 @@ public class AppFileUtil {
             }
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), encoding));
             writer.write(content);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (writer != null) {
-                writer.close();
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -213,7 +221,7 @@ public class AppFileUtil {
      * @param file    待追加文件源
      * @throws IOException
      */
-    public static void appendToFile(File file, String content) throws IOException {
+    public static void appendToFile(File file, String content) {
         appendToFile(file, content, System.getProperty("file.encoding"));
     }
 
@@ -225,7 +233,7 @@ public class AppFileUtil {
      * @param encoding 文件编码
      * @throws IOException
      */
-    public static void appendToFile(File file, String content, String encoding) throws IOException {
+    public static void appendToFile(File file, String content, String encoding)  {
         BufferedWriter writer = null;
         try {
             if (!file.getParentFile().exists()) {
@@ -233,9 +241,15 @@ public class AppFileUtil {
             }
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), encoding));
             writer.write(content);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (writer != null) {
-                writer.close();
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

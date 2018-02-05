@@ -35,7 +35,6 @@ import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
-import com.xxx.ency.util.DateUtil;
 import com.xxx.ency.util.LogUtil;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.util.WeatherUtil;
@@ -52,9 +51,6 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * 主页

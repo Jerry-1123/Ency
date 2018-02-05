@@ -59,10 +59,10 @@ public class ImageAdapter extends PagerAdapter {
         if(isPTP){
             GlideApp.with(context)
                     .asBitmap()
-                    .load(R.drawable.ic_ali)
+                    .load(R.drawable.icon_default)
                     .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH)
                     .into(imageView);
@@ -71,8 +71,8 @@ public class ImageAdapter extends PagerAdapter {
                     .asBitmap()
                     .load(imgs.get(position))
                     .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into(imageView);

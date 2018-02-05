@@ -33,19 +33,19 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
         helper.setText(R.id.txt_weixin_date, item.getCtime());
         if (isPTP) {
             GlideApp.with(mContext)
-                    .load(R.drawable.ic_ali)
+                    .load(R.drawable.icon_default)
                     .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_weixin));
         } else {
             GlideApp.with(mContext)
                     .load(item.getPicUrl())
-                    .fitCenter()
-                    .placeholder(R.drawable.ic_ali)
-                    .error(R.drawable.ic_ali)
+                    .centerCrop()
+                    .placeholder(R.drawable.icon_default)
+                    .error(R.drawable.icon_default)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.LOW)
                     .into((ImageView) helper.getView(R.id.img_weixin));
