@@ -2,10 +2,13 @@ package com.xxx.ency.view.about;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
@@ -22,6 +25,7 @@ import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
 import com.xxx.ency.util.ImageLoader;
+import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;
 
@@ -73,7 +77,7 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
 
     @Override
     public void showBingBean(BingBean bingBean) {
-        if (sharePrefManager.getNightMode()){
+        if (sharePrefManager.getNightMode()) {
             GlideApp.with(mContext)
                     .load(bingBean.getData().getOriginal_pic())
                     .centerCrop()
@@ -82,8 +86,7 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
                     .priority(Priority.LOW)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mImgAbout);
-        }
-        else {
+        } else {
             GlideApp.with(mContext)
                     .load(bingBean.getData().getOriginal_pic())
                     .centerCrop()
@@ -96,8 +99,26 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
     }
 
     @Override
-    public void showUpdateDialog(UpdateBean updateBean) {
-        startService(new Intent(mContext, UpdateService.class));
+    public void showUpdateDialog(final UpdateBean updateBean) {
+        new MaterialDialog.Builder(mContext)
+                .title(R.string.app_update)
+                .content("最新版本：" + updateBean.getVersionShort() + "\n"
+                        + "版本大小：" + SystemUtil.getFormatSize(updateBean.getBinary().getFsize()) + "\n"
+                        + "更新内容：" + updateBean.getChangelog())
+                .negativeText(R.string.no)
+                .negativeColorRes(R.color.colorNegative)
+                .positiveText(R.string.update)
+                .positiveColorRes(R.color.colorPositive)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showMsg(getResources().getString(R.string.start_update));
+                        Intent intent = new Intent(mContext, UpdateService.class);
+                        intent.putExtra("downloadurl", updateBean.getInstall_url());
+                        startService(intent);
+                    }
+                })
+                .show();
     }
 
     @OnClick(R.id.txt_github)

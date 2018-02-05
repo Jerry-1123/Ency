@@ -125,13 +125,13 @@ public class UpdateBean {
          * fsize : 3682905
          */
 
-        private int fsize;
+        private double fsize;
 
-        public int getFsize() {
+        public double getFsize() {
             return fsize;
         }
 
-        public void setFsize(int fsize) {
+        public void setFsize(double fsize) {
             this.fsize = fsize;
         }
     }

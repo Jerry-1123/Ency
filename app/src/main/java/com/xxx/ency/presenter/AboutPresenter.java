@@ -55,14 +55,16 @@ public class AboutPresenter extends RxPresenter<AboutContract.View> implements A
         addSubscribe(updateApi.getVersionInfo(Constants.FIR_IM_API_TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<UpdateBean>(context,mView) {
+                .subscribeWith(new BaseSubscriber<UpdateBean>(context, mView) {
                     @Override
                     public void onNext(UpdateBean updateBean) {
-                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
-                            mView.showMsg(context.getResources().getString(R.string.start_update));
-                            mView.showUpdateDialog(updateBean);
-                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
-                            mView.showMsg(context.getResources().getString(R.string.update_msg));
+                        if (null != updateBean) {
+                            if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
+                                mView.showMsg(context.getResources().getString(R.string.start_update));
+                                mView.showUpdateDialog(updateBean);
+                            } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
+                                mView.showMsg(context.getResources().getString(R.string.update_msg));
+                            }
                         }
                     }
                 }));

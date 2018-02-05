@@ -30,12 +30,14 @@ public class UpdateService extends Service {
     private DownloadManager dm;
     // 下载Id
     private long downloadId;
+    // 下载地址
+    private String downloadUrl;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             unregisterReceiver(receiver);
-            checkStatus(context, intent);
+            checkStatus(context);
             stopSelf();
         }
     };
@@ -48,6 +50,7 @@ public class UpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        downloadUrl = intent.getStringExtra("downloadurl");
         startDownload();
         // 注册广播接收者，监听下载状态
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
@@ -58,7 +61,7 @@ public class UpdateService extends Service {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ency.apk");
         AppFileUtil.delFile(file, true);
         // 创建下载任务
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse("http://ucdl.25pp.com/fs08/2017/09/19/10/2_b51f7cae8d7abbd3aaf323a431826420.apk?sf=9946816&vh=1e3a8680ee88002bdf2f00f715146e16&sh=10&cc=3646561943&appid=7060083&packageid=400525966&md5=27456638a0e6615fb5153a7a96c901bf&apprd=7060083&pkg=com.taptap&vcode=311&fname=TapTap&pos=detail-ndownload-com.taptap"));
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
         // 显示下载信息
         request.setTitle("Ency");
         request.setDescription("新版本下载中");
@@ -80,7 +83,7 @@ public class UpdateService extends Service {
     /**
      * 检查下载状态
      */
-    private void checkStatus(Context context, Intent intent) {
+    private void checkStatus(Context context) {
         DownloadManager.Query query = new DownloadManager.Query();
         //通过下载的id查找
         query.setFilterById(downloadId);
@@ -101,7 +104,7 @@ public class UpdateService extends Service {
                 case DownloadManager.STATUS_SUCCESSFUL:
                     //下载完成安装APK
                     File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ency.apk");
-                    intent = new Intent(Intent.ACTION_VIEW);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", file);

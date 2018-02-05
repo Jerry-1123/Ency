@@ -61,7 +61,7 @@ public class EncyApplication extends Application {
                 .stackViewMode(Fragmentation.BUBBLE)
                 // 开发环境：true时，遇到异常："Can not perform this action after onSaveInstanceState!"时，抛出，并Crash;
                 // 生产环境：false时，不抛出，不会Crash，会捕获，可以在handleException()里监听到
-                .debug(true)
+                .debug(false)
                 // 实际场景建议.debug(BuildConfig.DEBUG)
                 // 生产环境时，捕获上述异常（避免crash），会捕获
                 // 建议在回调处上传下面异常到崩溃监控服务器

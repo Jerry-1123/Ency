@@ -48,13 +48,15 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(updateApi.getVersionInfo(Constants.FIR_IM_API_TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<UpdateBean>(context,mView) {
+                .subscribeWith(new BaseSubscriber<UpdateBean>(context, mView) {
                     @Override
                     public void onNext(UpdateBean updateBean) {
-                        if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
-                            mView.showUpdateDialog(updateBean);
-                        } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
-                            mView.showUpdateDialog(null);
+                        if (null != updateBean) {
+                            if (AppApplicationUtil.getVersionCode(context) < updateBean.getVersion()) {
+                                mView.showUpdateDialog(updateBean);
+                            } else if (AppApplicationUtil.getVersionCode(context) == updateBean.getVersion()) {
+                                mView.showUpdateDialog(null);
+                            }
                         }
                     }
                 }));
@@ -88,7 +90,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(weatherApi.getWeather(location, Constants.WEATHER_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<WeatherBean>(context,mView) {
+                .subscribeWith(new BaseSubscriber<WeatherBean>(context, mView) {
                     @Override
                     public void onNext(WeatherBean weatherBean) {
                         mView.showWeather(weatherBean);
@@ -101,10 +103,10 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(RxBus.getInstance().register(Integer.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<Integer>(context,null) {
+                .subscribeWith(new BaseSubscriber<Integer>(context, null) {
                     @Override
                     public void onNext(Integer integer) {
-                        if(integer == 1000){
+                        if (integer == 1000) {
                             mView.changeDayOrNight(true);
                         }
                     }

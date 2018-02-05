@@ -7,9 +7,9 @@
     <string name="setting">设置</string>
     <string name="app_exit">应用退出</string>
     <string name="app_exit_confirm">是否确认退出应用？</string>
-    <string name="app_update">新版本</string>
+    <string name="app_update">发现新版本</string>
     <string name="start_update">开始更新啦~</string>
-    <string name="update">更新</string>
+    <string name="update">下载</string>
     <string name="update_msg">已经是最新版本~</string>
     <string name="copy">复制链接</string>
     <string name="copy_msg">已经复制链接地址到剪切板！</string>

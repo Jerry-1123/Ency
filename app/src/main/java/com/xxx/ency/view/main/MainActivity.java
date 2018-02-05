@@ -35,7 +35,9 @@ import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
+import com.xxx.ency.util.DateUtil;
 import com.xxx.ency.util.LogUtil;
+import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.util.WeatherUtil;
 import com.xxx.ency.view.about.AboutActivity;
 import com.xxx.ency.view.gank.GankMainFragment;
@@ -223,11 +225,13 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
      * 检查更新提示框
      */
     @Override
-    public void showUpdateDialog(UpdateBean updateBean) {
+    public void showUpdateDialog(final UpdateBean updateBean) {
         if (null != updateBean) {
             new MaterialDialog.Builder(mContext)
                     .title(R.string.app_update)
-                    .content(updateBean.getChangelog())
+                    .content("最新版本：" + updateBean.getVersionShort() + "\n"
+                            + "版本大小：" + SystemUtil.getFormatSize(updateBean.getBinary().getFsize()) + "\n"
+                            + "更新内容：" + updateBean.getChangelog())
                     .negativeText(R.string.no)
                     .negativeColorRes(R.color.colorNegative)
                     .positiveText(R.string.update)
@@ -236,7 +240,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             showMsg(getResources().getString(R.string.start_update));
-                            startService(new Intent(mContext, UpdateService.class));
+                            Intent intent = new Intent(mContext, UpdateService.class);
+                            intent.putExtra("downloadurl", updateBean.getInstall_url());
+                            startService(intent);
                         }
                     })
                     .show();

@@ -17,7 +17,7 @@ public class DateUtil {
      * @param time 时间毫秒
      * @return yyyy-MM-dd HH:mm:ss
      */
-    public static String LongToString(long time) {
+    public static String Long2String(long time) {
         Date date = new Date(time);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
@@ -29,7 +29,7 @@ public class DateUtil {
      * @param date
      * @return yyyy-MM-dd HH:mm:ss
      */
-    public static String DateToString(Date date) {
+    public static String Date2String(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return formatter.format(date);
     }
@@ -40,7 +40,7 @@ public class DateUtil {
      * @param time 2010-11-20 11:10:10
      * @return Date
      */
-    public static Date StringToDate(String time) {
+    public static Date String2Date(String time) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             return formatter.parse(time);
