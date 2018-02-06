@@ -8,6 +8,25 @@ greendao {
 }
 
 android {
+    //配置签名信息
+    signingConfigs {
+        config {
+            //加载资源
+            Properties properties = new Properties()
+            InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
+            properties.load( inputStream )
+
+            def sdkDir = properties.getProperty('RELEASE_KEYSTORE_FILE')
+            def key_storePassword = properties.getProperty( 'RELEASE_KEYSTORE_PASSWORD' )
+            def key_keyAlias = properties.getProperty( 'RELEASE_KEY_ALIAS' )
+            def key_keyPassword = properties.getProperty( 'RELEASE_KEY_PASSWORD' )
+
+            storeFile file(sdkDir)
+            storePassword key_storePassword
+            keyAlias key_keyAlias
+            keyPassword key_keyPassword
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
@@ -21,18 +40,28 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
-//        jackOptions {
-//            enabled true
-//        }
+        flavorDimensions "versionCode"
     }
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false                     //混淆开启
+            signingConfig signingConfigs.config    //设置签名信息
+            proguardFiles  'proguard-rules.pro','proguard.cfg'
+        }
+        debug {
+            minifyEnabled false                     //混淆关闭
+            signingConfig signingConfigs.config    //设置签名信息
+            proguardFiles 'proguard-rules.pro','proguard.cfg'
+        }
+    }
+    //打包apk重命名
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (variant.buildType.name == 'release') {
+                output.outputFileName = "Ency_${variant.versionName}_release.apk"
+            } else if (variant.buildType.name == 'debug') {
+                output.outputFileName = "Ency_${variant.versionName}_debug.apk"
+            }
         }
     }
     packagingOptions {
@@ -78,8 +107,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0+'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0+'
     // glide
     compile 'com.github.bumptech.glide:glide:4.3.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
@@ -100,13 +129,12 @@ dependencies {
     // 道德地图定位
     compile 'com.amap.api:location:3.6.1'
     // jsoup
-    compile 'org.jsoup:jsoup:1.10.3'
+    compile 'org.jsoup:jsoup:1.10.3+'
     // other
     compile('com.afollestad.material-dialogs:core:0.9.4.5') {
         exclude group: 'com.android.support'
     }
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
-    compile 'com.github.chrisbanes:PhotoView:2.1.3'
     compile 'com.android.support:cardview-v7:27.0.2'
     implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }
