@@ -109,10 +109,10 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
         weiXinAdapter.setEnableLoadMore(false);
     }
-
     /**
      * 上拉加载
      */
+
     @Override
     public void onLoadMoreRequested() {
         page++;

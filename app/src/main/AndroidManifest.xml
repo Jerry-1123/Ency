@@ -67,6 +67,11 @@
             android:name=".view.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
+        <!--热门视频-->
+        <activity
+            android:name=".view.eyepetizer.EyepetizerHotActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".view.main.UpdateService" />
 
         <provider

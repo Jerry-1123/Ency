@@ -136,6 +136,6 @@ public class SystemUtil {
             durationString = "" + remainingSeconds;
 
         }
-        return stringLast + "′" + durationString + "″";
+        return stringLast + "′ " + durationString + "″";
     }
 }

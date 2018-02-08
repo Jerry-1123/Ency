@@ -11,38 +11,39 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.xxx.ency.R;
 import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.DailyVideoBean;
+import com.xxx.ency.model.bean.HotVideoBean;
 import com.xxx.ency.util.SystemUtil;
 
 /**
  * Created by xiarh on 2018/2/7.
  */
 
-public class EyepetizerDailyAdapter extends BaseQuickAdapter<DailyVideoBean.ItemListBean, BaseViewHolder> {
+public class EyepetizerHotAdapter extends BaseQuickAdapter<HotVideoBean.ItemListBean, BaseViewHolder> {
 
-    public EyepetizerDailyAdapter() {
-        super(R.layout.item_eyepetizer_daily);
+    public EyepetizerHotAdapter() {
+        super(R.layout.item_eyepetizer_hot);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DailyVideoBean.ItemListBean item) {
-        helper.setText(R.id.txt_video_duration, SystemUtil.second2Minute(item.getData().getContent().getData().getDuration()));
-        helper.setText(R.id.txt_video_title, item.getData().getContent().getData().getTitle());
-        helper.setText(R.id.txt_video_content, item.getData().getHeader().getTitle() + " / "
-                + item.getData().getHeader().getDescription());
+    protected void convert(BaseViewHolder helper, HotVideoBean.ItemListBean item) {
+        helper.setText(R.id.txt_video_duration, SystemUtil.second2Minute(item.getData().getDuration()));
+        helper.setText(R.id.txt_video_title, item.getData().getTitle());
+        helper.setText(R.id.txt_video_content, item.getData().getAuthor().getName() + " / #"
+                + item.getData().getCategory());
         GlideApp.with(mContext)
-                .load(item.getData().getContent().getData().getCover().getDetail())
+                .load(item.getData().getCover().getDetail())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into((RoundedImageView) helper.getView(R.id.img_video));
         GlideApp.with(mContext)
-                .load(item.getData().getHeader().getIcon())
+                .load(item.getData().getAuthor().getIcon())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into((RoundedImageView) helper.getView(R.id.img_video_author));
         ImageView imgDaily = helper.getView(R.id.img_dialy);
-        if (item.getData().getHeader().getDescription().contains("每日编辑精选")) {
+        if (item.getData().getAuthor().getName().contains("每日编辑精选")) {
             imgDaily.setVisibility(View.VISIBLE);
         } else {
             imgDaily.setVisibility(View.GONE);

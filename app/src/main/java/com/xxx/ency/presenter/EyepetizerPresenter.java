@@ -1,12 +1,12 @@
 package com.xxx.ency.presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.contract.EyepetizerContract;
 import com.xxx.ency.model.bean.DailyVideoBean;
+import com.xxx.ency.model.bean.HotVideoBean;
 import com.xxx.ency.model.http.EyepetizerApi;
 
 import javax.inject.Inject;
@@ -30,7 +30,6 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
         this.context = context;
     }
 
-
     @Override
     public void getDailyVideo(int page, String udid) {
         addSubscribe(eyepetizerApi.getDailyVideo(page, udid)
@@ -42,7 +41,24 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
                         if (dailyVideoBean.isAdExist()) {
                             mView.showDailyVideoData(dailyVideoBean);
                         } else {
-                            mView.failGetData();
+                            mView.failGetDailyData();
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void getHotVideo(String strategy) {
+        addSubscribe(eyepetizerApi.getHotVideo(strategy)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<HotVideoBean>(context, null) {
+                    @Override
+                    public void onNext(HotVideoBean hotVideoBean) {
+                        if (hotVideoBean != null) {
+                            mView.showHotVideoData(hotVideoBean);
+                        } else {
+                            mView.failGetHotData();
                         }
                     }
                 }));
