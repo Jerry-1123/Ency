@@ -39,6 +39,7 @@ import com.xxx.ency.util.LogUtil;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.util.WeatherUtil;
 import com.xxx.ency.view.about.AboutActivity;
+import com.xxx.ency.view.eyepetizer.EyepetizerFragment;
 import com.xxx.ency.view.gank.GankMainFragment;
 import com.xxx.ency.view.like.LikeFragment;
 import com.xxx.ency.view.one.OneFragment;
@@ -93,6 +94,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     private WeiXinFragment weiXinFragment;
     private OneFragment oneFragment;
     private LikeFragment likeFragment;
+    private EyepetizerFragment eyepetizerFragment;
     private GankMainFragment gankFragment;
 
     @Override
@@ -194,7 +196,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // 不给权限就直接退出，不多BB
+                        // 不给权限就直接退出
                         AppExitUtil.exitAPP(mContext);
                     }
                 })
@@ -205,8 +207,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         weiXinFragment = new WeiXinFragment();
         oneFragment = new OneFragment();
         likeFragment = new LikeFragment();
+        eyepetizerFragment = new EyepetizerFragment();
         gankFragment = new GankMainFragment();
-        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, gankFragment, likeFragment);
+        loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, gankFragment, eyepetizerFragment, likeFragment);
     }
 
     @Override
@@ -326,6 +329,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
             case R.id.item_gank:
                 setTitle("干货热门");
                 showHideFragment(gankFragment);
+                break;
+            case R.id.item_eyepetizer:
+                setTitle("开眼视频");
+                showHideFragment(eyepetizerFragment);
                 break;
             case R.id.item_like:
                 setTitle("我的收藏");

@@ -24,7 +24,6 @@ import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
-import com.xxx.ency.util.ImageLoader;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;

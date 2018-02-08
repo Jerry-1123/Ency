@@ -112,4 +112,30 @@ public class SystemUtil {
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
                 + "TB";
     }
+
+    /**
+     * 秒数转分钟
+     *
+     * @param seconds
+     * @return
+     */
+    public static String second2Minute(int seconds) {
+        int minutes = seconds / 60;
+        String stringLast;
+        if (minutes <= 9) {
+            stringLast = "0" + minutes;
+        } else {
+            stringLast = "" + minutes;
+        }
+        int remainingSeconds = seconds % 60;
+        String durationString;
+        if (remainingSeconds < 10) {
+            durationString = "0" + remainingSeconds;
+
+        } else {
+            durationString = "" + remainingSeconds;
+
+        }
+        return stringLast + "′" + durationString + "″";
+    }
 }

@@ -16,6 +16,10 @@
             android:icon="@drawable/ic_tip"
             android:title="@string/gank" />
         <item
+            android:id="@+id/item_eyepetizer"
+            android:icon="@drawable/ic_tip"
+            android:title="@string/eyepetizer" />
+        <item
             android:id="@+id/item_like"
             android:icon="@drawable/ic_tip"
             android:title="@string/mylike" />

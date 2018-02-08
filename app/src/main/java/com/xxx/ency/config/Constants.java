@@ -26,6 +26,9 @@ public class Constants {
     // fir.im ID
     public static final String FIR_IM_ID = "59e01d00959d691da60001b0";
 
+    // 开眼视频pdid
+    public static final String EYEPETIZER_UDID = "79a95dc6b649489383e976b5b97d129f6d592fad";
+
     public static final String PATH_DATA = EncyApplication.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
 
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";
