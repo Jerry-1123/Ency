@@ -18,11 +18,9 @@ import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.contract.EyepetizerContract;
 import com.xxx.ency.di.component.DaggerEyepetizerFragmentComponent;
 import com.xxx.ency.di.module.EyepetizerFragmentModule;
-import com.xxx.ency.model.bean.DailyVideoBean;
-import com.xxx.ency.model.bean.HotVideoBean;
+import com.xxx.ency.model.bean.VideoBean;
 import com.xxx.ency.presenter.EyepetizerPresenter;
-import com.xxx.ency.view.eyepetizer.adapter.EyepetizerDailyAdapter;
-import com.xxx.ency.view.eyepetizer.adapter.EyepetizerHotAdapter;
+import com.xxx.ency.view.eyepetizer.adapter.EyepetizerAdapter;
 
 import butterknife.BindView;
 
@@ -45,11 +43,11 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
 
     private RecyclerView recyclerViewTop;
 
-    private EyepetizerDailyAdapter dailyAdapter;
+    private EyepetizerAdapter dailyAdapter;
 
-    private EyepetizerHotAdapter hotAdapter;
+    private EyepetizerAdapter hotAdapter;
 
-    private HotVideoBean hotVideoBean = new HotVideoBean();
+    private VideoBean hotVideoBean = new VideoBean();
 
     private int page = 1;
 
@@ -74,8 +72,8 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        mPresenter.getHotVideo("weekly", "256", "XXX");
         mPresenter.getDailyVideo(page, Constants.EYEPETIZER_UDID);
-        mPresenter.getHotVideo("weekly");
 
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.header_eyepetizer, null);
         recyclerViewTop = headerView.findViewById(R.id.recyclerview_eyepetizer_top);
@@ -92,7 +90,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
             }
         });
 
-        hotAdapter = new EyepetizerHotAdapter();
+        hotAdapter = new EyepetizerAdapter();
         recyclerViewTop.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewTop.setAdapter(hotAdapter);
         recyclerViewTop.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -111,7 +109,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
         });
         new PagerSnapHelper().attachToRecyclerView(recyclerViewTop);
 
-        dailyAdapter = new EyepetizerDailyAdapter();
+        dailyAdapter = new EyepetizerAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(dailyAdapter);
         dailyAdapter.addHeaderView(headerView);
@@ -119,7 +117,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
         dailyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DailyVideoBean.ItemListBean videoBean = (DailyVideoBean.ItemListBean) adapter.getData().get(position);
+                VideoBean.ItemListBean videoBean = (VideoBean.ItemListBean) adapter.getData().get(position);
                 Toast.makeText(mContext, videoBean.getData().getHeader().getDescription(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -131,8 +129,8 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     @Override
     public void onRefresh() {
         page = 1;
+        mPresenter.getHotVideo("weekly", "256", "XXX");
         mPresenter.getDailyVideo(page, Constants.EYEPETIZER_UDID);
-        mPresenter.getHotVideo("weekly");
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
         dailyAdapter.setEnableLoadMore(false);
     }
@@ -149,7 +147,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     }
 
     @Override
-    public void showDailyVideoData(DailyVideoBean dailyBean) {
+    public void showDailyVideoData(VideoBean dailyBean) {
         if (null != swipeRefreshLayout && swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
             // 下拉刷新后可以上拉加载
@@ -179,7 +177,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     }
 
     @Override
-    public void showHotVideoData(HotVideoBean hotBean) {
+    public void showHotVideoData(VideoBean hotBean) {
         if (hotBean != null) {
             hotVideoBean = hotBean;
             hotAdapter.setNewData(hotBean.getItemList().subList(0, 5));

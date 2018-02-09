@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
-import com.xxx.ency.model.bean.HotVideoBean;
-import com.xxx.ency.view.eyepetizer.adapter.EyepetizerHotAdapter;
+import com.xxx.ency.model.bean.VideoBean;
+import com.xxx.ency.view.eyepetizer.adapter.Eyepetizer2Adapter;
 
 import butterknife.BindView;
 
@@ -24,7 +24,7 @@ public class EyepetizerHotActivity extends BaseActivity {
     @BindView(R.id.recyclerview_eyepetizer)
     RecyclerView recyclerView;
 
-    private EyepetizerHotAdapter hotAdapter;
+    private Eyepetizer2Adapter hotAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -39,9 +39,9 @@ public class EyepetizerHotActivity extends BaseActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        HotVideoBean hotVideoBean = (HotVideoBean) bundle.getSerializable("data");
+        VideoBean hotVideoBean = (VideoBean) bundle.getSerializable("data");
 
-        hotAdapter = new EyepetizerHotAdapter();
+        hotAdapter = new Eyepetizer2Adapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(hotAdapter);
         hotAdapter.setNewData(hotVideoBean.getItemList());

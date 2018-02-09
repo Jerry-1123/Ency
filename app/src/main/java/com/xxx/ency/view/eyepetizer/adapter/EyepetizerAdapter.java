@@ -10,21 +10,21 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.xxx.ency.R;
 import com.xxx.ency.config.GlideApp;
-import com.xxx.ency.model.bean.DailyVideoBean;
+import com.xxx.ency.model.bean.VideoBean;
 import com.xxx.ency.util.SystemUtil;
 
 /**
  * Created by xiarh on 2018/2/7.
  */
 
-public class EyepetizerDailyAdapter extends BaseQuickAdapter<DailyVideoBean.ItemListBean, BaseViewHolder> {
+public class EyepetizerAdapter extends BaseQuickAdapter<VideoBean.ItemListBean, BaseViewHolder> {
 
-    public EyepetizerDailyAdapter() {
+    public EyepetizerAdapter() {
         super(R.layout.item_eyepetizer_daily);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DailyVideoBean.ItemListBean item) {
+    protected void convert(BaseViewHolder helper, VideoBean.ItemListBean item) {
         helper.setText(R.id.txt_video_duration, SystemUtil.second2Minute(item.getData().getContent().getData().getDuration()));
         helper.setText(R.id.txt_video_title, item.getData().getContent().getData().getTitle());
         helper.setText(R.id.txt_video_content, item.getData().getHeader().getTitle() + " / "

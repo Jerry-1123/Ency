@@ -2,8 +2,7 @@ package com.xxx.ency.contract;
 
 import com.xxx.ency.base.BasePresenter;
 import com.xxx.ency.base.BaseView;
-import com.xxx.ency.model.bean.DailyVideoBean;
-import com.xxx.ency.model.bean.HotVideoBean;
+import com.xxx.ency.model.bean.VideoBean;
 
 /**
  * Created by xiarh on 2018/2/7.
@@ -17,7 +16,7 @@ public interface EyepetizerContract {
          *
          * @param dailyBean
          */
-        void showDailyVideoData(DailyVideoBean dailyBean);
+        void showDailyVideoData(VideoBean dailyBean);
 
         /**
          * 获取数据失败
@@ -29,7 +28,7 @@ public interface EyepetizerContract {
          *
          * @param hotBean
          */
-        void showHotVideoData(HotVideoBean hotBean);
+        void showHotVideoData(VideoBean hotBean);
 
         /**
          * 获取数据失败
@@ -52,6 +51,6 @@ public interface EyepetizerContract {
          *
          * @param strategy
          */
-        void getHotVideo(String strategy);
+        void getHotVideo(String strategy, String vc, String deviceModel);
     }
 }

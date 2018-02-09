@@ -1,7 +1,6 @@
 package com.xxx.ency.model.http;
 
-import com.xxx.ency.model.bean.DailyVideoBean;
-import com.xxx.ency.model.bean.HotVideoBean;
+import com.xxx.ency.model.bean.VideoBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -23,7 +22,7 @@ public interface EyepetizerApi {
      * @return
      */
     @GET("api/v5/index/tab/allRec")
-    Flowable<DailyVideoBean> getDailyVideo(@Query("page") int page, @Query("udid") String udid);
+    Flowable<VideoBean> getDailyVideo(@Query("page") int page, @Query("udid") String udid);
 
     /**
      * 获取热门视频
@@ -31,6 +30,6 @@ public interface EyepetizerApi {
      * @param strategy
      * @return
      */
-    @GET("api/v3/ranklist")
-    Flowable<HotVideoBean> getHotVideo(@Query("strategy") String strategy);
+    @GET("api/v4/rankList/videos")
+    Flowable<VideoBean> getHotVideo(@Query("strategy") String strategy, @Query("vc") String vc, @Query("deviceModel") String deviceModel);
 }

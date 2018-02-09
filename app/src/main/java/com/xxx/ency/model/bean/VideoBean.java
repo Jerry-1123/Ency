@@ -1,13 +1,14 @@
 package com.xxx.ency.model.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by xiarh on 2018/2/6.
  */
 
-public class DailyVideoBean {
+public class VideoBean implements Serializable {
 
     private int count;
     private int total;
@@ -55,7 +56,7 @@ public class DailyVideoBean {
         this.itemList = itemList;
     }
 
-    public static class ItemListBean {
+    public static class ItemListBean implements Serializable {
 
         private String type;
         private DataBeanX data;
@@ -103,7 +104,7 @@ public class DailyVideoBean {
             this.adIndex = adIndex;
         }
 
-        public static class DataBeanX {
+        public static class DataBeanX implements Serializable {
 
             private String dataType;
             private ContentBean content;
@@ -143,7 +144,7 @@ public class DailyVideoBean {
                 this.adTrack = adTrack;
             }
 
-            public static class HeaderBean {
+            public static class HeaderBean implements Serializable {
                 private int id;
                 private String title;
                 private Object font;
@@ -281,7 +282,7 @@ public class DailyVideoBean {
                 }
             }
 
-            public static class ContentBean {
+            public static class ContentBean implements Serializable {
 
                 private String type;
                 private DataBean data;
@@ -329,7 +330,7 @@ public class DailyVideoBean {
                     this.adIndex = adIndex;
                 }
 
-                public static class DataBean {
+                public static class DataBean implements Serializable {
 
                     private String dataType;
                     private int id;
@@ -503,7 +504,7 @@ public class DailyVideoBean {
                         this.descriptionEditor = descriptionEditor;
                     }
 
-                    public static class ProviderBean {
+                    public static class ProviderBean implements Serializable {
 
                         private String name;
                         private String alias;
@@ -534,7 +535,7 @@ public class DailyVideoBean {
                         }
                     }
 
-                    public static class AuthorBean {
+                    public static class AuthorBean implements Serializable {
 
                         private int id;
                         private String icon;
@@ -628,7 +629,7 @@ public class DailyVideoBean {
                         }
                     }
 
-                    public static class CoverBean {
+                    public static class CoverBean implements Serializable {
 
                         private String feed;
                         private String detail;
@@ -677,7 +678,7 @@ public class DailyVideoBean {
                         }
                     }
 
-                    public static class ConsumptionBean {
+                    public static class ConsumptionBean implements Serializable {
 
                         private int collectionCount;
                         private int shareCount;

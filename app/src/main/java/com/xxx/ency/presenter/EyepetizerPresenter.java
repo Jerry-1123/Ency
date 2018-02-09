@@ -5,8 +5,7 @@ import android.content.Context;
 import com.xxx.ency.base.BaseSubscriber;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.contract.EyepetizerContract;
-import com.xxx.ency.model.bean.DailyVideoBean;
-import com.xxx.ency.model.bean.HotVideoBean;
+import com.xxx.ency.model.bean.VideoBean;
 import com.xxx.ency.model.http.EyepetizerApi;
 
 import javax.inject.Inject;
@@ -35,9 +34,9 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
         addSubscribe(eyepetizerApi.getDailyVideo(page, udid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<DailyVideoBean>(context, null) {
+                .subscribeWith(new BaseSubscriber<VideoBean>(context, null) {
                     @Override
-                    public void onNext(DailyVideoBean dailyVideoBean) {
+                    public void onNext(VideoBean dailyVideoBean) {
                         if (dailyVideoBean.isAdExist()) {
                             mView.showDailyVideoData(dailyVideoBean);
                         } else {
@@ -48,13 +47,13 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
     }
 
     @Override
-    public void getHotVideo(String strategy) {
-        addSubscribe(eyepetizerApi.getHotVideo(strategy)
+    public void getHotVideo(String strategy, String vc, String deviceModel) {
+        addSubscribe(eyepetizerApi.getHotVideo(strategy,vc,deviceModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<HotVideoBean>(context, null) {
+                .subscribeWith(new BaseSubscriber<VideoBean>(context, null) {
                     @Override
-                    public void onNext(HotVideoBean hotVideoBean) {
+                    public void onNext(VideoBean hotVideoBean) {
                         if (hotVideoBean != null) {
                             mView.showHotVideoData(hotVideoBean);
                         } else {
