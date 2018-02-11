@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img_video_tag"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:riv_corner_radius="5dp" />
+
+    <TextView
+        android:id="@+id/txt_video_tag_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="#剧情#" />
+
+</FrameLayout>

@@ -34,31 +34,35 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
         addSubscribe(eyepetizerApi.getDailyVideo(page, udid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<VideoBean>(context, null) {
+                .subscribeWith(new BaseSubscriber<VideoBean>(context, mView) {
                     @Override
                     public void onNext(VideoBean dailyVideoBean) {
-                        if (dailyVideoBean.isAdExist()) {
-                            mView.showDailyVideoData(dailyVideoBean);
-                        } else {
-                            mView.failGetDailyData();
-                        }
+                        mView.showDailyVideoData(dailyVideoBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        mView.failGetDailyData();
                     }
                 }));
     }
 
     @Override
     public void getHotVideo(String strategy, String vc, String deviceModel) {
-        addSubscribe(eyepetizerApi.getHotVideo(strategy,vc,deviceModel)
+        addSubscribe(eyepetizerApi.getHotVideo(strategy, vc, deviceModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<VideoBean>(context, null) {
+                .subscribeWith(new BaseSubscriber<VideoBean>(context, mView) {
                     @Override
                     public void onNext(VideoBean hotVideoBean) {
-                        if (hotVideoBean != null) {
-                            mView.showHotVideoData(hotVideoBean);
-                        } else {
-                            mView.failGetHotData();
-                        }
+                        mView.showHotVideoData(hotVideoBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        mView.failGetHotData();
                     }
                 }));
     }

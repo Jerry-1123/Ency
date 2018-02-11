@@ -35,6 +35,8 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
             helper.setText(R.id.txt_like_type, R.string.weixin);
         } else if (item.getType() == Constants.TYPE_GANK) {
             helper.setText(R.id.txt_like_type, R.string.gank);
+        } else if (item.getType() == Constants.TYPE_VIDEO) {
+            helper.setText(R.id.txt_like_type, R.string.eyepetizer);
         }
         helper.setText(R.id.txt_like_date, DateUtil.Long2String(item.getTime()));
         if (isPTP) {

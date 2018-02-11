@@ -12,7 +12,7 @@ import com.xxx.ency.R;
  * Created by xiarh on 2017/10/13.
  */
 
-public class SnackBarUtil {
+public class SnackBarUtils {
 
     public static void show(View view, CharSequence msg) {
         Snackbar snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);

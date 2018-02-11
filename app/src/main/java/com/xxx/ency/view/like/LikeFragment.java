@@ -12,6 +12,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseFragment;
+import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.db.GreenDaoManager;
@@ -58,15 +59,20 @@ LikeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LikeBean bean = (LikeBean) adapter.getData().get(position);
-                WebActivity.open(new WebActivity.Builder()
-                        .setGuid(bean.getUrl())
-                        .setImgUrl(bean.getImageUrl())
-                        .setType(bean.getType())
-                        .setUrl(bean.getUrl())
-                        .setTitle(bean.getTitle())
-                        .setShowLikeIcon(true)
-                        .setContext(mContext)
-                );
+                if(bean.getType() == Constants.TYPE_VIDEO){
+
+                }
+                else {
+                    WebActivity.open(new WebActivity.Builder()
+                            .setGuid(bean.getUrl())
+                            .setImgUrl(bean.getImageUrl())
+                            .setType(bean.getType())
+                            .setUrl(bean.getUrl())
+                            .setTitle(bean.getTitle())
+                            .setShowLikeIcon(true)
+                            .setContext(mContext)
+                    );
+                }
             }
         });
         likeAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {

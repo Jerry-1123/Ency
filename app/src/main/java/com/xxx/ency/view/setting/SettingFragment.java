@@ -1,7 +1,6 @@
 package com.xxx.ency.view.setting;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -12,7 +11,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.xxx.ency.R;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.model.prefs.SharePrefManager;
-import com.xxx.ency.util.SnackBarUtil;
+import com.xxx.ency.util.SnackBarUtils;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.view.web.WebActivity;
 
@@ -81,7 +80,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     public boolean onPreferenceClick(Preference preference) {
         if (preference == cleanCachePreference) {
             SystemUtil.clearAllCache(getActivity());
-            SnackBarUtil.show(getView(), "缓存已清除 (*^__^*)");
+            SnackBarUtils.show(getView(), "缓存已清除 (*^__^*)");
             cleanCachePreference.setSummary("缓存大小：" + SystemUtil.getTotalCacheSize(getActivity()));
         } else if (preference == versionPreference) {
 

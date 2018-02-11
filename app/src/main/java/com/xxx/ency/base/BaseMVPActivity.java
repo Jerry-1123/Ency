@@ -2,7 +2,7 @@ package com.xxx.ency.base;
 
 import android.view.ViewGroup;
 
-import com.xxx.ency.util.SnackBarUtil;
+import com.xxx.ency.util.SnackBarUtils;
 
 import javax.inject.Inject;
 
@@ -35,12 +35,12 @@ public abstract class BaseMVPActivity<T extends BasePresenter> extends BaseActiv
 
     @Override
     public void showMsg(CharSequence msg) {
-        SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), msg);
+        SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), msg);
     }
 
     @Override
     public void showError(CharSequence error) {
-        SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), error);
+        SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), error);
     }
 
     @Override

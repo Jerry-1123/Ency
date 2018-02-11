@@ -103,7 +103,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
         addSubscribe(RxBus.getInstance().register(Integer.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<Integer>(context, null) {
+                .subscribeWith(new BaseSubscriber<Integer>(context, mView) {
                     @Override
                     public void onNext(Integer integer) {
                         if (integer == 1000) {

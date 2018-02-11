@@ -38,4 +38,6 @@ public class Constants {
     public static final int TYPE_WEIXIN = 1;
 
     public static final int TYPE_GANK = 2;
+
+    public static final int TYPE_VIDEO = 3;
 }

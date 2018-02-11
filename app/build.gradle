@@ -31,7 +31,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.xxx.ency"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 3
         versionName "1.2"
@@ -138,6 +138,8 @@ dependencies {
     }
     // 椭圆形图片
     compile 'com.makeramen:roundedimageview:2.3.0'
+    // JiaoZiVideoPlayer
+    compile 'cn.jzvd:jiaozivideoplayer:6.2.7'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }

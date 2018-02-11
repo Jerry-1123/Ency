@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,14 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.GeolocationPermissions;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -35,7 +32,7 @@ import com.xxx.ency.config.EncyApplication;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.model.prefs.SharePrefManager;
-import com.xxx.ency.util.SnackBarUtil;
+import com.xxx.ency.util.SnackBarUtils;
 import com.xxx.ency.widget.X5WebView;
 
 import butterknife.BindView;
@@ -252,7 +249,7 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
                     item.setIcon(R.drawable.ic_notlike);
                     daoManager.deleteByGuid(guid);
                     isLiked = false;
-                    SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功从收藏中移除");
+                    SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功从收藏中移除");
                 } else {
                     item.setIcon(R.drawable.ic_like);
                     LikeBean bean = new LikeBean();
@@ -265,13 +262,13 @@ public class WebActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
                     bean.setTime(System.currentTimeMillis());
                     daoManager.insert(bean);
                     isLiked = true;
-                    SnackBarUtil.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功添加到收藏");
+                    SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功添加到收藏");
                 }
                 break;
             case R.id.item_copy:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(url);
-                SnackBarUtil.show(webView, R.string.copy_msg, this);
+                SnackBarUtils.show(webView, R.string.copy_msg, this);
                 break;
             case R.id.item_browser:
                 Uri uri = Uri.parse(url);

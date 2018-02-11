@@ -33,11 +33,12 @@ public class EyepetizerAdapter extends BaseQuickAdapter<VideoBean.ItemListBean, 
                 .load(item.getData().getContent().getData().getCover().getDetail())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.icon_default)
                 .priority(Priority.LOW)
                 .into((RoundedImageView) helper.getView(R.id.img_video));
         GlideApp.with(mContext)
                 .load(item.getData().getHeader().getIcon())
-                .centerCrop()
+                .error(R.drawable.icon_default)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into((RoundedImageView) helper.getView(R.id.img_video_author));

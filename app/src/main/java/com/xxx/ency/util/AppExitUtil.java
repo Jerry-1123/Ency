@@ -3,9 +3,6 @@ package com.xxx.ency.util;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
-
-import com.xxx.ency.contract.OneContract;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +26,7 @@ public class AppExitUtil {
         Timer tExit;
         if (isExit == false) {
             isExit = true;
-            SnackBarUtil.show(view,"再按一次退出");
+            SnackBarUtils.show(view,"再按一次退出");
             //创建定时器
             tExit = new Timer();
             //如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务

@@ -75,6 +75,7 @@
         <!--详细视频-->
         <activity
             android:name=".view.eyepetizer.EyepetizerDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <service android:name=".view.main.UpdateService" />
