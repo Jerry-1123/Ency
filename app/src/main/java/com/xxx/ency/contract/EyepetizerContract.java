@@ -44,13 +44,14 @@ public interface EyepetizerContract {
          * @param page
          * @param udid
          */
-        void getDailyVideo(int page, String udid);
+        void getVideoData(int page, String udid, String strategy, String vc, String deviceModel);
 
         /**
-         * 获取热门视频
+         * 获取视频
          *
-         * @param strategy
+         * @param page
+         * @param udid
          */
-        void getHotVideo(String strategy, String vc, String deviceModel);
+        void getDailyVideoData(int page, String udid);
     }
 }

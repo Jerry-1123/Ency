@@ -72,8 +72,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        mPresenter.getHotVideo("weekly", "256", "XXX");
-        mPresenter.getDailyVideo(page, Constants.EYEPETIZER_UDID);
+        mPresenter.getVideoData(page, Constants.EYEPETIZER_UDID,"weekly", "256", "XXX");
 
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.header_eyepetizer, null);
         recyclerViewTop = headerView.findViewById(R.id.recyclerview_eyepetizer_top);
@@ -133,8 +132,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     @Override
     public void onRefresh() {
         page = 1;
-        mPresenter.getHotVideo("weekly", "256", "XXX");
-        mPresenter.getDailyVideo(page, Constants.EYEPETIZER_UDID);
+        mPresenter.getVideoData(page, Constants.EYEPETIZER_UDID,"weekly", "256", "XXX");
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
         dailyAdapter.setEnableLoadMore(false);
     }
@@ -145,7 +143,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     @Override
     public void onLoadMoreRequested() {
         page++;
-        mPresenter.getDailyVideo(page, Constants.EYEPETIZER_UDID);
+        mPresenter.getDailyVideoData(page, Constants.EYEPETIZER_UDID);
         // 防止上拉加载的时候可以下拉刷新
         swipeRefreshLayout.setEnabled(false);
     }

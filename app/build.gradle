@@ -31,7 +31,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.xxx.ency"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 3
         versionName "1.2"

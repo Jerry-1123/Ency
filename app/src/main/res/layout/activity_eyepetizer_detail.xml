@@ -190,10 +190,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:background="@drawable/shape_txt"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="3dp">
 
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/ic_add" />
 
             <TextView
                 android:layout_width="wrap_content"
