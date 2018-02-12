@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxx.ency.R;
 import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.WeiXinBean;
+import com.xxx.ency.util.AppNetWorkUtil;
 
 /**
  * Created by xiarh on 2017/11/8.
@@ -31,7 +32,7 @@ public class WeiXinAdapter extends BaseQuickAdapter<WeiXinBean.NewslistBean, Bas
         helper.setText(R.id.txt_weixin_title, item.getTitle());
         helper.setText(R.id.txt_weixin_author, item.getDescription());
         helper.setText(R.id.txt_weixin_date, item.getCtime());
-        if (isPTP) {
+        if (isPTP && AppNetWorkUtil.getNetworkType(mContext) == AppNetWorkUtil.TYPE_MOBILE) {
             GlideApp.with(mContext)
                     .load(R.drawable.icon_default)
                     .fitCenter()

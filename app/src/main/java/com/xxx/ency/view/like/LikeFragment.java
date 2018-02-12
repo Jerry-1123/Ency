@@ -1,6 +1,7 @@
 package com.xxx.ency.view.like;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import com.xxx.ency.view.web.WebActivity;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * 我的收藏
@@ -59,10 +62,11 @@ LikeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LikeBean bean = (LikeBean) adapter.getData().get(position);
-                if(bean.getType() == Constants.TYPE_VIDEO){
-
-                }
-                else {
+                if (bean.getType() == Constants.TYPE_VIDEO) {
+                    JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    JZVideoPlayerStandard.startFullscreen(mContext, JZVideoPlayerStandard.class, bean.getUrl(), bean.getTitle());
+                } else {
                     WebActivity.open(new WebActivity.Builder()
                             .setGuid(bean.getUrl())
                             .setImgUrl(bean.getImageUrl())
@@ -110,5 +114,19 @@ LikeFragment extends BaseFragment {
             likeAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
             likeAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        if (JZVideoPlayer.backPress()) {
+            return true;
+        }
+        return super.onBackPressedSupport();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
     }
 }

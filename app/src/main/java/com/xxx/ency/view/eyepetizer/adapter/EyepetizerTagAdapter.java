@@ -25,7 +25,7 @@ public class EyepetizerTagAdapter extends BaseQuickAdapter<VideoBean.ItemListBea
         GlideApp.with(mContext)
                 .load(item.getBgPicture())
                 .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.LOW)
                 .into((RoundedImageView) helper.getView(R.id.img_video_tag));
     }

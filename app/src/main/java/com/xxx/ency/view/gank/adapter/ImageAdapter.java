@@ -14,6 +14,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
 import com.xxx.ency.config.GlideApp;
+import com.xxx.ency.util.AppNetWorkUtil;
 import com.xxx.ency.view.gank.ImageActivity;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ImageAdapter extends PagerAdapter {
 
     private boolean isPTP;
 
-    public ImageAdapter(Context context, List<String> imgs,boolean isPTP) {
+    public ImageAdapter(Context context, List<String> imgs, boolean isPTP) {
         this.imgs = imgs;
         this.context = context;
         this.isPTP = isPTP;
@@ -56,7 +57,7 @@ public class ImageAdapter extends PagerAdapter {
         final ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        if(isPTP){
+        if (isPTP && AppNetWorkUtil.getNetworkType(context) == AppNetWorkUtil.TYPE_MOBILE) {
             GlideApp.with(context)
                     .asBitmap()
                     .load(R.drawable.icon_default)
@@ -66,7 +67,7 @@ public class ImageAdapter extends PagerAdapter {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH)
                     .into(imageView);
-        }else {
+        } else {
             GlideApp.with(context)
                     .asBitmap()
                     .load(imgs.get(position))

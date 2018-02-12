@@ -10,6 +10,7 @@ import com.xxx.ency.R;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.LikeBean;
+import com.xxx.ency.util.AppNetWorkUtil;
 import com.xxx.ency.util.DateUtil;
 
 /**
@@ -39,7 +40,7 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
             helper.setText(R.id.txt_like_type, R.string.eyepetizer);
         }
         helper.setText(R.id.txt_like_date, DateUtil.Long2String(item.getTime()));
-        if (isPTP) {
+        if (isPTP && AppNetWorkUtil.getNetworkType(mContext) == AppNetWorkUtil.TYPE_MOBILE) {
             GlideApp.with(mContext)
                     .load(R.drawable.icon_default)
                     .fitCenter()

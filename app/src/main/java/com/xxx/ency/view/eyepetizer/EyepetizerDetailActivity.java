@@ -30,6 +30,9 @@ import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.util.ColorUtil;
 import com.xxx.ency.view.eyepetizer.adapter.EyepetizerTagAdapter;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JZVideoPlayer;
@@ -130,7 +133,8 @@ public class EyepetizerDetailActivity extends BaseActivity {
         txtVideoAuthorName.setText(videoBean.getContent().getData().getAuthor().getName());
         txtVideoAuthorDescription.setText(videoBean.getContent().getData().getAuthor().getDescription());
         tagAdapter = new EyepetizerTagAdapter();
-        tagAdapter.setNewData(videoBean.getContent().getData().getTags().subList(0, 3));
+        tagAdapter.setNewData(videoBean.getContent().getData().getTags().size() > 3
+                ? videoBean.getContent().getData().getTags().subList(0, 3) : videoBean.getContent().getData().getTags());
         recyclerviewTag.setLayoutManager(new GridLayoutManager(mContext, 3));
         recyclerviewTag.setAdapter(tagAdapter);
         daoManager = EncyApplication.getAppComponent().getGreenDaoManager();
@@ -138,9 +142,25 @@ public class EyepetizerDetailActivity extends BaseActivity {
     }
 
     private void initVideoPlayer() {
+        LinkedHashMap map = new LinkedHashMap();
+        if (videoBean.getContent().getData().getPlayInfo().size() == 3) {
+            map.put("流畅", videoBean.getContent().getData().getPlayInfo().get(0).getUrl());
+            map.put("标清", videoBean.getContent().getData().getPlayInfo().get(1).getUrl());
+            map.put("高清", videoBean.getContent().getData().getPlayInfo().get(2).getUrl());
+        } else if (videoBean.getContent().getData().getPlayInfo().size() == 2) {
+            map.put("标清", videoBean.getContent().getData().getPlayInfo().get(0).getUrl());
+            map.put("高清", videoBean.getContent().getData().getPlayInfo().get(1).getUrl());
+        } else if (videoBean.getContent().getData().getPlayInfo().size() == 1) {
+            map.put("高清", videoBean.getContent().getData().getPlayInfo().get(0).getUrl());
+        }
+        Object[] objects = new Object[3];
+        objects[0] = map;
+        objects[1] = false;//looping
+        objects[2] = new HashMap<>();
         videoPlayerStandard.backButton.setVisibility(View.VISIBLE);
         videoPlayerStandard.titleTextView.setTextSize(16);
-        videoPlayerStandard.setUp(videoBean.getContent().getData().getPlayUrl(), JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, videoBean.getContent().getData().getTitle());
+        videoPlayerStandard.setUp(objects, 0,
+                JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, videoBean.getContent().getData().getTitle());
         GlideApp.with(mContext)
                 .load(videoBean.getContent().getData().getCover().getFeed())
                 .centerCrop()
@@ -208,8 +228,8 @@ public class EyepetizerDetailActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
-        //Change these two variables back
-        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
-        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+//        Change these two variables back
+//        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+//        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 }

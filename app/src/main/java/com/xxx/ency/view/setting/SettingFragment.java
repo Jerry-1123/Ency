@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatDelegate;
 import com.xxx.ency.R;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.model.prefs.SharePrefManager;
+import com.xxx.ency.util.AppApplicationUtil;
 import com.xxx.ency.util.SnackBarUtils;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.view.web.WebActivity;
 
 /**
+ * 设置
  * Created by xiarh on 2018/1/3.
  */
 
@@ -51,6 +53,9 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         cleanCachePreference.setOnPreferenceClickListener(this);
         versionPreference.setOnPreferenceClickListener(this);
         homepagePreference.setOnPreferenceClickListener(this);
+
+        // 设置当前版本号
+        versionPreference.setSummary("V " + AppApplicationUtil.getVersionCode(getActivity()));
 
         // 设置缓存大小
         cleanCachePreference.setSummary("缓存大小：" + SystemUtil.getTotalCacheSize(getActivity()));
