@@ -15,7 +15,7 @@ android {
             Properties properties = new Properties()
             InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
             properties.load( inputStream )
-
+            //此处报错，可使用自己的key
             def sdkDir = properties.getProperty('RELEASE_KEYSTORE_FILE')
             def key_storePassword = properties.getProperty( 'RELEASE_KEYSTORE_PASSWORD' )
             def key_keyAlias = properties.getProperty( 'RELEASE_KEY_ALIAS' )

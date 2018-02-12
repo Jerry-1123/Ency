@@ -9,13 +9,10 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.EncyApplication;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.contract.AboutContract;
 import com.xxx.ency.di.component.DaggerAboutActivityComponent;
 import com.xxx.ency.di.module.AboutActivityModule;
@@ -24,6 +21,7 @@ import com.xxx.ency.model.bean.UpdateBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.AboutPresenter;
 import com.xxx.ency.util.AppApplicationUtil;
+import com.xxx.ency.util.ImageLoader;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.view.main.UpdateService;
 import com.xxx.ency.view.web.WebActivity;
@@ -77,23 +75,9 @@ public class AboutActivity extends BaseMVPActivity<AboutPresenter> implements Ab
     @Override
     public void showBingBean(BingBean bingBean) {
         if (sharePrefManager.getNightMode()) {
-            GlideApp.with(mContext)
-                    .load(bingBean.getData().getOriginal_pic())
-                    .centerCrop()
-                    .placeholder(R.drawable.bg_about_night)
-                    .error(R.drawable.bg_about_night)
-                    .priority(Priority.LOW)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(mImgAbout);
+            ImageLoader.loadAllNoPlaceHolder(mContext, bingBean.getData().getOriginal_pic(), R.drawable.bg_about_night, mImgAbout);
         } else {
-            GlideApp.with(mContext)
-                    .load(bingBean.getData().getOriginal_pic())
-                    .centerCrop()
-                    .placeholder(R.drawable.bg_about_day)
-                    .error(R.drawable.bg_about_day)
-                    .priority(Priority.LOW)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(mImgAbout);
+            ImageLoader.loadAllNoPlaceHolder(mContext, bingBean.getData().getOriginal_pic(), R.drawable.bg_about_day, mImgAbout);
         }
     }
 

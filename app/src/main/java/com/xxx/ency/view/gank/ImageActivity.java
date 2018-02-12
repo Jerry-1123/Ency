@@ -8,16 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.EncyApplication;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.contract.ImageContract;
 import com.xxx.ency.di.component.DaggerImageActivityComponent;
 import com.xxx.ency.di.module.ImageActivityModule;
 import com.xxx.ency.presenter.ImagePresenter;
+import com.xxx.ency.util.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,12 +55,7 @@ public class ImageActivity extends BaseMVPActivity<ImagePresenter> implements Im
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle bundle = getIntent().getExtras();
         imgUrl = bundle.getString("imgurl");
-        GlideApp.with(mContext)
-                .asBitmap()
-                .load(imgUrl)
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(imageView);
+        ImageLoader.loadAllAsBitmap(mContext, imgUrl, imageView);
         hideOrShowToolbar();
     }
 

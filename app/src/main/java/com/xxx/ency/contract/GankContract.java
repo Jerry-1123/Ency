@@ -23,6 +23,11 @@ public interface GankContract {
          * 获取数据失败
          */
         void failGetData();
+
+        /**
+         * 刷新Adapter
+         */
+        void refreshAdapter(boolean isRefresh);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -35,5 +40,10 @@ public interface GankContract {
          * @param page
          */
         void getGankData(String type, int size, int page);
+
+        /**
+         * 省流量模式
+         */
+        void getPTP();
     }
 }

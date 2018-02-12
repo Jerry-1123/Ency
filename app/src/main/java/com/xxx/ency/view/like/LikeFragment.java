@@ -32,8 +32,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by xiarh on 2017/11/23.
  */
 
-public class
-LikeFragment extends BaseFragment {
+public class LikeFragment extends BaseFragment {
 
     @BindView(R.id.recyclerview_like)
     RecyclerView recyclerView;

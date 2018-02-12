@@ -50,6 +50,7 @@ public class EncyApplication extends Application {
         AppCompatDelegate.setDefaultNightMode(nightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
 
         sharePrefManager.setLocalMode(AppCompatDelegate.getDefaultNightMode());
+        sharePrefManager.setLocalProvincialTrafficPatterns(sharePrefManager.getProvincialTrafficPattern());
 
         // 初始化Bugly
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());

@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.util.AppNetWorkUtil;
+import com.xxx.ency.util.ImageLoader;
 import com.xxx.ency.view.gank.ImageActivity;
 
 import java.util.List;
@@ -58,25 +56,9 @@ public class ImageAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         if (isPTP && AppNetWorkUtil.getNetworkType(context) == AppNetWorkUtil.TYPE_MOBILE) {
-            GlideApp.with(context)
-                    .asBitmap()
-                    .load(R.drawable.icon_default)
-                    .fitCenter()
-                    .placeholder(R.drawable.icon_default)
-                    .error(R.drawable.icon_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.HIGH)
-                    .into(imageView);
+            ImageLoader.loadDefault(context,imageView);
         } else {
-            GlideApp.with(context)
-                    .asBitmap()
-                    .load(imgs.get(position))
-                    .fitCenter()
-                    .placeholder(R.drawable.icon_default)
-                    .error(R.drawable.icon_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.LOW)
-                    .into(imageView);
+            ImageLoader.loadAllAsBitmap(context,imgs.get(position),R.drawable.icon_default,imageView);
         }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

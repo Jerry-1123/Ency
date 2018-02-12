@@ -3,6 +3,7 @@ package com.xxx.ency.presenter;
 import android.content.Context;
 
 import com.xxx.ency.base.BaseSubscriber;
+import com.xxx.ency.base.RxBus;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.contract.EyepetizerContract;
 import com.xxx.ency.model.bean.VideoBean;
@@ -87,6 +88,21 @@ public class EyepetizerPresenter extends RxPresenter<EyepetizerContract.View> im
                     public void onError(Throwable t) {
                         super.onError(t);
                         mView.failGetDailyData();
+                    }
+                }));
+    }
+
+    @Override
+    public void getPTP() {
+        addSubscribe(RxBus.getInstance().register(Integer.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<Integer>(context, mView) {
+                    @Override
+                    public void onNext(Integer integer) {
+                        if (integer == 1001) {
+                            mView.refreshAdapter(true);
+                        }
                     }
                 }));
     }

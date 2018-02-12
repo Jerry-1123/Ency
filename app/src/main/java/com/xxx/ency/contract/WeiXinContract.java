@@ -23,6 +23,11 @@ public interface WeiXinContract {
          * 获取数据失败
          */
         void failGetData();
+
+        /**
+         * 刷新Adapter
+         */
+        void refreshAdapter(boolean isRefresh);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -34,5 +39,10 @@ public interface WeiXinContract {
          * @param page
          */
         void getWeiXinData(int pagesize, int page);
+
+        /**
+         * 省流量模式
+         */
+        void getPTP();
     }
 }

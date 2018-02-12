@@ -63,6 +63,12 @@ public class SettingActivity extends BaseActivity {
     private void goBack() {
         int a = sharePrefManager.getLocalMode();
         int b = AppCompatDelegate.getDefaultNightMode();
+        boolean c = sharePrefManager.getLocalProvincialTrafficPatterns();
+        boolean d = sharePrefManager.getProvincialTrafficPattern();
+        if(c != d){
+            RxBus.getInstance().post(1001);
+            sharePrefManager.setLocalProvincialTrafficPatterns(d);
+        }
         if (a != b) {
             sharePrefManager.setLocalMode(AppCompatDelegate.getDefaultNightMode());
             RxBus.getInstance().post(1000);

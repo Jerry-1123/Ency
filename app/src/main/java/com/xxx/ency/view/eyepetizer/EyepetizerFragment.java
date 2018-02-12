@@ -18,9 +18,12 @@ import com.xxx.ency.contract.EyepetizerContract;
 import com.xxx.ency.di.component.DaggerEyepetizerFragmentComponent;
 import com.xxx.ency.di.module.EyepetizerFragmentModule;
 import com.xxx.ency.model.bean.VideoBean;
+import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.EyepetizerPresenter;
 import com.xxx.ency.view.eyepetizer.adapter.Eyepetizer2Adapter;
 import com.xxx.ency.view.eyepetizer.adapter.EyepetizerAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -34,6 +37,9 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerview_eyepetizer)
     RecyclerView recyclerView;
+
+    @Inject
+    SharePrefManager sharePrefManager;
 
     private TextView tvHot;
 
@@ -73,6 +79,7 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
         swipeRefreshLayout.setOnRefreshListener(this);
 
         mPresenter.getVideoData(page, Constants.EYEPETIZER_UDID,"weekly", "256", "XXX");
+        mPresenter.getPTP();
 
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.header_eyepetizer, null);
         recyclerViewTop = headerView.findViewById(R.id.recyclerview_eyepetizer_top);
@@ -192,5 +199,16 @@ public class EyepetizerFragment extends BaseMVPFragment<EyepetizerPresenter> imp
     @Override
     public void failGetHotData() {
 
+    }
+
+    /**
+     * 省流量模式，刷新Adapter
+     */
+    @Override
+    public void refreshAdapter(boolean isRefreshed) {
+        if (isRefreshed) {
+            hotAdapter.notifyDataSetChanged();
+            dailyAdapter.notifyDataSetChanged();
+        }
     }
 }

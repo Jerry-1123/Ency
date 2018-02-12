@@ -52,15 +52,6 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (null != sharePrefManager && null != weiXinAdapter) {
-            weiXinAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
-            weiXinAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
     protected void initInject() {
         DaggerWeiXinFragmentComponent
                 .builder()
@@ -76,6 +67,7 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getWeiXinData(PAGE_SIZE, page);
+        mPresenter.getPTP();
         weiXinAdapter = new WeiXinAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
@@ -109,6 +101,7 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
         weiXinAdapter.setEnableLoadMore(false);
     }
+
     /**
      * 上拉加载
      */
@@ -157,5 +150,16 @@ public class WeiXinFragment extends BaseMVPFragment<WeiXinPresenter> implements 
         weiXinAdapter.loadMoreFail();
         swipeRefreshLayout.setEnabled(true);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * 省流量模式，刷新Adapter
+     */
+    @Override
+    public void refreshAdapter(boolean isRefreshed) {
+        if (isRefreshed) {
+            weiXinAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
+            weiXinAdapter.notifyDataSetChanged();
+        }
     }
 }

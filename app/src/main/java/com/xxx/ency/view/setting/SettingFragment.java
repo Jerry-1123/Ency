@@ -55,7 +55,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         homepagePreference.setOnPreferenceClickListener(this);
 
         // 设置当前版本号
-        versionPreference.setSummary("V " + AppApplicationUtil.getVersionCode(getActivity()));
+        versionPreference.setSummary("V " + AppApplicationUtil.getVersionName(getActivity()));
 
         // 设置缓存大小
         cleanCachePreference.setSummary("缓存大小：" + SystemUtil.getTotalCacheSize(getActivity()));

@@ -12,22 +12,22 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseActivity;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.config.EncyApplication;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.model.bean.VideoBean;
 import com.xxx.ency.model.db.GreenDaoManager;
 import com.xxx.ency.util.ColorUtil;
+import com.xxx.ency.util.ImageLoader;
+import com.xxx.ency.util.SnackBarUtils;
 import com.xxx.ency.view.eyepetizer.adapter.EyepetizerTagAdapter;
 
 import java.util.HashMap;
@@ -124,12 +124,7 @@ public class EyepetizerDetailActivity extends BaseActivity {
         txtVideoContent.setText(videoBean.getContent().getData().getDescription());
         txtVideoShare.setText(videoBean.getContent().getData().getConsumption().getShareCount() + "");
         txtVideoReply.setText(videoBean.getContent().getData().getConsumption().getReplyCount() + "");
-        GlideApp.with(mContext)
-                .load(videoBean.getContent().getData().getAuthor().getIcon())
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .priority(Priority.LOW)
-                .into(imgVideoAuthor);
+        ImageLoader.loadAllNoPlaceHolder(mContext, videoBean.getContent().getData().getAuthor().getIcon(),imgVideoAuthor);
         txtVideoAuthorName.setText(videoBean.getContent().getData().getAuthor().getName());
         txtVideoAuthorDescription.setText(videoBean.getContent().getData().getAuthor().getDescription());
         tagAdapter = new EyepetizerTagAdapter();
@@ -161,12 +156,8 @@ public class EyepetizerDetailActivity extends BaseActivity {
         videoPlayerStandard.titleTextView.setTextSize(16);
         videoPlayerStandard.setUp(objects, 0,
                 JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, videoBean.getContent().getData().getTitle());
-        GlideApp.with(mContext)
-                .load(videoBean.getContent().getData().getCover().getFeed())
-                .centerCrop()
-                .priority(Priority.LOW)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(videoPlayerStandard.thumbImageView);
+        ImageLoader.loadAllNoPlaceHolder(mContext, videoBean.getContent().getData().getCover().getFeed()
+                ,videoPlayerStandard.thumbImageView);
         JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
@@ -188,6 +179,8 @@ public class EyepetizerDetailActivity extends BaseActivity {
             txtVideoCollection.setText("收藏");
             daoManager.deleteByGuid(videoBean.getHeader().getId() + "");
             isLiked = false;
+            SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功从收藏中移除");
+
         } else {
             imgVideoCollection.setImageResource(R.drawable.icon_collect);
             txtVideoCollection.setText("已收藏");
@@ -201,6 +194,7 @@ public class EyepetizerDetailActivity extends BaseActivity {
             bean.setTime(System.currentTimeMillis());
             daoManager.insert(bean);
             isLiked = true;
+            SnackBarUtils.show(((ViewGroup) findViewById(android.R.id.content)).getChildAt(0), "成功添加到收藏");
         }
     }
 

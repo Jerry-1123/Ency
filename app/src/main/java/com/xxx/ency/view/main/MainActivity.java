@@ -21,12 +21,9 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xxx.ency.R;
 import com.xxx.ency.base.BaseMVPActivity;
 import com.xxx.ency.config.EncyApplication;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.contract.MainContract;
 import com.xxx.ency.di.component.DaggerMainActivityComponent;
 import com.xxx.ency.di.module.MainActivityModule;
@@ -35,6 +32,7 @@ import com.xxx.ency.model.bean.WeatherBean;
 import com.xxx.ency.model.prefs.SharePrefManager;
 import com.xxx.ency.presenter.MainPresenter;
 import com.xxx.ency.util.AppExitUtil;
+import com.xxx.ency.util.ImageLoader;
 import com.xxx.ency.util.LogUtil;
 import com.xxx.ency.util.SystemUtil;
 import com.xxx.ency.util.WeatherUtil;
@@ -127,19 +125,9 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mTextTemperature = mHeaderView.findViewById(R.id.txt_temperature);
         mImgWeatherBg = mHeaderView.findViewById(R.id.img_weather_bg);
         if (sharePrefManager.getNightMode()) {
-            GlideApp.with(mContext)
-                    .load(R.drawable.bg_weather_night)
-                    .centerCrop()
-                    .priority(Priority.LOW)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mImgWeatherBg);
+            ImageLoader.loadAll(mContext, R.drawable.bg_weather_night, mImgWeatherBg);
         } else {
-            GlideApp.with(mContext)
-                    .load(R.drawable.bg_weather_day)
-                    .centerCrop()
-                    .priority(Priority.LOW)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mImgWeatherBg);
+            ImageLoader.loadAll(mContext, R.drawable.bg_weather_day, mImgWeatherBg);
         }
         mPresenter.checkPermissions();
         mPresenter.setDayOrNight();
@@ -258,12 +246,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         mTxtCity.setText(weatherBean.getHeWeather6().get(0).getBasic().getLocation());
         mTxtWeather.setText(weatherBean.getHeWeather6().get(0).getNow().getCond_txt() + " " + weatherBean.getHeWeather6().get(0).getNow().getWind_dir());
         mTextTemperature.setText(weatherBean.getHeWeather6().get(0).getNow().getTmp() + "°");
-        GlideApp.with(mContext)
-                .load(WeatherUtil.getImageUrl(weatherBean.getHeWeather6().get(0).getNow().getCond_code()))
-                .centerCrop()
-                .priority(Priority.HIGH)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(mImgWeather);
+        ImageLoader.loadAllAsBitmap(mContext, WeatherUtil.getImageUrl(weatherBean.getHeWeather6().get(0).getNow().getCond_code()), mImgWeather);
     }
 
     /**

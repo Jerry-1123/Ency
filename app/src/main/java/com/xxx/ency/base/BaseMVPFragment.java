@@ -3,6 +3,9 @@ package com.xxx.ency.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.xxx.ency.util.SnackBarUtils;
 
 import javax.inject.Inject;
 
@@ -35,12 +38,12 @@ public abstract class BaseMVPFragment<T extends BasePresenter> extends BaseFragm
 
     @Override
     public void showMsg(CharSequence msg) {
-
+        SnackBarUtils.show(((ViewGroup) mActivity.findViewById(android.R.id.content)).getChildAt(0), msg);
     }
 
     @Override
     public void showError(CharSequence error) {
-
+        SnackBarUtils.show(((ViewGroup) mActivity.findViewById(android.R.id.content)).getChildAt(0), error);
     }
 
     @Override

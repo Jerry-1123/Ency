@@ -3,6 +3,7 @@ package com.xxx.ency.presenter;
 import android.content.Context;
 
 import com.xxx.ency.base.BaseSubscriber;
+import com.xxx.ency.base.RxBus;
 import com.xxx.ency.base.RxPresenter;
 import com.xxx.ency.config.Constants;
 import com.xxx.ency.contract.WeiXinContract;
@@ -45,6 +46,21 @@ public class WeiXinPresenter extends RxPresenter<WeiXinContract.View> implements
                     public void onError(Throwable t) {
                         super.onError(t);
                         mView.failGetData();
+                    }
+                }));
+    }
+
+    @Override
+    public void getPTP() {
+        addSubscribe(RxBus.getInstance().register(Integer.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<Integer>(context, mView) {
+                    @Override
+                    public void onNext(Integer integer) {
+                        if (integer == 1001) {
+                            mView.refreshAdapter(true);
+                        }
                     }
                 }));
     }

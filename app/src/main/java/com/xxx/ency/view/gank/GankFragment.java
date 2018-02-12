@@ -59,15 +59,6 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (null != sharePrefManager && null != gankAdapter) {
-            gankAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
-            gankAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
     protected void initInject() {
         DaggerGankFragmentComponent
                 .builder()
@@ -95,6 +86,7 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getGankData(type, PAGE_SIZE, page);
+        mPresenter.getPTP();
         gankAdapter = new GankAdapter(resultsBeans);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
@@ -178,5 +170,13 @@ public class GankFragment extends BaseMVPFragment<GankPresenter> implements Gank
         gankAdapter.loadMoreFail();
         swipeRefreshLayout.setEnabled(true);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void refreshAdapter(boolean isRefresh) {
+        if (isRefresh) {
+            gankAdapter.setPTP(sharePrefManager.getProvincialTrafficPattern());
+            gankAdapter.notifyDataSetChanged();
+        }
     }
 }

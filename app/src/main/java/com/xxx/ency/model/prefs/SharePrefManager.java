@@ -1,6 +1,5 @@
 package com.xxx.ency.model.prefs;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -31,6 +30,14 @@ public class SharePrefManager {
 
     public boolean getProvincialTrafficPattern() {
         return SPfres.getBoolean("provincial_traffic_patterns", false);
+    }
+
+    public void setLocalProvincialTrafficPatterns(boolean event){
+        SPfres.edit().putBoolean("local_provincial_traffic_patterns", event).commit();
+    }
+
+    public boolean getLocalProvincialTrafficPatterns(){
+        return SPfres.getBoolean("local_provincial_traffic_patterns", false);
     }
 
     /**

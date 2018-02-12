@@ -1,15 +1,10 @@
 package com.xxx.ency.view.gank.adapter;
 
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxx.ency.R;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.GankBean;
 
 import java.util.List;
@@ -56,13 +51,13 @@ public class GankAdapter extends BaseMultiItemQuickAdapter<GankBean.ResultsBean,
                 viewPager.setAdapter(adapter);
                 break;
             case GankBean.ResultsBean.MEIZI:
-                ImageView imageView = helper.getView(R.id.img_meizi);
-                GlideApp.with(mContext)
-                        .load(item.getUrl())
-                        .priority(Priority.LOW)
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                        .override(Target.SIZE_ORIGINAL)
-                        .into(imageView);
+//                ImageView imageView = helper.getView(R.id.img_meizi);
+//                GlideApp.with(mContext)
+//                        .load(item.getUrl())
+//                        .priority(Priority.LOW)
+//                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+//                        .override(Target.SIZE_ORIGINAL)
+//                        .into(imageView);
                 break;
         }
     }

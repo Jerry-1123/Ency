@@ -34,6 +34,11 @@ public interface EyepetizerContract {
          * 获取数据失败
          */
         void failGetHotData();
+
+        /**
+         * 刷新Adapter
+         */
+        void refreshAdapter(boolean isRefresh);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -53,5 +58,10 @@ public interface EyepetizerContract {
          * @param udid
          */
         void getDailyVideoData(int page, String udid);
+
+        /**
+         * 省流量模式
+         */
+        void getPTP();
     }
 }

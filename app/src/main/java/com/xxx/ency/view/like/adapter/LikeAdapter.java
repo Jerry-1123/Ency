@@ -2,16 +2,14 @@ package com.xxx.ency.view.like.adapter;
 
 import android.widget.ImageView;
 
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxx.ency.R;
 import com.xxx.ency.config.Constants;
-import com.xxx.ency.config.GlideApp;
 import com.xxx.ency.model.bean.LikeBean;
 import com.xxx.ency.util.AppNetWorkUtil;
 import com.xxx.ency.util.DateUtil;
+import com.xxx.ency.util.ImageLoader;
 
 /**
  * Created by xiarh on 2017/11/23.
@@ -41,23 +39,9 @@ public class LikeAdapter extends BaseQuickAdapter<LikeBean, BaseViewHolder> {
         }
         helper.setText(R.id.txt_like_date, DateUtil.Long2String(item.getTime()));
         if (isPTP && AppNetWorkUtil.getNetworkType(mContext) == AppNetWorkUtil.TYPE_MOBILE) {
-            GlideApp.with(mContext)
-                    .load(R.drawable.icon_default)
-                    .fitCenter()
-                    .placeholder(R.drawable.icon_default)
-                    .error(R.drawable.icon_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.LOW)
-                    .into((ImageView) helper.getView(R.id.img_like));
+            ImageLoader.loadDefault(mContext,(ImageView) helper.getView(R.id.img_like));
         } else {
-            GlideApp.with(mContext)
-                    .load(item.getImageUrl())
-                    .fitCenter()
-                    .placeholder(R.drawable.icon_default)
-                    .error(R.drawable.icon_default)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.LOW)
-                    .into((ImageView) helper.getView(R.id.img_like));
+            ImageLoader.loadAll(mContext,item.getImageUrl(),(ImageView) helper.getView(R.id.img_like));
         }
     }
 }
