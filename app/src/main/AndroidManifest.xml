@@ -42,6 +42,7 @@
         <!--主页-->
         <activity
             android:name="com.xxx.ency.view.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main" />
 

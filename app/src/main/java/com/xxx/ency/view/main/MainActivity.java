@@ -200,14 +200,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
         loadMultipleRootFragment(R.id.main_content, 0, weiXinFragment, oneFragment, gankFragment, eyepetizerFragment, likeFragment);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return AppExitUtil.exitApp(this, mToolbar);
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     /**
      * 检查更新提示框
      */
@@ -343,6 +335,19 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                 LogUtil.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
             }
         }
+    }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            return AppExitUtil.exitApp(this, mToolbar);
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
+    @Override
+    public void onBackPressedSupport() {
+        AppExitUtil.exitApp(this, mToolbar);
     }
 
     @Override
